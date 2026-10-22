@@ -1,0 +1,30 @@
+name: Feature or style idea
+description: Suggest a feature, an improvement or a new menu style.
+labels: [enhancement, triage]
+body:
+  - type: textarea
+    id: idea
+    attributes:
+      label: The idea
+      description: What should ValoShell do, and why would it help?
+    validations:
+      required: true
+
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Kind
+      options:
+        - New feature
+        - Improvement to an existing screen
+        - New menu style
+        - Studio
+        - Streaming
+    validations:
+      required: true
+
+  - type: textarea
+    id: references
+    attributes:
+      label: References
+      description: Screenshots, mockups or the game menu a new style should echo.

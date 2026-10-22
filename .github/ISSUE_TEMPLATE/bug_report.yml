@@ -1,0 +1,76 @@
+name: Bug report
+description: Something is broken or looks wrong.
+labels: [bug, triage]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting. ValoShell is an early preview, so every report helps.
+        Please check the [open issues](https://github.com/Soulhackzlol/ValoShell/issues) first.
+
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: What you did, what you expected and what you got instead.
+      placeholder: I opened the Store in the CS2 style and the Night Market panel was empty.
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Switch to the CS2 style
+        2. Open the Store
+        3. ...
+    validations:
+      required: true
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Where
+      options:
+        - Play / party
+        - Agent select
+        - Lobby
+        - Post-match
+        - Store
+        - Collection
+        - Career
+        - Studio
+        - A specific style
+        - Overlay / streamer mode
+        - Install / startup
+        - Other
+    validations:
+      required: true
+
+  - type: input
+    id: style
+    attributes:
+      label: Menu style
+      placeholder: VALORANT Glass
+
+  - type: input
+    id: version
+    attributes:
+      label: ValoShell version
+      description: The release you downloaded, or the commit you built.
+      placeholder: 0.1.0
+    validations:
+      required: true
+
+  - type: input
+    id: windows
+    attributes:
+      label: Windows version
+      placeholder: Windows 11 24H2
+
+  - type: textarea
+    id: media
+    attributes:
+      label: Screenshots or video
+      description: Drag files in here. Hide any names you don't want public.

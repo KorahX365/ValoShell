@@ -1,0 +1,40 @@
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Build and draft release
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - uses: Swatinem/rust-cache@v2
+
+      - run: npm ci
+
+      - run: npm run build
+
+      - name: Name the executable after the tag
+        shell: pwsh
+        run: Copy-Item target/release/valoshell.exe "ValoShell-${{ github.ref_name }}.exe"
+
+      # A draft, so the notes can be written and the build tried before anyone sees it.
+      - uses: softprops/action-gh-release@v2
+        with:
+          draft: true
+          prerelease: true
+          generate_release_notes: true
+          files: ValoShell-${{ github.ref_name }}.exe

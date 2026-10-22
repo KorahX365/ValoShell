@@ -1,0 +1,56 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    name: Lint, test and build
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: clippy, rustfmt
+
+      - uses: Swatinem/rust-cache@v2
+
+      - run: npm ci
+
+      - name: UI types
+        run: npm run ui:check
+
+      - name: UI tests
+        run: npm run ui:test
+
+      # The Tauri app embeds ui/dist, so it must exist before Rust compiles.
+      - name: UI build
+        run: npm run ui:build
+
+      - name: Rust format
+        run: cargo fmt --all --check
+
+      - name: Rust lint
+        run: cargo clippy --workspace --all-targets -- -D warnings
+
+      - name: Rust tests
+        run: cargo test --workspace
+
+      # cargo test regenerates the TypeScript bindings; a diff means they were not committed.
+      - name: Bindings up to date
+        run: git diff --exit-code -- ui/src/bindings
