@@ -1,0 +1,1113 @@
+/* Glass style pieces. Frosted fills, hairline borders, soft depth and springy motion.
+   Pointer-driven values arrive as CSS variables from glassMotion.ts:
+   --mx/--my glare position, --px/--py parallax (-0.5..0.5), --rx/--ry tilt, --gx/--gy pull. */
+.hello,
+.party,
+.play,
+.friends {
+  --spring: cubic-bezier(0.2, 1.35, 0.35, 1);
+  --soft: cubic-bezier(0.2, 1, 0.3, 1);
+  font-family: "Inter Variable", "Segoe UI", sans-serif;
+  color: var(--glass-text, #f5f5f7);
+}
+
+/* A specular highlight that follows the pointer across any frosted surface. */
+.glare {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: inherit;
+  background: radial-gradient(circle at var(--mx, 50%) var(--my, 0%), rgb(255 255 255 / 0.16), transparent 45%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 400ms ease;
+}
+
+[data-hover] > .glare {
+  opacity: 1;
+}
+
+.ripple {
+  position: absolute;
+  z-index: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgb(255 255 255 / 0.5), rgb(255 255 255 / 0) 60%);
+  pointer-events: none;
+}
+
+/* ---- greeting ---- */
+.hello {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  height: 100%;
+}
+
+.helloTitle {
+  margin: 0;
+  font-size: clamp(30px, 4.4vh, 52px);
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 1.05;
+}
+
+.word {
+  display: inline-block;
+  white-space: pre;
+  animation: wordIn 900ms var(--soft) backwards;
+  animation-delay: calc(var(--w) * 90ms + 120ms);
+}
+
+.helloName {
+  color: rgb(245 245 247 / 0.55);
+  background: linear-gradient(100deg, rgb(245 245 247 / 0.5) 30%, #ffffff 50%, rgb(245 245 247 / 0.5) 70%) 0 0 / 250% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation:
+    wordIn 900ms var(--soft) backwards,
+    sheen 2.4s ease 1.1s both;
+  animation-delay: calc(var(--w) * 90ms + 120ms), calc(var(--w) * 90ms + 700ms);
+}
+
+.helloLine {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 500;
+  color: rgb(245 245 247 / 0.6);
+  animation: wordIn 900ms var(--soft) 520ms backwards;
+}
+
+/* ---- party ---- */
+.party {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  align-items: center;
+  gap: 18px;
+  width: 100%;
+  height: 100%;
+  perspective: 1100px;
+}
+
+.partySlot {
+  height: 100%;
+  display: flex;
+  animation: slotIn 900ms var(--spring) backwards;
+  animation-delay: calc(var(--i) * 70ms);
+}
+
+/* Centre first: the slots open out from you. */
+.partySlot:nth-child(3) {
+  animation-delay: 0ms;
+}
+
+.partySlot:nth-child(2),
+.partySlot:nth-child(4) {
+  height: 94%;
+  animation-delay: 90ms;
+}
+
+.partySlot:nth-child(1),
+.partySlot:nth-child(5) {
+  height: 88%;
+  animation-delay: 180ms;
+}
+
+.card,
+.invite {
+  position: relative;
+  flex: 1;
+  overflow: hidden;
+  border-radius: 28px;
+  box-shadow:
+    inset 0 0 0 0.5px rgb(255 255 255 / 0.25),
+    0 24px 60px rgb(0 0 0 / 0.4);
+  transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateY(0) scale(1);
+  transform-style: preserve-3d;
+  transition:
+    transform 700ms var(--spring),
+    box-shadow 400ms ease;
+  will-change: transform;
+}
+
+.card[data-hover],
+.invite[data-hover]:not(:disabled) {
+  transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateY(-8px) scale(1.02);
+  transition:
+    transform 260ms var(--soft),
+    box-shadow 400ms ease;
+  box-shadow:
+    inset 0 0 0 0.5px rgb(255 255 255 / 0.35),
+    calc(var(--px, 0) * -40px) calc(40px + var(--py, 0) * -20px) 80px rgb(0 0 0 / 0.5);
+}
+
+.card:active,
+.invite:active:not(:disabled) {
+  transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateY(-4px) scale(0.985);
+}
+
+.card[data-self] {
+  box-shadow:
+    inset 0 0 0 1.5px rgb(255 255 255 / 0.55),
+    0 24px 60px rgb(0 0 0 / 0.45);
+}
+
+/* New members arrive with a little blur-in, wherever they land. */
+.card {
+  animation: cardIn 800ms var(--spring) backwards;
+}
+
+.cardArt {
+  position: absolute;
+  inset: -16px;
+  background: var(--art) center top / cover no-repeat, linear-gradient(160deg, #3a3d48, #15171c);
+  transform: translate(calc(var(--px, 0) * -18px), calc(var(--py, 0) * -14px)) scale(1);
+  transition: transform 900ms var(--soft);
+}
+
+.card[data-hover] .cardArt {
+  transform: translate(calc(var(--px, 0) * -18px), calc(var(--py, 0) * -14px)) scale(1.06);
+  transition: transform 300ms var(--soft);
+}
+
+.crown,
+.kick {
+  position: absolute;
+  top: 12px;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  color: #ffd60a;
+  background: rgb(20 20 24 / 0.5);
+  backdrop-filter: blur(16px);
+}
+
+.crown {
+  left: 12px;
+  animation: crownIn 900ms var(--spring) 400ms backwards;
+}
+
+.kick {
+  right: 12px;
+  color: #f5f5f7;
+  opacity: 0;
+  transform: scale(0.6);
+  transition:
+    opacity 160ms ease,
+    transform 400ms var(--spring),
+    background 160ms ease;
+}
+
+.card[data-hover] .kick {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.kick:hover {
+  background: rgb(255 69 58 / 0.85);
+}
+
+.cardGlass {
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  bottom: 10px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 12px 12px 16px;
+  border-radius: 20px;
+  background: var(--glass-fill, rgb(24 26 32 / 0.5));
+  box-shadow: inset 0 0 0 0.5px rgb(255 255 255 / 0.22), inset 0 1px 0 rgb(255 255 255 / 0.1);
+  backdrop-filter: blur(24px) saturate(180%);
+  transform: translate(calc(var(--px, 0) * 6px), calc(var(--py, 0) * 4px));
+  transition: transform 700ms var(--soft);
+}
+
+.cardText {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.cardText b {
+  font-size: 15px;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cardText small {
+  font-size: 12px;
+  color: rgb(245 245 247 / 0.62);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ringWrap {
+  position: relative;
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+}
+
+.ringHalo {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  box-shadow: 0 0 0 2px var(--glass-ring, #30d158);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.ring {
+  width: 34px;
+  height: 34px;
+  transform: rotate(-90deg);
+}
+
+.ringTrack {
+  fill: none;
+  stroke: rgb(255 255 255 / 0.16);
+  stroke-width: 3;
+}
+
+.ringFill {
+  fill: none;
+  stroke: var(--glass-ring, #30d158);
+  stroke-width: 3;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 800ms var(--soft);
+}
+
+/* The check draws itself once the ring has closed. */
+.ringCheck {
+  fill: none;
+  stroke: rgb(255 255 255 / 0.25);
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+  transform: rotate(90deg);
+  transform-origin: 18px 18px;
+  transition: stroke 300ms ease;
+}
+
+.ring[data-ready] .ringCheck {
+  stroke: var(--glass-ring, #30d158);
+  animation: drawCheck 520ms var(--soft) 360ms both;
+}
+
+.invite {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  color: rgb(245 245 247 / 0.7);
+  background: rgb(255 255 255 / 0.05);
+  backdrop-filter: blur(20px);
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.12);
+}
+
+
+.inviteRing {
+  position: absolute;
+  inset: 14px;
+  border-radius: 20px;
+  border: 1.5px dashed rgb(255 255 255 / 0.12);
+  pointer-events: none;
+  transition:
+    border-color 300ms ease,
+    inset 500ms var(--spring);
+}
+
+.invite[data-hover]:not(:disabled) .inviteRing {
+  inset: 10px;
+  border-color: rgb(255 255 255 / 0.28);
+}
+
+.inviteLabel {
+  transition:
+    color 200ms ease,
+    letter-spacing 400ms var(--soft);
+}
+
+.invite[data-hover]:not(:disabled) .inviteLabel {
+  color: #ffffff;
+  letter-spacing: 0.04em;
+}
+
+.inviteFaces {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 22px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  row-gap: 8px;
+  color: rgb(245 245 247 / 0.45);
+}
+
+.inviteFace {
+  display: grid;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  box-shadow: 0 0 0 2px rgb(20 22 28 / 0.9);
+  transition: transform 500ms var(--spring);
+}
+
+.inviteFace + .inviteFace {
+  margin-left: -9px;
+}
+
+.inviteFaces small {
+  flex-basis: 100%;
+  text-align: center;
+  font-size: 11.5px;
+}
+
+.invite[data-hover]:not(:disabled) .inviteFace {
+  transform: translateX(calc((var(--f) - 1) * 5px));
+}
+
+.inviteIcon {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  color: #f5f5f7;
+  background: rgb(255 255 255 / 0.12);
+  transform: translate(var(--gx, 0px), var(--gy, 0px)) rotate(0deg);
+  transition:
+    transform 600ms var(--spring),
+    background 200ms ease,
+    box-shadow 300ms ease;
+}
+
+.invite[data-hover]:not(:disabled) .inviteIcon {
+  transform: translate(var(--gx, 0px), var(--gy, 0px)) rotate(90deg) scale(1.1);
+  background: rgb(255 255 255 / 0.22);
+  box-shadow: 0 0 0 8px rgb(255 255 255 / 0.05);
+  transition:
+    transform 400ms var(--spring),
+    background 200ms ease,
+    box-shadow 300ms ease;
+}
+
+/* ---- mode control and PLAY ---- */
+.play {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  height: 100%;
+}
+
+.modesFrame {
+  position: relative;
+  max-width: 100%;
+  padding: 3px;
+  border-radius: 14px;
+  background: rgb(28 30 36 / 0.5);
+  box-shadow: inset 0 0 0 0.5px rgb(255 255 255 / 0.2);
+  backdrop-filter: blur(24px) saturate(180%);
+  animation: wordIn 800ms var(--soft) 200ms backwards;
+}
+
+/* Fades at the ends say there is more to scroll to. */
+.modesFrame[data-fade-start] .modes {
+  mask-image: linear-gradient(to right, transparent, black 36px);
+}
+
+.modesFrame[data-fade-end] .modes {
+  mask-image: linear-gradient(to left, transparent, black 36px);
+}
+
+.modesFrame[data-fade-start][data-fade-end] .modes {
+  mask-image: linear-gradient(to right, transparent, black 36px, black calc(100% - 36px), transparent);
+}
+
+.modes {
+  position: relative;
+  display: flex;
+  max-width: 100%;
+  overflow-x: auto;
+  border-radius: 11px;
+  scrollbar-width: none;
+}
+
+.modes::-webkit-scrollbar {
+  display: none;
+}
+
+.modeThumb {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: var(--w, 0px);
+  border-radius: 11px;
+  background: rgb(255 255 255 / 0.18);
+  box-shadow:
+    inset 0 0 0 0.5px rgb(255 255 255 / 0.25),
+    0 3px 10px rgb(0 0 0 / 0.25);
+  transform: translateX(var(--x, 0px));
+  transition:
+    transform 560ms var(--spring),
+    width 460ms var(--spring);
+}
+
+.mode {
+  position: relative;
+  flex: none;
+  height: 32px;
+  padding: 0 14px;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+  color: rgb(245 245 247 / 0.65);
+  border-radius: 11px;
+  transition:
+    color 200ms ease,
+    transform 300ms var(--spring),
+    background 200ms ease;
+}
+
+.mode:hover:not(:disabled):not([data-active]) {
+  color: #ffffff;
+  background: rgb(255 255 255 / 0.06);
+}
+
+.mode:active:not(:disabled) {
+  transform: scale(0.93);
+}
+
+.mode[data-active] {
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.playMagnet {
+  transform: translate(var(--gx, 0px), var(--gy, 0px));
+  transition: transform 700ms var(--spring);
+}
+
+.playMagnet:hover {
+  transition: transform 200ms var(--soft);
+}
+
+.playButton {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-width: 260px;
+  height: 58px;
+  padding: 0 40px;
+  overflow: hidden;
+  font: inherit;
+  font-size: 19px;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+  color: #ffffff;
+  border-radius: 29px;
+  background: linear-gradient(180deg, color-mix(in oklch, var(--glass-accent, var(--accent)) 92%, white), var(--glass-accent, var(--accent)));
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.35),
+    0 14px 34px color-mix(in srgb, var(--glass-accent, var(--accent)) 45%, transparent);
+  transition:
+    transform 500ms var(--spring),
+    box-shadow 400ms ease,
+    background 400ms ease,
+    min-width 500ms var(--spring);
+}
+
+/* Ready to go: the glow breathes slowly. */
+.playButton[data-idle] {
+  animation: breathe 3.2s ease-in-out infinite;
+}
+
+.playButton:hover:not(:disabled) {
+  transform: scale(1.045);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.4),
+    0 20px 46px color-mix(in srgb, var(--glass-accent, var(--accent)) 60%, transparent);
+}
+
+.playButton:active:not(:disabled) {
+  transform: scale(0.96);
+  transition-duration: 120ms;
+}
+
+.playButton:disabled {
+  opacity: 0.45;
+}
+
+/* A light sweep across the capsule on hover. */
+.shine {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(105deg, transparent 35%, rgb(255 255 255 / 0.35) 50%, transparent 65%) -150% 0 / 250% 100% no-repeat;
+  pointer-events: none;
+}
+
+.playButton:hover:not(:disabled) .shine {
+  animation: sweep 900ms var(--soft);
+}
+
+.playLabel,
+.searchClock {
+  position: relative;
+  display: inline-block;
+}
+
+/* Searching: a light runs round the edge of the capsule. */
+.playButton[data-searching] {
+  min-width: 300px;
+  background: rgb(40 42 50 / 0.7);
+  box-shadow: inset 0 0 0 0.5px rgb(255 255 255 / 0.25), 0 14px 34px rgb(0 0 0 / 0.3);
+  backdrop-filter: blur(20px);
+}
+
+.playButton[data-searching]::before {
+  content: "";
+  position: absolute;
+  inset: -40%;
+  z-index: -2;
+  background: conic-gradient(from 0deg, transparent 0 70%, var(--glass-accent, var(--accent)) 85%, transparent 100%);
+  animation: spin 2.2s linear infinite;
+}
+
+.playButton[data-searching]::after {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  z-index: -1;
+  border-radius: 27px;
+  background: rgb(30 32 38 / 0.94);
+}
+
+.spinner {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2.5px solid rgb(255 255 255 / 0.2);
+  border-top-color: #ffffff;
+  animation:
+    spin 900ms linear infinite,
+    popIn 500ms var(--spring) backwards;
+}
+
+.searchClock {
+  font-variant-numeric: tabular-nums;
+  color: rgb(245 245 247 / 0.7);
+  animation: popIn 500ms var(--spring) backwards;
+}
+
+.playMeta {
+  font-size: 12.5px;
+  font-weight: 500;
+  color: rgb(245 245 247 / 0.55);
+  animation: wordIn 800ms var(--soft) 300ms backwards;
+}
+
+/* ---- friends ---- */
+.friends {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  /* As tall as the list needs, up to the piece: a short list doesn't leave an empty slab. */
+  max-height: 100%;
+  padding: 18px 14px 14px;
+  border-radius: 28px;
+  background: var(--glass-fill, rgb(24 26 32 / 0.48));
+  box-shadow:
+    inset 0 0 0 0.5px rgb(255 255 255 / 0.2),
+    inset 0 1px 0 rgb(255 255 255 / 0.1),
+    0 24px 60px rgb(0 0 0 / 0.35);
+  backdrop-filter: blur(32px) saturate(180%);
+  animation: panelIn 900ms var(--spring) 120ms backwards;
+}
+
+.friends > * {
+  position: relative;
+  z-index: 2;
+}
+
+.friends > .glare {
+  position: absolute;
+  z-index: 1;
+}
+
+.friendsHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 0 6px;
+}
+
+.friendsHead h2 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+
+.friendsHead span {
+  display: inline-block;
+  font-size: 12.5px;
+  color: #30d158;
+}
+
+.friendSearch {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 36px;
+  padding: 0 8px 0 12px;
+  border-radius: 12px;
+  color: rgb(245 245 247 / 0.5);
+  background: rgb(255 255 255 / 0.07);
+  transition:
+    background 200ms ease,
+    box-shadow 300ms ease,
+    transform 400ms var(--spring);
+}
+
+.friendSearch:focus-within {
+  color: #f5f5f7;
+  background: rgb(255 255 255 / 0.11);
+  box-shadow:
+    0 0 0 3px color-mix(in srgb, var(--accent) 35%, transparent),
+    inset 0 0 0 0.5px rgb(255 255 255 / 0.3);
+  transform: scale(1.015);
+}
+
+.friendSearch input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  background: none;
+  font: inherit;
+  font-size: 14px;
+  color: #f5f5f7;
+  user-select: text;
+}
+
+.friendSearch input:focus {
+  outline: none;
+}
+
+.clear {
+  display: grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  color: #1c1c1e;
+  background: rgb(245 245 247 / 0.55);
+  animation: popIn 360ms var(--spring) backwards;
+}
+
+.friendList {
+  flex: 0 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+.friendGroup ol {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  list-style: none;
+}
+
+.groupHead {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  height: 30px;
+  padding: 0 8px;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: rgb(245 245 247 / 0.5);
+  border-radius: 10px;
+  background: rgb(24 26 32 / 0.65);
+  backdrop-filter: blur(20px);
+  transition:
+    color 200ms ease,
+    background 200ms ease;
+}
+
+.groupHead:hover {
+  color: #f5f5f7;
+  background: rgb(255 255 255 / 0.08);
+}
+
+.groupHead b {
+  min-width: 20px;
+  padding: 1px 6px;
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: 8px;
+  background: rgb(255 255 255 / 0.08);
+}
+
+.groupChevron {
+  margin-left: auto;
+  transition: transform 400ms var(--spring);
+}
+
+.friendGroup[data-collapsed] .groupChevron {
+  transform: rotate(-90deg);
+}
+
+/* Collapsing slides the rows shut instead of snapping them away. */
+.groupBody {
+  display: grid;
+  grid-template-rows: 1fr;
+  transition: grid-template-rows 450ms var(--soft), opacity 300ms ease;
+}
+
+.friendGroup[data-collapsed] .groupBody {
+  grid-template-rows: 0fr;
+  opacity: 0;
+}
+
+.friend {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 54px;
+  padding: 6px 8px;
+  border-radius: 14px;
+  animation: rowIn 700ms var(--soft) backwards;
+  animation-delay: calc(var(--i) * 40ms + 300ms);
+  transition:
+    background 200ms ease,
+    transform 400ms var(--spring);
+}
+
+.friend:hover {
+  background: rgb(255 255 255 / 0.08);
+  transform: translateX(3px);
+}
+
+.friendAvatar {
+  position: relative;
+  flex: none;
+  display: grid;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  box-shadow: 0 0 0 2px #30d158;
+  transition: transform 500ms var(--spring);
+}
+
+.friend:hover .friendAvatar {
+  transform: scale(1.08);
+}
+
+/* Searching friends: their ring pulses like a heartbeat. */
+.friend[data-status="queueing"] .friendAvatar {
+  box-shadow: 0 0 0 2px #0a84ff;
+  animation: queuePulse 1.8s ease-in-out infinite;
+}
+
+.friend[data-status="agent_select"] .friendAvatar,
+.friend[data-status="in_match"] .friendAvatar {
+  box-shadow: 0 0 0 2px #0a84ff;
+}
+
+.friend[data-status="away"] .friendAvatar {
+  box-shadow: 0 0 0 2px #ffd60a;
+}
+
+.friend[data-status="online"] .friendAvatar,
+.friend[data-status="offline"] .friendAvatar {
+  box-shadow: 0 0 0 2px rgb(255 255 255 / 0.2);
+}
+
+.friend[data-status="offline"] {
+  opacity: 0.55;
+}
+
+.friendImage,
+.friendInitial {
+  grid-area: 1 / 1;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.friendInitial {
+  display: grid;
+  place-items: center;
+  font-size: 15px;
+  font-weight: 600;
+  color: #ffffff;
+  background: linear-gradient(150deg, oklch(0.62 0.12 var(--hue, 250)), oklch(0.36 0.08 calc(var(--hue, 250) + 40)));
+}
+
+.productBadge {
+  position: absolute;
+  right: -3px;
+  bottom: -3px;
+  display: grid;
+  place-items: center;
+  width: 17px;
+  height: 17px;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 800;
+  border-radius: 50%;
+  color: #0b0c10;
+  background: #c8aa6e;
+  box-shadow: 0 0 0 2px rgb(24 26 32);
+}
+
+.productBadge[data-product="tft"] {
+  background: #ffc542;
+}
+
+.productBadge[data-product="bacon"] {
+  background: #59b8ff;
+}
+
+.friendText {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.friendText b {
+  font-size: 14.5px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.friendText small {
+  font-size: 12px;
+  color: rgb(245 245 247 / 0.55);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.friendInvite {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  height: 28px;
+  padding: 0 12px;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  color: #ffffff;
+  border-radius: 14px;
+  background: var(--accent);
+  opacity: 0;
+  transform: translateX(8px) scale(0.85);
+  transition:
+    opacity 180ms ease,
+    transform 450ms var(--spring),
+    background 300ms ease;
+}
+
+.friend:hover .friendInvite,
+.friendInvite[data-sent] {
+  opacity: 1;
+  transform: none;
+}
+
+.friendInvite:active:not(:disabled) {
+  transform: scale(0.92);
+}
+
+.friendInvite[data-sent] {
+  color: #ffffff;
+  background: #30d158;
+}
+
+.friendEmpty {
+  padding: 20px 8px;
+  font-size: 13px;
+  color: rgb(245 245 247 / 0.5);
+  animation: wordIn 600ms var(--soft) backwards;
+}
+
+/* ---- keyframes ---- */
+@keyframes wordIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+    filter: blur(8px);
+  }
+}
+
+@keyframes sheen {
+  from {
+    background-position: 100% 0;
+  }
+  to {
+    background-position: 0 0;
+  }
+}
+
+@keyframes slotIn {
+  from {
+    opacity: 0;
+    transform: translateY(40px) scale(0.92);
+    filter: blur(10px);
+  }
+}
+
+@keyframes cardIn {
+  from {
+    opacity: 0;
+    filter: blur(12px) saturate(0.4);
+  }
+}
+
+@keyframes panelIn {
+  from {
+    opacity: 0;
+    transform: translateX(28px) scale(0.97);
+    filter: blur(10px);
+  }
+}
+
+@keyframes rowIn {
+  from {
+    opacity: 0;
+    transform: translateX(16px);
+  }
+}
+
+@keyframes crownIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) rotate(-30deg) scale(0.4);
+  }
+}
+
+@keyframes popIn {
+  from {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+}
+
+@keyframes drawCheck {
+  from {
+    stroke-dashoffset: 1;
+  }
+}
+
+@keyframes breathe {
+  50% {
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.35),
+      0 18px 48px color-mix(in srgb, var(--glass-accent, var(--accent)) 70%, transparent);
+  }
+}
+
+@keyframes sweep {
+  to {
+    background-position: 250% 0;
+  }
+}
+
+@keyframes queuePulse {
+  50% {
+    box-shadow:
+      0 0 0 2px #0a84ff,
+      0 0 0 6px rgb(10 132 255 / 0.25);
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .word,
+  .helloName,
+  .helloLine,
+  .partySlot,
+  .card,
+  .crown,
+  .modes,
+  .playMeta,
+  .friends,
+  .friend,
+  .friendEmpty,
+  .playButton[data-idle],
+  .friend[data-status="queueing"] .friendAvatar {
+    animation: none;
+  }
+}
+
+:global(:root[data-motion="reduced"]) .word,
+:global(:root[data-motion="reduced"]) .helloName,
+:global(:root[data-motion="reduced"]) .partySlot,
+:global(:root[data-motion="reduced"]) .card,
+:global(:root[data-motion="reduced"]) .friend,
+:global(:root[data-motion="reduced"]) .friends,
+:global(:root[data-motion="reduced"]) .playButton {
+  animation: none;
+}

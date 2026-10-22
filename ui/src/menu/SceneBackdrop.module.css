@@ -1,0 +1,298 @@
+.backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  background: var(--ground);
+  --parallax-x: 0px;
+  --parallax-y: 0px;
+  transition: background 500ms var(--ease-standard);
+}
+
+.backdrop > *,
+.motion > * {
+  position: absolute;
+  inset: -40px;
+}
+
+/* Framing (pan, zoom, tilt, colour grade) on the outer layer, the slow camera move on the
+   inner one, so the two transforms never fight. */
+.backdrop > .frame,
+.frame > .motion {
+  position: absolute;
+  inset: 0;
+}
+
+.frame {
+  transition:
+    transform 700ms var(--ease-decelerate),
+    filter 700ms var(--ease-standard);
+}
+
+.motion {
+  --motion-speed: 1;
+  animation-duration: calc(var(--motion-base, 24s) / var(--motion-speed));
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+.motion[data-motion="drift"] {
+  --motion-base: 24s;
+  animation-name: drift;
+}
+
+.motion[data-motion="zoom"] {
+  --motion-base: 30s;
+  animation-name: kenBurns;
+}
+
+.motion[data-motion="pan"] {
+  --motion-base: 40s;
+  animation-name: pan;
+}
+
+.motion[data-motion="sway"] {
+  --motion-base: 14s;
+  animation-name: sway;
+}
+
+.motion[data-motion="pulse"] {
+  --motion-base: 6s;
+  animation-name: pulse;
+}
+
+.motion[data-motion="orbit"] {
+  --motion-base: 36s;
+  animation-name: orbit;
+  animation-timing-function: linear;
+  animation-direction: normal;
+}
+
+.motion[data-paused] {
+  animation-play-state: paused;
+}
+
+@keyframes drift {
+  from {
+    transform: translate(-2%, -1%) scale(1.08);
+  }
+  to {
+    transform: translate(2%, 1%) scale(1.08);
+  }
+}
+
+@keyframes kenBurns {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: translate(-2%, -1.5%) scale(1.18);
+  }
+}
+
+@keyframes pan {
+  from {
+    transform: translateX(-4%) scale(1.1);
+  }
+  to {
+    transform: translateX(4%) scale(1.1);
+  }
+}
+
+@keyframes sway {
+  from {
+    transform: rotate(-1.2deg) scale(1.07);
+  }
+  to {
+    transform: rotate(1.2deg) scale(1.07);
+  }
+}
+
+@keyframes pulse {
+  from {
+    transform: scale(1.02);
+    filter: brightness(1);
+  }
+  to {
+    transform: scale(1.07);
+    filter: brightness(1.12);
+  }
+}
+
+@keyframes orbit {
+  0% {
+    transform: translate(3%, 0) scale(1.1);
+  }
+  25% {
+    transform: translate(0, 2%) scale(1.1);
+  }
+  50% {
+    transform: translate(-3%, 0) scale(1.1);
+  }
+  75% {
+    transform: translate(0, -2%) scale(1.1);
+  }
+  100% {
+    transform: translate(3%, 0) scale(1.1);
+  }
+}
+
+/* Deep layers move least, near layers most: that ratio is what reads as depth. */
+.glow {
+  background:
+    radial-gradient(60% 70% at 18% 85%, color-mix(in oklch, var(--accent) 22%, transparent), transparent 70%),
+    radial-gradient(45% 50% at 88% 12%, color-mix(in oklch, var(--accent-2, var(--accent)) 8%, transparent), transparent 70%);
+  transform: translate(calc(var(--parallax-x) * -0.4), calc(var(--parallax-y) * -0.4));
+  transition: transform 600ms var(--ease-decelerate);
+}
+
+.shader {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  filter: blur(var(--blur, 0px));
+}
+
+/* ASCII mode: the source keeps running underneath (it is what gets sampled) but only the
+   characters are visible. */
+.ascii {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.9;
+}
+
+.backdrop[data-ascii] .art,
+.backdrop[data-ascii] .video,
+.backdrop[data-ascii] .portrait,
+.backdrop[data-ascii] .shader {
+  opacity: 0;
+}
+
+.art {
+  background-image: var(--scene-art, none);
+  background-size: cover;
+  background-position: center;
+  filter: blur(var(--blur, 0px));
+  transform: translate(calc(var(--parallax-x) * -0.7), calc(var(--parallax-y) * -0.7)) scale(1.06);
+  transition: transform 600ms var(--ease-decelerate);
+  animation: artIn 900ms var(--ease-decelerate) both;
+}
+
+.video {
+  width: calc(100% + 80px);
+  height: calc(100% + 80px);
+  object-fit: cover;
+  filter: blur(var(--blur, 0px));
+  transform: translate(calc(var(--parallax-x) * -0.7), calc(var(--parallax-y) * -0.7)) scale(1.04);
+  transition: transform 600ms var(--ease-decelerate);
+}
+
+/* Box set inline (left, top, width, height) from the figure's position and size. */
+.portrait {
+  inset: auto;
+  background-image: var(--portrait);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: right bottom;
+  transform: translate(calc(var(--parallax-x) * -1.1), calc(var(--parallax-y) * -1.1));
+  transition:
+    transform 600ms var(--ease-decelerate),
+    left 300ms var(--ease-decelerate),
+    top 300ms var(--ease-decelerate),
+    width 300ms var(--ease-decelerate),
+    height 300ms var(--ease-decelerate);
+  animation: portraitIn 1100ms var(--ease-decelerate) both;
+}
+
+.dim {
+  inset: 0;
+  background: rgb(0 0 0 / var(--dim, 0.35));
+}
+
+/* A bright map behind agent select: darker at the top and bottom where the timer, the lineup
+   and the agent grid sit, like the client's own wash. */
+.dim[data-map] {
+  background:
+    linear-gradient(rgb(0 0 0 / 0.55), rgb(0 0 0 / 0.15) 35%, rgb(0 0 0 / 0.2) 60%, rgb(0 0 0 / 0.7)),
+    rgb(0 0 0 / var(--dim, 0.35));
+}
+
+/* The custom lobby's map: almost hidden under the client's navy, a little clearer mid-screen
+   (sampled: 16 28 36 at the edges, 36 54 67 in the middle). */
+.dim[data-lobby] {
+  background: radial-gradient(60% 55% at 50% 35%, rgb(15 25 35 / 0.8), rgb(15 25 35 / 0.97));
+}
+
+.grain {
+  opacity: var(--grain, 0.07);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+}
+
+.vignette {
+  inset: 0;
+  background: radial-gradient(120% 90% at 50% 45%, transparent 45%, rgb(0 0 0 / var(--vignette, 0.72)) 100%);
+}
+
+/* A neutral stand-in for the game while designing the overlay. */
+.gameStandIn {
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background:
+    linear-gradient(180deg, rgb(120 150 170 / 0.25), transparent 45%),
+    radial-gradient(80% 60% at 50% 70%, #3b3a36, #191917 70%),
+    #1d1d1b;
+}
+
+.crosshair {
+  position: relative;
+  width: 18px;
+  height: 18px;
+}
+
+.crosshair::before,
+.crosshair::after {
+  content: "";
+  position: absolute;
+  background: #6cff6c;
+  box-shadow: 0 0 0 1px rgb(0 0 0 / 0.6);
+}
+
+.crosshair::before {
+  left: 8px;
+  top: 0;
+  width: 2px;
+  height: 18px;
+}
+
+.crosshair::after {
+  top: 8px;
+  left: 0;
+  width: 18px;
+  height: 2px;
+}
+
+.gameNote {
+  position: absolute;
+  bottom: 28%;
+  font-size: var(--text-caption);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: rgb(255 255 255 / 0.35);
+}
+
+@keyframes artIn {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes portraitIn {
+  from {
+    opacity: 0;
+    translate: 60px 0;
+  }
+}

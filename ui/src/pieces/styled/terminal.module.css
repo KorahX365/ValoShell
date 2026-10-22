@@ -1,0 +1,77 @@
+/* Terminal console: phosphor text on black, a status line, a blinking block cursor. */
+
+.console {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-1);
+  background: rgb(0 0 0 / 0.82);
+  box-shadow: inset 0 0 0 1px rgb(var(--text-rgb) / 0.3);
+  cursor: text;
+}
+
+.status {
+  flex: none;
+  padding: 3px 10px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: var(--ground);
+  background: var(--accent);
+}
+
+.log {
+  flex: 1;
+  min-height: 0;
+  padding: 8px 10px 0;
+  overflow: auto;
+}
+
+.line {
+  white-space: pre-wrap;
+  word-break: break-word;
+  animation: lineIn 140ms steps(3, end) both;
+}
+
+/* A new line wipes in left to right, like text arriving on a slow terminal. */
+@keyframes lineIn {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+.line[data-kind="in"] {
+  color: var(--accent);
+}
+
+.line[data-kind="err"] {
+  color: #ff6b5e;
+}
+
+.prompt {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 10px 10px;
+  color: var(--accent);
+}
+
+.prompt input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  outline: none;
+  font: inherit;
+  color: var(--text-1);
+  caret-color: var(--accent);
+  caret-shape: block;
+  background: transparent;
+}

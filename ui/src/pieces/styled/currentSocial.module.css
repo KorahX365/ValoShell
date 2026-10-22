@@ -1,0 +1,428 @@
+/* The current client's right-edge social panel: 60 px strip of card icons, 380 px list open. */
+.panel {
+  position: absolute;
+  top: var(--nav-top, 50px);
+  right: 0;
+  bottom: 0;
+  z-index: 26;
+  width: 60px;
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-din);
+  color: #ece8e1;
+  background: rgb(14 20 26 / 0.86);
+  box-shadow: inset 1px 0 0 rgb(255 255 255 / 0.05);
+  transition: width 220ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.panel[data-open] {
+  width: 380px;
+  background: rgb(20 22 25 / 0.97);
+  box-shadow: -18px 0 40px rgb(0 0 0 / 0.45);
+}
+
+/* ---- open: tabs, search, list ---- */
+.tabs {
+  flex: none;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 40px;
+}
+
+.tab {
+  position: relative;
+  display: grid;
+  place-items: center;
+  color: #ece8e1;
+  background: rgb(20 28 35 / 0.9);
+}
+
+.tab[data-active] {
+  background: linear-gradient(to bottom, rgb(18 80 76 / 0.95), rgb(14 58 56 / 0.95));
+  box-shadow: inset 0 -3px 0 #2ee6c5;
+}
+
+.tab:hover:not([data-active]) {
+  background: rgb(255 255 255 / 0.08);
+}
+
+.tabBadge {
+  position: absolute;
+  top: 7px;
+  right: calc(50% - 18px);
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #f5c344;
+}
+
+.search {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  height: 46px;
+  margin: 8px 8px 4px;
+  padding: 0 18px;
+  color: #8b9299;
+  background: rgb(8 12 16 / 0.7);
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.12);
+}
+
+.search input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  background: none;
+  font: inherit;
+  font-size: 15px;
+  letter-spacing: 0.5px;
+  color: #ece8e1;
+  user-select: text;
+}
+
+.search input::placeholder {
+  color: #8b9299;
+}
+
+.search input:focus {
+  outline: none;
+}
+
+.list {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 4px 0 8px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgb(255 255 255 / 0.25) transparent;
+}
+
+.row {
+  position: relative;
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 58px;
+  padding: 2px 14px 2px 2px;
+  background: rgb(33 36 40 / 0.95);
+}
+
+.row:hover {
+  background: rgb(46 50 55 / 0.97);
+}
+
+.row[data-party]::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: -26px;
+  width: 3px;
+  background: #8a7fe6;
+}
+
+.row[data-group="offline"] .name {
+  color: #ece8e1;
+}
+
+.row[data-self] .name {
+  color: #f6d77c;
+}
+
+.rowText {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.name {
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.status {
+  font-size: 12px;
+  letter-spacing: 0.3px;
+  white-space: pre;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #6ba2ea;
+}
+
+.status[data-tone="available"] {
+  color: #4fd1ab;
+}
+
+.status[data-tone="away"] {
+  color: #e8913c;
+}
+
+.status[data-tone="offline"] {
+  color: #9aa1a8;
+}
+
+.rowIcons {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  color: #c9cdd1;
+}
+
+.chatIcon {
+  opacity: 0.85;
+}
+
+.rowButton {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 22px;
+  color: #ece8e1;
+  opacity: 0;
+  transition: opacity 120ms ease;
+}
+
+.row:hover .rowButton {
+  opacity: 1;
+}
+
+.rowButton:hover:not(:disabled) {
+  color: #4fe0c4;
+}
+
+.rowButton:disabled {
+  opacity: 0.4;
+}
+
+.partyNote {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  height: 24px;
+  padding-left: 26px;
+  font-size: 11px;
+  color: #8a8d91;
+  background: rgb(26 28 31 / 0.95);
+}
+
+.group {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  height: 40px;
+  margin-top: 8px;
+  padding: 0 14px 0 14px;
+  font: inherit;
+  color: #a6a9ad;
+  background: rgb(59 62 67 / 0.95);
+  text-align: left;
+}
+
+.group:hover {
+  background: rgb(72 76 82 / 0.97);
+}
+
+.groupIcon {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  color: #a6a9ad;
+}
+
+.groupTitle {
+  flex: 1;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+}
+
+.groupArrow {
+  width: 0;
+  height: 0;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-top: 10px solid #a6a9ad;
+  transform: rotate(90deg);
+  transition: transform 160ms ease;
+}
+
+.group[data-open] .groupArrow {
+  transform: none;
+}
+
+/* ---- avatars ---- */
+.avatar {
+  position: relative;
+  flex: none;
+  display: grid;
+  width: 54px;
+  height: 54px;
+}
+
+.avatarImage,
+.avatarFallback {
+  grid-area: 1 / 1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.avatarFallback {
+  display: grid;
+  place-items: center;
+  color: #8f959b;
+  background: linear-gradient(to bottom, #3d434a, #2b3036);
+}
+
+.avatarFallback[data-product] {
+  color: #c9cdd1;
+  background: linear-gradient(to bottom, #2d3e52, #1c2836);
+}
+
+.avatarFallback[data-product="league_of_legends"] {
+  background: #0a1428;
+}
+
+.avatarFallback[data-product="lion"] {
+  background: linear-gradient(to bottom, #3f8ff0, #1f64d6);
+}
+
+/* The client's status badge in the avatar's corner: a teal ring when available, a blue disc
+   with a play mark when playing, an orange one when away. */
+.dot {
+  position: absolute;
+  right: 2px;
+  bottom: 2px;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  border: 2px solid #3dd6a5;
+  background: radial-gradient(circle, #3dd6a5 0 2px, #10231f 2.5px);
+  box-shadow: 0 0 0 1px rgb(0 0 0 / 0.6);
+}
+
+.dot[data-tone="busy"],
+.dot[data-tone="other"] {
+  border: none;
+  background: #3b82d6;
+}
+
+.dot[data-tone="busy"]::after,
+.dot[data-tone="other"]::after {
+  content: "";
+  position: absolute;
+  left: 4.5px;
+  top: 3.5px;
+  border-left: 5px solid #ffffff;
+  border-top: 3px solid transparent;
+  border-bottom: 3px solid transparent;
+}
+
+.dot[data-tone="away"] {
+  border: none;
+  background: #e0883a;
+}
+
+.dot[data-tone="away"]::after {
+  content: "";
+  position: absolute;
+  left: 6px;
+  top: 3px;
+  width: 3px;
+  height: 4px;
+  border-left: 1.5px solid #ffffff;
+  border-bottom: 1.5px solid #ffffff;
+}
+
+.dot[data-tone="offline"] {
+  display: none;
+}
+
+/* ---- closed: the strip ---- */
+.strip {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.stripAdd {
+  position: relative;
+  flex: none;
+  display: grid;
+  place-items: center;
+  height: 92px;
+  color: #ece8e1;
+  background: rgb(26 33 40 / 0.95);
+  box-shadow: inset 0 -1px 0 rgb(255 255 255 / 0.06);
+}
+
+.stripAdd .tabBadge {
+  top: 26px;
+  right: 12px;
+}
+
+.stripList {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 0;
+  overflow: hidden;
+}
+
+.stripCell {
+  position: relative;
+  flex: none;
+}
+
+.stripCell .avatar {
+  width: 52px;
+  height: 52px;
+}
+
+.stripCell[data-party]::before {
+  content: "";
+  position: absolute;
+  left: -5px;
+  top: -6px;
+  bottom: -22px;
+  width: 3px;
+  background: #8a7fe6;
+}
+
+.stripMore {
+  flex: none;
+  margin-top: -4px;
+  font-size: 10px;
+  color: #9aa1a8;
+}
+
+.stripMarker {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 60px;
+  height: 30px;
+  color: #b5bac0;
+  background: rgb(66 72 80 / 0.9);
+}

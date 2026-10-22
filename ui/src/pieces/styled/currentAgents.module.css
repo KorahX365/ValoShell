@@ -1,0 +1,342 @@
+/* VALORANT (current client) Agents page. Coordinates are the client's own on its 1860 x 1032
+   stage (screen y minus the 48 px bar); colours sampled from the client. */
+.page {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  font-family: var(--font-din);
+  color: #ece8e1;
+  background: linear-gradient(160deg, var(--tint-top, #161a36) 20%, var(--tint-bottom, #26136c) 95%);
+}
+
+/* The navy column under the list, fading into the agent's tint. */
+.column {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 700px;
+  background: linear-gradient(to right, #0f1923 440px, rgb(15 25 35 / 0) 700px);
+  pointer-events: none;
+}
+
+.crumb {
+  position: absolute;
+  left: 55px;
+  top: 12px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 14px;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: rgb(236 232 225 / 0.8);
+}
+
+.crumb i {
+  width: 8px;
+  height: 9px;
+  background: rgb(236 232 225 / 0.5);
+  clip-path: polygon(0 0, 100% 50%, 0 100%);
+}
+.filters {
+  position: absolute;
+  left: 47px;
+  top: 186px;
+  z-index: 2;
+  display: flex;
+  gap: 17.5px;
+}
+
+.filter {
+  display: grid;
+  place-items: center;
+  width: 60px;
+  height: 60px;
+  color: #ece8e1;
+  background: rgb(34 42 49);
+  box-shadow: inset 0 0 0 1px rgb(236 232 225 / 0.22);
+  transition: box-shadow 120ms ease, background 120ms ease;
+}
+
+.filter:hover {
+  background: rgb(46 56 64);
+}
+
+.filter[data-active] {
+  background: rgb(15 25 35);
+  box-shadow: inset 0 0 0 2px #ffffff;
+}
+
+.filterIcon {
+  width: 34px;
+  height: 34px;
+  object-fit: contain;
+}
+
+.allDots {
+  width: 22px;
+  height: 22px;
+  background: radial-gradient(circle, #ece8e1 2.4px, transparent 2.9px) 0 0 / 7.33px 7.33px;
+}
+
+.grid {
+  position: absolute;
+  left: 47px;
+  top: 263px;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(4, 85px);
+  grid-auto-rows: 85px;
+  gap: 10px;
+  width: 393px;
+  height: 625px;
+  padding-right: 23px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #ece8e1 transparent;
+}
+
+.grid::-webkit-scrollbar {
+  width: 4px;
+}
+
+.grid::-webkit-scrollbar-thumb {
+  background: #ece8e1;
+}
+
+.cell {
+  overflow: hidden;
+  background: linear-gradient(to bottom, rgb(46 54 61), rgb(31 39 45));
+  box-shadow: inset 0 0 0 1px rgb(236 232 225 / 0.14);
+  transition: box-shadow 120ms ease;
+}
+
+.cell:hover {
+  box-shadow: inset 0 0 0 1px rgb(236 232 225 / 0.6);
+}
+
+.cell[data-active] {
+  box-shadow: inset 0 0 0 2px #ffffff;
+}
+
+.cellIcon {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* The agent's name four times over, in navy, behind them. */
+.ghost {
+  position: absolute;
+  left: 930px;
+  top: -10px;
+  display: flex;
+  flex-direction: column;
+  font-family: "Tungsten", "VAL Title", "Oswald Variable", sans-serif;
+  font-size: 300px;
+  font-weight: 700;
+  line-height: 230px;
+  text-align: center;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: rgb(15 25 35 / 0.6);
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.portrait {
+  position: absolute;
+  left: 955px;
+  top: -102px;
+  height: 1390px;
+  max-width: none;
+  transform: translateX(-50%);
+  filter: drop-shadow(0 20px 40px rgb(0 0 0 / 0.35));
+  pointer-events: none;
+}
+
+.rail {
+  position: absolute;
+  left: 1369px;
+  top: 161px;
+  width: 2px;
+  height: 112px;
+  background: #ffffff;
+}
+
+/* The diamond and notch where the rail meets the rule under the name. */
+.rail::before {
+  content: "";
+  position: absolute;
+  left: -9px;
+  top: 51px;
+  width: 8px;
+  height: 8px;
+  background: #ffffff;
+  transform: rotate(45deg);
+}
+
+.rail::after {
+  content: "";
+  position: absolute;
+  left: 1px;
+  top: 47px;
+  width: 9px;
+  height: 16px;
+  border: solid #ffffff;
+  border-width: 0 2px 2px 0;
+  transform: scaleY(0.75) rotate(-45deg);
+  transform-origin: 0 50%;
+}
+
+.rule {
+  position: absolute;
+  left: 1372px;
+  top: 216px;
+  width: 446px;
+  height: 1px;
+  background: linear-gradient(to right, rgb(236 232 225 / 0.45) 95%, #ffffff 95%);
+}
+
+.mastery {
+  position: absolute;
+  left: 1395px;
+  top: 130px;
+  display: grid;
+  place-items: center;
+  width: 70px;
+  height: 68px;
+  font-size: 17px;
+  color: #ffffff;
+}
+
+.mastery svg {
+  position: absolute;
+  inset: 0;
+  overflow: visible;
+}
+
+.mastery svg path {
+  fill: rgb(20 14 50 / 0.5);
+  stroke: var(--val-accent, rgb(227 122 155));
+  stroke-width: 3;
+  stroke-linejoin: round;
+}
+
+.mastery svg path:first-child {
+  fill: none;
+}
+
+.mastery b {
+  position: relative;
+  font-weight: 400;
+}
+
+.name {
+  position: absolute;
+  left: 1480px;
+  top: 134px;
+  margin: 0;
+  font-family: "Tungsten", "VAL Title", "Oswald Variable", sans-serif;
+  font-size: 60px;
+  font-weight: 700;
+  line-height: 1;
+  text-transform: uppercase;
+  color: var(--val-accent, rgb(227 122 155));
+}
+
+.tabs {
+  position: absolute;
+  left: 1394px;
+  top: 238px;
+  display: flex;
+  gap: 8px;
+}
+
+.tab {
+  display: grid;
+  grid-template-rows: 67px 33px;
+  width: 78px;
+  padding: 0;
+  font: inherit;
+  color: #ffffff;
+}
+
+.tab > :first-child {
+  justify-self: center;
+  align-self: center;
+}
+
+.tabIcon {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+  opacity: 0.75;
+  transition: opacity 120ms ease;
+}
+
+.tab b {
+  display: grid;
+  place-items: center;
+  font-size: 15px;
+  font-weight: 700;
+  background: rgb(255 255 255 / 0.12);
+  transition: background 120ms ease;
+}
+
+.tab:hover .tabIcon {
+  opacity: 1;
+}
+
+.tab:hover b {
+  background: rgb(255 255 255 / 0.18);
+}
+
+.tab[data-active] {
+  background: rgb(255 255 255 / 0.15);
+  box-shadow: inset 0 3px 0 rgb(236 232 225 / 0.9);
+}
+
+.tab[data-active] .tabIcon {
+  opacity: 1;
+}
+
+.tab[data-active] b {
+  background: rgb(255 255 255 / 0.25);
+}
+
+.tabRule {
+  position: absolute;
+  left: 1394px;
+  top: 355px;
+  width: 424px;
+  height: 1px;
+  background: rgb(236 232 225 / 0.35);
+}
+
+.text {
+  position: absolute;
+  left: 1394px;
+  top: 376px;
+  width: 426px;
+  font-size: 13.5px;
+  line-height: 18px;
+  letter-spacing: 0.3px;
+}
+
+.bio {
+  margin: 0 0 22px;
+  color: var(--val-accent, rgb(227 122 155));
+}
+
+.text h3 {
+  margin: 0 0 6px;
+  font-size: 14.5px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+.text p {
+  margin: 0;
+}

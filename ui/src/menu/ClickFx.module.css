@@ -1,0 +1,111 @@
+/* Click bursts: every particle is placed at the click and moved by its animation. */
+.layer {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  overflow: hidden;
+  pointer-events: none;
+  --fx-accent: var(--accent);
+}
+
+.layer > span {
+  position: absolute;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+.ring,
+.thinRing,
+.fatRing,
+.shield {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.ring {
+  box-shadow: 0 0 0 1.5px var(--fx-accent);
+}
+
+.thinRing {
+  box-shadow: 0 0 0 0.6px color-mix(in oklch, var(--fx-accent) 80%, white);
+}
+
+.fatRing {
+  box-shadow: 0 0 0 2.5px #ffffff, 0 0 6px 2px rgb(80 160 255 / 0.6);
+}
+
+.shield {
+  background: radial-gradient(circle, transparent 55%, rgb(111 212 255 / 0.35) 70%, transparent 72%);
+  box-shadow: 0 0 6px 1px rgb(111 212 255 / 0.5);
+}
+
+/* VALORANT shards: thin slanted slivers. */
+.shard {
+  width: 4px;
+  height: 13px;
+  background: var(--fx-accent);
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+
+.tick {
+  width: 1px;
+  height: 8px;
+  background: #ecebbd;
+}
+
+.spark {
+  width: 6px;
+  height: 2px;
+  border-radius: 1px;
+  background: linear-gradient(to right, #fff6c8, #ffb000);
+  box-shadow: 0 0 4px #ffb000;
+}
+
+.pixelSpark {
+  width: 3px;
+  height: 3px;
+  background: #ffb000;
+}
+
+.star {
+  width: 20px;
+  height: 20px;
+  background: #fbe925;
+  clip-path: polygon(50% 0, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+  filter: drop-shadow(0 0 3px rgb(255 255 255 / 0.8));
+}
+
+.glyph {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  line-height: 1;
+  color: var(--fx-accent);
+  text-shadow: 0 0 6px var(--fx-accent);
+}
+
+/* Minecraft block-break crumbs: little dirt and stone squares, no smoothing. */
+.crumb {
+  width: 6px;
+  height: 6px;
+  background: #866043;
+  box-shadow: inset -2px -2px 0 #5d4330;
+}
+
+.crumb:nth-child(3n) {
+  background: #7f7f7f;
+  box-shadow: inset -2px -2px 0 #5a5a5a;
+}
+
+.crumb:nth-child(4n) {
+  background: #5c9a3a;
+  box-shadow: inset -2px -2px 0 #3f6f27;
+}
+
+.drop {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgb(255 255 255 / 0.55), rgb(255 255 255 / 0) 70%);
+  filter: blur(2px);
+}

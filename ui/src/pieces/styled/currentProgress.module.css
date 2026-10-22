@@ -1,0 +1,419 @@
+/* VALORANT (current client) Progress and mode-select pieces. */
+.page {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2.6fr);
+  gap: 34px;
+  width: 100%;
+  height: 100%;
+  font-family: var(--font-din);
+  color: #ece8e1;
+}
+
+.heading {
+  margin: 0 0 10px;
+  font-family: "Tungsten", "VAL Title", "Oswald Variable", "Bahnschrift Condensed", sans-serif;
+  font-size: 34px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.2px;
+  text-transform: uppercase;
+}
+
+.missions,
+.pass {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.box,
+.passBox {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--val-panel, rgb(18 30 46 / 0.82));
+  box-shadow: inset 0 0 0 2px rgb(236 232 225 / 0.22);
+}
+
+.boxHead {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 14px 30px;
+  font-size: 14px;
+  letter-spacing: 0.3px;
+  background: rgb(255 255 255 / 0.06);
+}
+
+.boxHead b {
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.boxHead span {
+  color: rgb(236 232 225 / 0.6);
+}
+
+.boxHead[data-weekly] {
+  margin-top: auto;
+  background: none;
+}
+
+.boxNote {
+  margin: 10px 30px;
+  font-size: 13px;
+  color: rgb(236 232 225 / 0.55);
+}
+
+.checkpoints {
+  display: flex;
+  justify-content: space-around;
+  margin: 50px 22px 0;
+}
+
+.checkpoint {
+  display: grid;
+  place-items: center;
+  width: 62px;
+  height: 62px;
+  box-shadow: inset 0 0 0 2px rgb(236 232 225 / 0.35);
+  transform: rotate(45deg);
+}
+
+.checkpoint b {
+  font-family: "Tungsten", "VAL Title", "Oswald Variable", sans-serif;
+  font-size: 44px;
+  transform: rotate(-45deg);
+}
+
+.checkpoint[data-done] {
+  background: var(--val-accent, #2ee6c5);
+  color: #0f1923;
+}
+
+.checkpointBars {
+  display: flex;
+  gap: 14px;
+  margin: 90px 34px 0;
+}
+
+.checkpointBars i {
+  flex: 1;
+  height: 2px;
+  background: rgb(236 232 225 / 0.25);
+}
+
+.weekly {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 6px 30px 10px;
+}
+
+.weeklyMark {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  box-shadow: inset 0 0 0 2px rgb(236 232 225 / 0.4);
+  transform: rotate(45deg);
+}
+
+.weeklyBody {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 15px;
+}
+
+.bar,
+.tierBar {
+  position: relative;
+  display: block;
+  height: 4px;
+  background: rgb(236 232 225 / 0.2);
+}
+
+.bar i,
+.tierBar i {
+  position: absolute;
+  inset: 0 auto 0 0;
+  background: #ece8e1;
+}
+
+.weeklyNumbers {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+}
+
+.weeklyNumbers b {
+  font-weight: 500;
+  color: var(--val-accent, #2ee6c5);
+}
+
+.passBox {
+  flex: 0 0 64%;
+  padding: 24px 22px;
+  overflow: hidden;
+}
+
+.season {
+  font-size: 20px;
+  text-transform: uppercase;
+}
+
+.ends {
+  font-size: 18px;
+  text-transform: uppercase;
+}
+
+.ends b {
+  font-weight: 600;
+  color: #f0c86a;
+}
+
+.reward {
+  position: absolute;
+  right: 18%;
+  top: 22%;
+  width: 52%;
+  height: 52%;
+  object-fit: contain;
+  filter: drop-shadow(0 12px 18px rgb(0 0 0 / 0.5));
+}
+
+.premium {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: auto;
+  font-size: 15px;
+}
+
+.premium svg {
+  color: #f0c86a;
+}
+
+.rewardName {
+  font-size: 30px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.tierRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: min(400px, 40%);
+  margin-top: 10px;
+  font-size: 14px;
+  text-transform: uppercase;
+}
+
+.xpLeft {
+  margin-left: auto;
+  text-transform: none;
+  color: var(--val-accent, #2ee6c5);
+}
+
+.tierBar {
+  width: min(400px, 40%);
+  margin: 8px 0 0 34px;
+}
+
+.upgrade {
+  position: absolute;
+  right: 22px;
+  bottom: 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  min-width: 280px;
+  padding: 10px 20px;
+  font: inherit;
+  color: #0f1923;
+  background: #ece8e1;
+  outline: 1px solid #ece8e1;
+  outline-offset: 5px;
+}
+
+.upgrade span {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 18px;
+}
+
+.upgrade small {
+  font-size: 13px;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+}
+
+.pass .heading:nth-of-type(2) {
+  margin-top: 28px;
+}
+
+.objectives {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.objective {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 130px 0 20px;
+  background: linear-gradient(120deg, rgb(26 32 46 / 0.92), rgb(30 44 72 / 0.9));
+  box-shadow: inset 0 0 0 2px rgb(236 232 225 / 0.22);
+}
+
+.objective b {
+  font-size: 18px;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.objective small {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  text-transform: uppercase;
+  color: #f0c86a;
+}
+
+.objective:not([data-locked]) small {
+  color: var(--val-accent, #2ee6c5);
+}
+
+.segments {
+  display: flex;
+  gap: 4px;
+  width: 156px;
+}
+
+.segments i {
+  flex: 1;
+  height: 4px;
+  background: rgb(236 232 225 / 0.3);
+}
+
+.segments i[data-on] {
+  background: #ece8e1;
+}
+
+.objectiveIcon {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  display: grid;
+  place-items: center;
+  width: 98px;
+  height: 98px;
+  font-size: 11px;
+  text-transform: uppercase;
+  color: #ece8e1;
+  background: rgb(10 16 24 / 0.6);
+  box-shadow: inset 0 0 0 2px rgb(236 232 225 / 0.5);
+  transform: translateY(-50%);
+}
+
+.objectiveIcon[data-free] {
+  background: linear-gradient(135deg, #c7313f 0 30%, #e8e8ea 30%);
+  color: #2b2b2b;
+  align-items: end;
+  padding-bottom: 8px;
+}
+
+/* ---- mode select ---- */
+.modes {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  width: 100%;
+  height: 100%;
+  font-family: var(--font-din);
+  color: #ece8e1;
+}
+
+.modesTitle {
+  margin: 0;
+  font-family: "Tungsten", "VAL Title", "Oswald Variable", "Bahnschrift Condensed", sans-serif;
+  font-size: 44px;
+  font-weight: 700;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.modeGrid {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  grid-auto-rows: clamp(140px, 24vh, 260px);
+  align-content: start;
+  gap: 12px;
+  overflow-y: auto;
+}
+
+.modeTile {
+  position: relative;
+  overflow: hidden;
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.15);
+}
+
+.modeTile[data-active] {
+  outline: 2px solid var(--val-accent, #ece8e1);
+  outline-offset: 3px;
+}
+
+.modeImage,
+.modeEmpty {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 400ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.modeEmpty {
+  display: block;
+  background: linear-gradient(160deg, #3b4652, #18212b);
+}
+
+.modeTile:hover:not(:disabled) .modeImage {
+  transform: scale(1.06);
+}
+
+.modeShade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 40%, rgb(10 16 24 / 0.88));
+}
+
+.modeName {
+  position: absolute;
+  left: 14px;
+  bottom: 10px;
+  font-family: "Tungsten", "VAL Title", "Oswald Variable", "Bahnschrift Condensed", sans-serif;
+  font-size: 30px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #ffffff;
+}
+
+.modesEmpty {
+  color: rgb(236 232 225 / 0.6);
+}

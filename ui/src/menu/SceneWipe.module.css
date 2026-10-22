@@ -1,0 +1,38 @@
+.band {
+  position: absolute;
+  inset: 0 -20%;
+  z-index: 40;
+  pointer-events: none;
+  opacity: 0;
+  background: linear-gradient(90deg,
+      transparent 0%,
+      color-mix(in oklch, var(--accent) 85%, transparent) 42%,
+      var(--accent) 50%,
+      color-mix(in oklch, var(--accent) 85%, transparent) 58%,
+      transparent 100%);
+  mix-blend-mode: screen;
+  transform: translateX(-120%) skewX(-18deg);
+}
+
+/* Two panels that meet over the old screen and part over the new one. Parked off screen. */
+.shutter {
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 40;
+  height: 50%;
+  pointer-events: none;
+  opacity: 0;
+  background: var(--accent);
+  box-shadow: 0 0 0 1px rgb(0 0 0 / 0.3);
+}
+
+.shutterTop {
+  top: 0;
+  transform: translateY(-100%);
+}
+
+.shutterBottom {
+  bottom: 0;
+  transform: translateY(100%);
+}

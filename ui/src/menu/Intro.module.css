@@ -1,0 +1,583 @@
+/* Launch intros, one per style. The overlay fades out at the end; each style's pieces animate
+   on their own clocks inside it. */
+.intro {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background: #000000;
+  transition: opacity 450ms var(--ease-standard);
+}
+
+.intro[data-out] {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.intro > div {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  align-content: center;
+}
+
+.skipHint {
+  position: absolute;
+  right: 28px;
+  bottom: 22px;
+  z-index: 2;
+  font-family: var(--font-body, "Inter Variable", sans-serif);
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: rgb(255 255 255 / 0.35);
+  animation: fadeIn 600ms 900ms both;
+}
+
+/* ---- VALORANT (modern): two red slashes cut across, the name punches in. ---- */
+.valorant {
+  background: radial-gradient(70% 60% at 50% 50%, #1a0d12, #0a0a0e 70%);
+}
+
+.slashA,
+.slashB {
+  position: absolute;
+  left: -20%;
+  width: 140%;
+  height: 16vh;
+  background: var(--accent);
+  transform: skewY(-12deg) translateX(-110%);
+}
+
+.slashA {
+  top: 34%;
+  animation: slash 900ms cubic-bezier(0.7, 0, 0.2, 1) 80ms both;
+}
+
+.slashB {
+  top: 52%;
+  height: 3vh;
+  background: #ece8e1;
+  animation: slash 900ms cubic-bezier(0.7, 0, 0.2, 1) 220ms both;
+}
+
+.valorantTitle {
+  position: relative;
+  font-family: var(--font-display);
+  font-size: clamp(56px, 11vw, 168px);
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: #ece8e1;
+  text-shadow: 0 0 40px rgb(255 70 85 / 0.45);
+  animation: punch 700ms cubic-bezier(0.2, 1.4, 0.4, 1) 650ms both, glitch 1600ms steps(1) 1300ms;
+}
+
+.valorantSub {
+  position: relative;
+  margin-top: 8px;
+  font-family: var(--font-display);
+  font-size: 15px;
+  letter-spacing: 0.5em;
+  text-transform: uppercase;
+  color: rgb(236 232 225 / 0.7);
+  animation: fadeUp 600ms var(--ease-decelerate) 1100ms both;
+}
+
+@keyframes slash {
+  0% {
+    transform: skewY(-12deg) translateX(-110%);
+  }
+  55% {
+    transform: skewY(-12deg) translateX(0);
+  }
+  100% {
+    transform: skewY(-12deg) translateX(110%);
+  }
+}
+
+@keyframes punch {
+  from {
+    opacity: 0;
+    transform: scale(1.6);
+    filter: blur(12px);
+  }
+}
+
+@keyframes glitch {
+  0%,
+  100% {
+    transform: none;
+    clip-path: none;
+  }
+  8% {
+    transform: translate(-6px, 0);
+    clip-path: inset(10% 0 55% 0);
+  }
+  12% {
+    transform: translate(5px, 0);
+    clip-path: inset(60% 0 8% 0);
+  }
+  16% {
+    transform: none;
+    clip-path: none;
+  }
+}
+
+/* ---- VALORANT Beta: hairlines draw across the dark teal, the tag types in. ---- */
+.beta {
+  background: #0c1315;
+}
+
+.betaLineH,
+.betaLineV {
+  position: absolute;
+  background: rgb(255 255 255 / 0.35);
+}
+
+.betaLineH {
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  transform-origin: left;
+  animation: drawX 900ms var(--ease-decelerate) both;
+}
+
+.betaLineV {
+  left: 50%;
+  top: 0;
+  width: 1px;
+  height: 100%;
+  transform-origin: top;
+  animation: drawY 900ms var(--ease-decelerate) 200ms both;
+}
+
+.betaTag {
+  position: relative;
+  padding: 4px 10px;
+  font-family: var(--font-display);
+  font-size: 13px;
+  letter-spacing: 0.4em;
+  color: #0c1315;
+  background: #ecebbd;
+  animation: fadeIn 300ms 800ms both;
+}
+
+.betaTitle {
+  position: relative;
+  margin-top: 18px;
+  padding: 0 24px;
+  font-family: var(--font-display);
+  font-size: clamp(48px, 8vw, 120px);
+  font-weight: 600;
+  letter-spacing: 0.25em;
+  color: #eef1f0;
+  background: #0c1315;
+  animation: tracking 1200ms var(--ease-decelerate) 600ms both;
+}
+
+@keyframes drawX {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+@keyframes drawY {
+  from {
+    transform: scaleY(0);
+  }
+}
+
+@keyframes tracking {
+  from {
+    opacity: 0;
+    letter-spacing: 0.9em;
+  }
+}
+
+/* ---- CS:GO / CS2: a light sweep over slate, the name, a loading bar. ---- */
+.counter {
+  background: radial-gradient(80% 70% at 50% 40%, #3b4651, #161b20 75%);
+}
+
+.counter[data-cs2] {
+  background: radial-gradient(80% 70% at 50% 40%, #1d2228, #050607 75%);
+}
+
+.counterSweep {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, transparent 35%, rgb(255 255 255 / 0.14) 50%, transparent 65%);
+  transform: translateX(-100%);
+  animation: sweep 1400ms var(--ease-standard) 200ms both;
+}
+
+.counterTitle {
+  position: relative;
+  font-family: "Oswald Variable", var(--font-display);
+  font-size: clamp(54px, 9vw, 140px);
+  font-weight: 700;
+  font-style: italic;
+  letter-spacing: 0.04em;
+  color: #ffffff;
+  text-shadow: 0 4px 0 rgb(0 0 0 / 0.35);
+  animation: fadeUp 700ms var(--ease-decelerate) 150ms both;
+}
+
+.counter[data-cs2] .counterTitle {
+  font-style: normal;
+  letter-spacing: 0.12em;
+}
+
+.counterBar {
+  position: relative;
+  width: min(420px, 60vw);
+  height: 4px;
+  margin-top: 20px;
+  background: rgb(255 255 255 / 0.12);
+}
+
+.counterBar > span {
+  position: absolute;
+  inset: 0;
+  background: #de9b35;
+  transform-origin: left;
+  animation: drawX 1900ms cubic-bezier(0.4, 0, 0.2, 1) 200ms both;
+}
+
+.counter[data-cs2] .counterBar > span {
+  background: #ffffff;
+}
+
+.counterSub {
+  position: relative;
+  margin-top: 10px;
+  font-family: "Oswald Variable", var(--font-display);
+  font-size: 13px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgb(255 255 255 / 0.55);
+}
+
+@keyframes sweep {
+  to {
+    transform: translateX(100%);
+  }
+}
+
+/* ---- CS 1.6: the olive VGUI loading box, blocks filling one by one. ---- */
+.vgui {
+  background: #000000;
+}
+
+.vguiBox {
+  position: relative;
+  width: min(560px, 80vw);
+  font-family: Tahoma, Verdana, sans-serif;
+  color: #dedfd6;
+  background: #4c5844;
+  box-shadow: inset 1px 1px 0 #8c9284, inset -1px -1px 0 #292c21;
+  animation: popIn 160ms steps(2) 250ms both;
+}
+
+.vguiTitle {
+  padding: 8px 12px;
+  font-size: 15px;
+  font-weight: 700;
+  color: #ffffff;
+  background: #3e4637;
+}
+
+.vguiBody {
+  display: grid;
+  gap: 10px;
+  padding: 18px 16px 20px;
+  font-size: 14px;
+}
+
+.vguiBar {
+  display: flex;
+  gap: 3px;
+  padding: 3px;
+  background: #3e4637;
+  box-shadow: inset 1px 1px 0 #292c21, inset -1px -1px 0 #8c9284;
+}
+
+.vguiBar > span {
+  flex: 1;
+  height: 16px;
+  background: #c4b550;
+  animation: fadeIn 1ms steps(1) both;
+  animation-delay: calc(400ms + var(--i) * 80ms);
+}
+
+/* ---- Terminal: a BIOS-style boot log, line by line, on a CRT glow. ---- */
+.intro > .boot {
+  justify-items: start;
+  align-content: start;
+  gap: 6px;
+  padding: 7vh 8vw;
+  font-family: var(--font-mono);
+  font-size: clamp(13px, 1.4vw, 18px);
+  color: var(--accent);
+  text-shadow: 0 0 8px color-mix(in oklch, var(--accent) 70%, transparent);
+  background:
+    repeating-linear-gradient(to bottom, rgb(0 0 0 / 0) 0 2px, rgb(0 0 0 / 0.28) 2px 3px),
+    radial-gradient(90% 80% at 50% 50%, #031207, #000000 80%);
+}
+
+.boot > span {
+  white-space: pre;
+  animation: fadeIn 1ms steps(1) both;
+  animation-delay: calc(120ms + var(--i) * 250ms);
+}
+
+.boot > span:last-child {
+  animation:
+    fadeIn 1ms steps(1) both,
+    blink 600ms steps(1) infinite;
+  animation-delay: calc(120ms + var(--i) * 250ms), 2200ms;
+}
+
+/* ---- Fortnite: a blue burst of rays, the name bounces in yellow. ---- */
+.fortnite {
+  background: radial-gradient(60% 60% at 50% 50%, #3d7bff, #1a3ac4 55%, #0b1a6e);
+}
+
+.fnRays {
+  position: absolute;
+  inset: -50%;
+  background: repeating-conic-gradient(from 0deg, rgb(255 255 255 / 0.1) 0 6deg, transparent 6deg 18deg);
+  animation: spin 9s linear both;
+}
+
+.fnTitle {
+  position: relative;
+  font-family: "Oswald Variable", var(--font-display);
+  font-size: clamp(64px, 12vw, 180px);
+  font-weight: 700;
+  font-style: italic;
+  color: #fbe925;
+  -webkit-text-stroke: 3px #121212;
+  text-shadow: 0 8px 0 #121212;
+  transform: skewX(-6deg);
+  animation: bounceIn 900ms cubic-bezier(0.2, 1.6, 0.4, 1) 200ms both;
+}
+
+.fnSub {
+  position: relative;
+  margin-top: 6px;
+  font-family: "Oswald Variable", var(--font-display);
+  font-size: 22px;
+  font-weight: 700;
+  font-style: italic;
+  letter-spacing: 0.1em;
+  color: #ffffff;
+  animation: fadeUp 500ms var(--ease-decelerate) 800ms both;
+}
+
+@keyframes bounceIn {
+  from {
+    opacity: 0;
+    transform: skewX(-6deg) scale(0.2) rotate(-8deg);
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(90deg);
+  }
+}
+
+/* ---- Minecraft: the red studio splash, white pixel type and a white load bar. ---- */
+.mojang {
+  background: #ef323d;
+}
+
+.mojangTitle {
+  font-family: "Pixelify Sans Variable", monospace;
+  font-size: clamp(48px, 8vw, 120px);
+  font-weight: 700;
+  color: #ffffff;
+  animation: fadeIn 300ms steps(3) 200ms both;
+}
+
+.mojangStudio {
+  margin-top: 4px;
+  font-family: "Pixelify Sans Variable", monospace;
+  font-size: clamp(18px, 2.4vw, 32px);
+  letter-spacing: 0.4em;
+  color: #ffffff;
+  animation: fadeIn 300ms steps(3) 500ms both;
+}
+
+.mojangBar {
+  position: relative;
+  width: min(520px, 60vw);
+  height: 14px;
+  margin-top: 36px;
+  border: 2px solid #ffffff;
+}
+
+.mojangBar > span {
+  position: absolute;
+  inset: 2px;
+  background: #ffffff;
+  transform-origin: left;
+  animation: drawX 2000ms steps(16) 300ms both;
+}
+
+/* ---- Halo: a glowing ring sweeps round, the name rises out of the light. ---- */
+.halo {
+  background: radial-gradient(70% 60% at 50% 55%, #0e3456, #020812 75%);
+}
+
+.haloRing {
+  position: absolute;
+  width: min(70vw, 900px);
+  aspect-ratio: 4;
+  border-radius: 50%;
+  border: 3px solid rgb(180 235 255 / 0.9);
+  box-shadow:
+    0 0 24px 4px rgb(111 212 255 / 0.6),
+    inset 0 0 24px 4px rgb(111 212 255 / 0.4);
+  transform: rotate(-8deg);
+  clip-path: inset(0 100% 0 0);
+  animation: ringSweep 1400ms cubic-bezier(0.5, 0, 0.2, 1) 150ms both;
+}
+
+.haloTitle {
+  position: relative;
+  font-family: var(--font-display);
+  font-size: clamp(54px, 9vw, 140px);
+  font-weight: 300;
+  letter-spacing: 0.3em;
+  color: #e8f8ff;
+  text-shadow: 0 0 30px rgb(111 212 255 / 0.8);
+  animation: rise 1200ms var(--ease-decelerate) 700ms both;
+}
+
+.haloSub {
+  position: relative;
+  margin-top: 10px;
+  font-family: var(--font-display);
+  font-size: 15px;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: rgb(232 248 255 / 0.6);
+  animation: fadeIn 700ms 1300ms both;
+}
+
+@keyframes ringSweep {
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+    filter: blur(8px);
+  }
+}
+
+/* ---- VALORANT 2022: a red bar wipes up, tall condensed name. ---- */
+.valnow {
+  background: #0f1923;
+}
+
+.valnowBar {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--accent);
+  transform-origin: bottom;
+  animation: barWipe 1100ms cubic-bezier(0.7, 0, 0.2, 1) both;
+}
+
+.valnowTitle {
+  position: relative;
+  font-family: "Oswald Variable", var(--font-display);
+  font-size: clamp(72px, 14vw, 220px);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: #ece8e1;
+  animation: fadeUp 700ms var(--ease-decelerate) 700ms both;
+}
+
+.currentMark {
+  position: relative;
+  color: #ece8e1;
+  animation: fadeUp 700ms var(--ease-decelerate) 700ms both;
+}
+
+@keyframes barWipe {
+  0% {
+    transform: scaleY(0);
+  }
+  50% {
+    transform: scaleY(1);
+    transform-origin: bottom;
+  }
+  51% {
+    transform-origin: top;
+  }
+  100% {
+    transform: scaleY(0);
+    transform-origin: top;
+  }
+}
+
+/* ---- shared ---- */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+}
+
+@keyframes popIn {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+/* Pip-Boy: the same boot scroll in the unit's bigger mono, centred on its green screen. */
+.intro > .boot[data-pip] {
+  justify-items: center;
+  align-content: center;
+  gap: 4px;
+  font-family: "Share Tech Mono", var(--font-mono);
+  font-size: clamp(16px, 1.7vw, 24px);
+  text-transform: uppercase;
+  background:
+    repeating-linear-gradient(to bottom, rgb(0 0 0 / 0) 0 2px, rgb(0 0 0 / 0.3) 2px 3px),
+    radial-gradient(80% 70% at 50% 50%, #06301a, #010804 80%);
+}
+
+.boot[data-pip] > span {
+  animation-delay: calc(80ms + var(--i) * 160ms);
+}
+
+.boot[data-pip] > span:last-child {
+  animation-delay: calc(80ms + var(--i) * 160ms), 1700ms;
+}

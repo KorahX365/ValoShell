@@ -1,0 +1,11 @@
+/* The style's own mouse pointer (menu/cursors.ts sets --cursor and --cursor-hot). Off while
+   the Studio is open, whose handles need their resize and move cursors. */
+:root[data-cursor]:not([data-studio]),
+:root[data-cursor]:not([data-studio]) body *:not(input, textarea, [contenteditable="true"]) {
+  cursor: var(--cursor) !important;
+}
+
+:root[data-cursor]:not([data-studio]) body :is(button, a[href], [role="button"], [role="radio"], [role="tab"], [role="option"], [role="switch"], [role="menuitem"], select, summary, label):not(:disabled),
+:root[data-cursor]:not([data-studio]) body :is(button, a[href], [role="button"], [role="radio"], [role="tab"], [role="option"], [role="switch"], [role="menuitem"]):not(:disabled) * {
+  cursor: var(--cursor-hot) !important;
+}

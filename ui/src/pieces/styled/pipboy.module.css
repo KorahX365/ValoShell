@@ -1,0 +1,247 @@
+/* Pip-Boy: one phosphor green on near-black, uppercase mono type with a faint glow, thin 2px
+   rules, and solid green fills (with dark type) for anything selected. */
+
+.stat {
+  container-type: size;
+  position: relative;
+  display: grid;
+  grid-template-rows: auto 1fr auto auto;
+  justify-items: center;
+  gap: 1.6cqh;
+  width: 100%;
+  height: 100%;
+  color: var(--accent);
+}
+
+.subTabs {
+  display: flex;
+  gap: 28px;
+  font-size: 19px;
+  letter-spacing: 1px;
+  opacity: 0.55;
+}
+
+.subTabs > [data-on] {
+  opacity: 1;
+  color: var(--accent);
+  text-shadow: 0 0 8px rgb(26 255 128 / 0.6);
+}
+
+.subTabs > :not([data-on]) {
+  opacity: 0.6;
+}
+
+.figure {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+}
+
+/* The agent as the screen draws a figure: one green, the shading crushed, the dark parts
+   dropped out so only the lit lines glow. */
+.figureArt {
+  position: absolute;
+  left: 50%;
+  top: 6%;
+  height: 94%;
+  transform: translateX(-50%);
+  object-fit: contain;
+  filter: grayscale(1) contrast(1.5) brightness(1.15) sepia(1) hue-rotate(78deg) saturate(4.5) drop-shadow(0 0 8px rgb(26 255 128 / 0.3));
+  mix-blend-mode: screen;
+  -webkit-mask-image: linear-gradient(to bottom, #000 72%, transparent 98%);
+  mask-image: linear-gradient(to bottom, #000 72%, transparent 98%);
+}
+
+.limb {
+  position: absolute;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  width: 15cqw;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.limb[data-limb="head"] {
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+}
+
+.limb[data-limb="armL"] {
+  left: 8%;
+  top: 30%;
+}
+
+.limb[data-limb="armR"] {
+  right: 8%;
+  top: 30%;
+}
+
+.limb[data-limb="legL"] {
+  left: 14%;
+  top: 72%;
+}
+
+.limb[data-limb="legR"] {
+  right: 14%;
+  top: 72%;
+}
+
+.limb[data-empty] {
+  opacity: 0.4;
+}
+
+.limbName {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.limbBar {
+  width: 100%;
+  height: 10px;
+  box-shadow: inset 0 0 0 2px var(--accent);
+}
+
+.limbBar > i {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+  box-shadow: 0 0 8px rgb(26 255 128 / 0.5);
+}
+
+.readouts {
+  display: flex;
+  gap: 10px;
+}
+
+.readout {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 120px;
+  height: 46px;
+  padding: 0 14px;
+  justify-content: center;
+  font-size: 18px;
+  background: rgb(26 255 128 / 0.12);
+}
+
+.readout b {
+  font-weight: 400;
+}
+
+.readout small {
+  font-size: 13px;
+  opacity: 0.75;
+}
+
+.readout img {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+}
+
+.caption {
+  margin: 0;
+  font-size: 20px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* ---- key hints ---- */
+
+.hints {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  width: 100%;
+  height: 100%;
+}
+
+.hint {
+  height: 100%;
+  max-height: 44px;
+  padding: 0 16px;
+  font-size: 18px;
+  letter-spacing: 1px;
+  color: var(--accent);
+  background: rgb(26 255 128 / 0.1);
+  transition: none;
+}
+
+.hint kbd {
+  font: inherit;
+  opacity: 0.7;
+}
+
+.hint:hover:not(:disabled),
+.hint:focus-visible {
+  color: var(--ground);
+  text-shadow: none;
+  background: var(--accent);
+  outline: none;
+}
+
+.hint:hover kbd {
+  opacity: 1;
+}
+
+.hint:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+/* ---- HP / LEVEL / AP status bar ---- */
+
+.bar {
+  display: flex;
+  gap: 6px;
+  width: 100%;
+  height: 100%;
+  font-size: 20px;
+  letter-spacing: 1px;
+  color: var(--accent);
+}
+
+.barCell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex: 1;
+  padding: 0 16px;
+  white-space: nowrap;
+  background: rgb(26 255 128 / 0.14);
+}
+
+.barCell b {
+  font-weight: 400;
+}
+
+.barCell[data-off] {
+  opacity: 0.45;
+}
+
+.barLevel {
+  flex: 2.4;
+}
+
+.levelTrack {
+  flex: 1;
+  height: 16px;
+  box-shadow: inset 0 0 0 2px var(--accent);
+}
+
+.levelTrack > i {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+}

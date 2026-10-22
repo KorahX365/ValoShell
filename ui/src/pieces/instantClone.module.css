@@ -1,0 +1,137 @@
+/* ---- InstantClone stream delay: a status line over a row of preset buttons and a cut ---- */
+.widget {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--space-3);
+  width: 100%;
+  height: 100%;
+  padding: var(--space-3) var(--space-4);
+  background: var(--panel);
+  box-shadow: inset 0 0 0 1px var(--border-default);
+  clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 0 100%);
+  transition: box-shadow var(--dur-fast) var(--ease-standard);
+}
+
+.widget[data-phase="active"] {
+  box-shadow: inset 0 0 0 1px var(--accent-border);
+}
+
+.widget[data-editing] button {
+  pointer-events: none;
+}
+
+.status,
+.offline {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+.offline {
+  flex-direction: column;
+  gap: 2px;
+}
+
+.dot {
+  flex: none;
+  align-self: center;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--text-3);
+  transition: background var(--dur-fast) var(--ease-standard);
+}
+
+.widget[data-phase="preparing"] .dot,
+.widget[data-phase="ready"] .dot {
+  background: var(--text-1);
+  animation: breathe 1.2s var(--ease-standard) infinite alternate;
+}
+
+.widget[data-phase="active"] .dot {
+  background: var(--accent);
+}
+
+.title {
+  font-family: var(--font-display);
+  font-stretch: calc(112% * var(--stretch, 1));
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-1);
+}
+
+.delay {
+  margin-left: auto;
+  font-weight: 600;
+  color: var(--text-2);
+}
+
+.widget[data-phase="active"] .delay {
+  color: var(--accent);
+}
+
+.hint,
+.error {
+  font-size: var(--text-caption);
+  color: var(--text-3);
+}
+
+.error {
+  color: var(--enemy);
+}
+
+.actions {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.preset,
+.cut {
+  flex: 1;
+  min-width: 0;
+  padding: 6px 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-2);
+  background: transparent;
+  box-shadow: inset 0 0 0 1px var(--border-default);
+  transition: color var(--dur-fast) var(--ease-standard), box-shadow var(--dur-fast) var(--ease-standard);
+}
+
+.preset:hover,
+.cut:hover:not(:disabled) {
+  color: var(--text-1);
+  box-shadow: inset 0 0 0 1px var(--border-strong);
+}
+
+.preset[data-on] {
+  color: var(--on-accent);
+  background: var(--accent);
+  box-shadow: none;
+}
+
+.cut {
+  color: var(--enemy);
+}
+
+.cut:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+@keyframes breathe {
+  to {
+    opacity: 0.35;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .widget[data-phase] .dot {
+    animation: none;
+  }
+}

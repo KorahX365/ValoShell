@@ -1,0 +1,60 @@
+{
+  "FeaturedBundle": {
+    "Bundle": {
+      "ID": "bundle-1",
+      "DataAssetID": "asset-1",
+      "CurrencyID": "85ad13f7-3d1b-5128-9eb2-7cd8ee0b5741",
+      "Items": [
+        {
+          "Item": { "ItemTypeID": "e7c63390-eda7-46e0-bb7a-a6abdacd2433", "ItemID": "skin-level-1", "Amount": 1 },
+          "BasePrice": 2675,
+          "CurrencyID": "85ad13f7-3d1b-5128-9eb2-7cd8ee0b5741",
+          "DiscountPercent": 0.33,
+          "DiscountedPrice": 1793,
+          "IsPromoItem": false
+        }
+      ],
+      "ItemOffers": [
+        {
+          "BundleItemOfferID": "boffer-1",
+          "Offer": { "OfferID": "o-1", "IsDirectPurchase": true, "StartDate": "2026-10-14T00:00:00Z",
+                     "Cost": { "85ad13f7-3d1b-5128-9eb2-7cd8ee0b5741": 2675 },
+                     "Rewards": [{ "ItemTypeID": "e7c63390-eda7-46e0-bb7a-a6abdacd2433", "ItemID": "skin-level-1", "Quantity": 1 }] },
+          "DiscountPercent": 0.33,
+          "DiscountedCost": { "85ad13f7-3d1b-5128-9eb2-7cd8ee0b5741": 1793 }
+        }
+      ],
+      "TotalBaseCost": { "85ad13f7-3d1b-5128-9eb2-7cd8ee0b5741": 8000 },
+      "TotalDiscountedCost": { "85ad13f7-3d1b-5128-9eb2-7cd8ee0b5741": 5360 },
+      "TotalDiscountPercent": 0.33,
+      "DurationRemainingInSeconds": 1000000,
+      "WholesaleOnly": false
+    },
+    "Bundles": [{ "ID": "bundle-1", "DurationRemainingInSeconds": 1000000 }],
+    "BundleRemainingDurationInSeconds": 1000000
+  },
+  "SkinsPanelLayout": {
+    "SingleItemOffers": ["skin-level-a", "skin-level-b"],
+    "SingleItemStoreOffers": [
+      { "OfferID": "skin-level-a", "IsDirectPurchase": true, "StartDate": "2026-10-19T00:00:00Z",
+        "Cost": { "85ad13f7-3d1b-5128-9eb2-7cd8ee0b5741": 1775 },
+        "Rewards": [{ "ItemTypeID": "e7c63390-eda7-46e0-bb7a-a6abdacd2433", "ItemID": "skin-level-a", "Quantity": 1 }] }
+    ],
+    "SingleItemOffersRemainingDurationInSeconds": 40000
+  },
+  "UpgradeCurrencyStore": {
+    "UpgradeCurrencyOffers": [{ "OfferID": "up-1", "StorefrontItemID": "sf-1", "Offer": { "OfferID": "up-1" }, "DiscountedPercent": 0 }]
+  },
+  "AccessoryStore": {
+    "AccessoryStoreOffers": [{ "Offer": { "OfferID": "acc-1" }, "ContractID": "contract-1" }],
+    "AccessoryStoreRemainingDurationInSeconds": 500000,
+    "StorefrontID": "sf-acc"
+  },
+  "BonusStore": {
+    "BonusStoreOffers": [
+      { "BonusOfferID": "bonus-1", "Offer": { "OfferID": "o-bonus" }, "DiscountPercent": 30,
+        "DiscountCosts": { "85ad13f7-3d1b-5128-9eb2-7cd8ee0b5741": 1200 }, "IsSeen": false }
+    ],
+    "BonusStoreRemainingDurationInSeconds": 900000
+  }
+}

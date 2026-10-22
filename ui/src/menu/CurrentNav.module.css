@@ -1,0 +1,179 @@
+/* Current VALORANT client top bar, measured on 1920 x 1080 screenshots: 48 px tall; the PLAY
+   block 235 px wide with a 45 px slant, its V at (32, 13) and the word at x 74; seven 79 px
+   icon tabs from x 229; on the right mail, the three currencies and the cog, ending 12 px in. */
+.bar {
+  position: absolute;
+  inset: 0 0 auto 0;
+  z-index: 30;
+  height: 48px;
+  display: flex;
+  align-items: stretch;
+  font-family: var(--font-din);
+  background: linear-gradient(to bottom, rgb(14 22 30 / 0.94), rgb(14 22 30 / 0.84));
+  box-shadow: 0 1px 0 rgb(255 255 255 / 0.04);
+}
+
+.play {
+  position: relative;
+  flex: none;
+  display: block;
+  width: 235px;
+  text-decoration: none;
+  color: #ebe9e5;
+  background: #ff4655;
+  clip-path: polygon(0 0, 100% 0, calc(100% - 45px) 100%, 0 100%);
+  transition: background 160ms ease, color 160ms ease;
+}
+
+.play:hover {
+  background: #ff5a68;
+}
+
+.play[data-active] {
+  color: #0f1923;
+  background: #ebe9e5;
+}
+
+.playLogo {
+  position: absolute;
+  left: 32px;
+  top: 12.5px;
+  color: #0f1923;
+}
+
+.playLabel {
+  position: absolute;
+  left: 74px;
+  top: 5px;
+  font-family: "Tungsten", "VAL Title", "Oswald Variable", "Bahnschrift Condensed", sans-serif;
+  font-size: 41px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+}
+
+.icons {
+  display: flex;
+  align-items: stretch;
+  margin-left: -6.5px;
+}
+
+.icon {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 79px;
+  color: #ebe9e5;
+  text-decoration: none;
+  transition: color 120ms ease;
+}
+
+.icon::before {
+  content: "";
+  position: absolute;
+  inset: 6px -4.5px 4px;
+  background: #e9e8e4;
+  clip-path: polygon(32px 0, 100% 0, calc(100% - 32px) 100%, 0 100%);
+  opacity: 0;
+  transition: opacity 140ms ease;
+}
+
+.icon > svg {
+  position: relative;
+}
+
+/* Hovered, the client tints the glyph and its caption in the same teal. */
+.icon:not([data-active]):hover {
+  color: #22ffc5;
+}
+
+.icon[data-active] {
+  color: #0f1923;
+}
+
+.icon[data-active]::before {
+  opacity: 1;
+}
+
+/* The caption hangs straight off the bar's bottom edge: a 24 px tab slanted like the PLAY block
+   (21 px over its height), no arrow. Measured on a 1920 x 1080 client screenshot. */
+.tip {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  z-index: 2;
+  /* 23 + 1 px: the caps sit 7 px under the tab's top edge and 8 px over its bottom. */
+  height: 23px;
+  padding: 1px 30px 0;
+  font-size: 13.5px;
+  font-weight: 400;
+  line-height: 24px;
+  white-space: nowrap;
+  text-transform: uppercase;
+  color: #22ffc5;
+  background: #0f1923;
+  clip-path: polygon(21px 0, 100% 0, calc(100% - 21px) 100%, 0 100%);
+  transform: translateX(-50%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 120ms ease;
+}
+
+.icon:hover .tip {
+  opacity: 1;
+}
+
+.liveDot {
+  position: relative;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #ff4655;
+  box-shadow: 0 0 10px #ff4655;
+}
+
+.side {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-left: auto;
+  padding: 1px 12px 0 0;
+  color: #ece8e1;
+}
+
+.sideButton {
+  display: grid;
+  place-items: center;
+  padding: 0;
+  margin-right: -2px;
+  color: #ece8e1;
+  opacity: 0.92;
+}
+
+.sideButton:hover,
+.gear:hover {
+  opacity: 1;
+  filter: drop-shadow(0 0 6px rgb(255 255 255 / 0.35));
+}
+
+/* Coin box 28 px, 3 px to its number, 17 px on to the next box (15 after the mail). */
+.coin {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  margin-left: 17px;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0.2px;
+  font-variant-numeric: tabular-nums;
+  color: #e6e9ec;
+}
+
+.gear {
+  display: grid;
+  place-items: center;
+  padding: 0;
+  margin-left: 18px;
+  color: #ece8e1;
+}

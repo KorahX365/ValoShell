@@ -1,0 +1,602 @@
+/* VALORANT (current client) Career page, in the client's pixels on its 1860 x 1032 stage
+   (screen y minus the 48 px bar). Colours sampled from the client. */
+.page {
+  position: absolute;
+  inset: 0;
+  font-family: var(--font-din);
+  color: #ece8e1;
+}
+
+.crumb {
+  position: absolute;
+  left: 60px;
+  top: 12px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 14px;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: rgb(236 232 225 / 0.8);
+}
+
+.crumb i {
+  width: 8px;
+  height: 9px;
+  background: rgb(236 232 225 / 0.5);
+  clip-path: polygon(0 0, 100% 50%, 0 100%);
+}
+
+/* ---- sub-tabs ---- */
+.tabs {
+  position: absolute;
+  left: 249px;
+  top: 4px;
+  display: flex;
+}
+
+.tab {
+  position: relative;
+  height: 32px;
+  padding: 0 24.5px;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  color: rgb(236 232 225 / 0.92);
+}
+
+.tab:hover {
+  color: #ffffff;
+}
+
+.tab::after {
+  content: "";
+  position: absolute;
+  left: -13px;
+  right: 12px;
+  bottom: -1px;
+  height: 2px;
+  background: #ece8e1;
+  opacity: 0;
+  transition: opacity 140ms ease;
+}
+
+.tab[data-active] {
+  color: #ffffff;
+}
+
+.tab[data-active]::after {
+  opacity: 1;
+}
+
+/* ---- identity ---- */
+.identity {
+  position: absolute;
+  left: 82px;
+  top: 76px;
+  display: grid;
+  grid-template-columns: 51px auto auto;
+  grid-template-rows: 26px 24px;
+  column-gap: 15px;
+  align-items: center;
+}
+
+.identityCard {
+  grid-row: 1 / 3;
+  display: block;
+  width: 51px;
+  height: 50px;
+  object-fit: cover;
+  background: #2a3540;
+  box-shadow: 0 0 0 1px rgb(236 232 225 / 0.5);
+}
+
+.identity b {
+  font-size: 19px;
+  font-weight: 600;
+  letter-spacing: 0.6px;
+}
+
+.copy {
+  justify-self: start;
+  display: grid;
+  place-items: center;
+  margin-left: -6px;
+  padding: 0;
+  color: #ece8e1;
+}
+
+.identity small {
+  grid-column: 2 / 4;
+  font-size: 14px;
+  letter-spacing: 0.4px;
+  color: rgb(236 232 225 / 0.6);
+}
+
+/* ---- section headings ---- */
+.heading {
+  position: absolute;
+  top: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 27px;
+  margin: 0;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  border-bottom: 1px solid rgb(236 232 225 / 0.2);
+}
+
+.heading[data-col="1"] {
+  left: 80px;
+  width: 387px;
+}
+
+.heading[data-col="2"] {
+  left: 500px;
+  width: 860px;
+}
+
+.heading[data-col="3"] {
+  left: 1392px;
+  width: 388px;
+}
+
+.heading[data-col="premier"] {
+  left: 1392px;
+  top: 729px;
+  width: 388px;
+}
+
+.heading svg {
+  opacity: 0.7;
+}
+
+/* ---- agent mastery ---- */
+.mastery {
+  position: absolute;
+  left: 84px;
+  top: 188px;
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+  width: 380px;
+}
+
+.masteryCard {
+  position: relative;
+  height: 240px;
+  overflow: hidden;
+  background: linear-gradient(to bottom, color-mix(in srgb, var(--tint) 45%, #0f1923), color-mix(in srgb, var(--tint) 70%, #0f1923));
+  box-shadow: inset 0 0 0 1px rgb(236 232 225 / 0.18);
+}
+
+.masteryArt {
+  position: absolute;
+  inset: 0 0 66px;
+  overflow: hidden;
+  border-bottom: 3px solid color-mix(in srgb, var(--tint) 60%, #ffb36b);
+}
+
+.masteryPortrait {
+  position: absolute;
+  left: 50%;
+  top: -18%;
+  width: 150%;
+  max-width: none;
+  transform: translateX(-50%);
+}
+
+.masteryCard footer {
+  position: absolute;
+  inset: auto 0 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 66px;
+  padding-left: 7px;
+  background: color-mix(in srgb, var(--tint) 40%, #1a2733);
+}
+
+.masteryLevel {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 50px;
+  height: 50px;
+  font-size: 14px;
+}
+
+.masteryLevel svg {
+  position: absolute;
+  inset: 0;
+}
+
+.masteryLevel svg path {
+  fill: rgb(15 25 35 / 0.5);
+  stroke: #f2c06b;
+  stroke-width: 2.4;
+}
+
+.masteryLevel svg path:first-child {
+  fill: none;
+}
+
+.masteryLevel b {
+  position: relative;
+  font-weight: 400;
+}
+
+.masteryCard h4 {
+  margin: 0;
+  font-family: "Tungsten", "VAL Title", "Oswald Variable", sans-serif;
+  font-size: 34px;
+  font-weight: 700;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+/* ---- match history ---- */
+.history {
+  position: absolute;
+  left: 500px;
+  top: 182px;
+  width: 858px;
+  height: 752px;
+  background: rgb(15 25 35 / 0.35);
+}
+
+.historyTools {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 50px;
+  padding: 0 26px 0 8px;
+}
+
+.modeFilter {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 295px;
+  height: 32px;
+  background: rgb(46 58 72);
+}
+
+.modeFilter select {
+  width: 100%;
+  height: 100%;
+  padding: 0 40px 0 22px;
+  border: none;
+  appearance: none;
+  font: inherit;
+  font-size: 11.5px;
+  text-transform: uppercase;
+  color: #ece8e1;
+  background: transparent;
+  cursor: pointer;
+}
+
+.modeFilter select:focus {
+  outline: none;
+}
+
+.modeFilter option {
+  color: #ece8e1;
+  background: #1b2733;
+}
+
+.modeFilter svg {
+  position: absolute;
+  right: 22px;
+  pointer-events: none;
+}
+
+.replays {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  font-size: 11px;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+}
+
+.replays i {
+  width: 42px;
+  height: 18px;
+  background: rgb(236 232 225 / 0.15);
+  clip-path: polygon(0 50%, 18% 0, 82% 0, 100% 50%, 82% 100%, 18% 100%);
+  box-shadow: inset 0 0 0 2px #ece8e1;
+}
+
+.rows {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  height: 700px;
+  padding: 3px 20px 0 5px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #ece8e1 transparent;
+}
+
+.empty {
+  padding: 30px;
+  font-size: 14px;
+  color: rgb(236 232 225 / 0.6);
+}
+
+.row {
+  --tone: var(--val-loss, rgb(255 70 85));
+  position: relative;
+  flex: none;
+  display: grid;
+  grid-template-columns: 70px 110px 240px 1fr 120px 31px;
+  align-items: center;
+  height: 75px;
+  padding-right: 4px;
+  overflow: hidden;
+  background: linear-gradient(to right, color-mix(in srgb, var(--tone) 34%, #142030), color-mix(in srgb, var(--tone) 22%, #142030) 70%, color-mix(in srgb, var(--tone) 14%, #142030));
+  box-shadow: inset 3px 0 0 var(--tone);
+}
+
+.row[data-won] {
+  --tone: var(--val-win, rgb(36 200 170));
+}
+
+.row:hover {
+  filter: brightness(1.12);
+}
+
+.rowMap {
+  position: absolute;
+  right: 40px;
+  top: 0;
+  width: 260px;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.3;
+  mask-image: linear-gradient(to right, transparent, black 60%);
+  pointer-events: none;
+}
+
+.rowAgent {
+  display: block;
+  width: 62px;
+  height: 75px;
+  margin-left: 8px;
+  object-fit: cover;
+  object-position: 50% 20%;
+}
+
+.rowMode {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  color: #ece8e1;
+}
+
+.rowRank {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+}
+
+.rowMode small {
+  font-size: 13px;
+  color: color-mix(in srgb, var(--tone) 70%, white);
+}
+
+.rowStats {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.rowStats small {
+  font-size: 12.5px;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  color: rgb(236 232 225 / 0.6);
+}
+
+.rowStats b {
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 1px;
+}
+
+.rowStats em {
+  width: fit-content;
+  padding: 1px 4px;
+  font-size: 9px;
+  font-style: normal;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  color: rgb(236 232 225 / 0.6);
+  background: rgb(0 0 0 / 0.2);
+}
+
+.rowResult {
+  position: absolute;
+  left: 417px;
+  top: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  transform: translate(-50%, -50%);
+}
+
+.rowResult b {
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--tone) 85%, white);
+}
+
+.rowResult small {
+  font-size: 13px;
+  letter-spacing: 1px;
+  color: rgb(236 232 225 / 0.75);
+}
+
+.rowMvp {
+  grid-column: 5;
+  position: relative;
+  justify-self: end;
+  max-width: 110px;
+  padding-right: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 18px;
+  letter-spacing: 0.4px;
+  text-align: right;
+  text-transform: uppercase;
+  color: var(--val-gold, rgb(236 196 108));
+}
+
+.rowDownload {
+  grid-column: 6;
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 31px;
+  height: 62px;
+  padding: 0;
+  color: #ece8e1;
+  background: rgb(15 25 35 / 0.55);
+  box-shadow: inset 0 0 0 1px rgb(236 232 225 / 0.6);
+}
+
+.rowDownload:disabled {
+  opacity: 0.35;
+}
+
+/* ---- competitive rank ---- */
+.rank {
+  position: absolute;
+  left: 1396px;
+  top: 187px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 380px;
+  height: 530px;
+  overflow: hidden;
+  background: radial-gradient(ellipse at 50% 40%, rgb(30 90 80), rgb(14 50 48) 70%);
+  box-shadow: inset 0 0 0 1px rgb(236 232 225 / 0.18);
+}
+
+.rankFrame {
+  position: absolute;
+  inset: 70px 40px 60px;
+  border: solid rgb(236 232 225 / 0.08);
+  border-width: 0 2px;
+  clip-path: polygon(0 10%, 8% 0, 92% 0, 100% 10%, 100% 90%, 92% 100%, 8% 100%, 0 90%);
+}
+
+.rankIcon {
+  position: absolute;
+  left: 50%;
+  top: 140px;
+  width: 120px;
+  height: 120px;
+  transform: translateX(-50%);
+  object-fit: contain;
+  filter: drop-shadow(0 8px 20px rgb(0 0 0 / 0.4));
+}
+
+.rankName {
+  position: absolute;
+  top: 295px;
+  font-family: "Tungsten", "VAL Title", "Oswald Variable", sans-serif;
+  font-size: 46px;
+  font-weight: 700;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.rankBar {
+  position: absolute;
+  top: 354px;
+  width: 200px;
+  height: 3px;
+  background: rgb(236 232 225 / 0.25);
+}
+
+.rankBar i {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: var(--rr);
+  background: rgb(36 255 198);
+}
+
+.rankRr {
+  position: absolute;
+  top: 363px;
+  font-size: 13.5px;
+  letter-spacing: 0.6px;
+}
+
+.rankDash {
+  position: absolute;
+  left: 50%;
+  bottom: 58px;
+  width: 116px;
+  height: 2px;
+  background: linear-gradient(to right, #ece8e1 6px, transparent 6px 12px, rgb(236 232 225 / 0.4) 12px calc(100% - 12px), transparent calc(100% - 12px) calc(100% - 6px), #ece8e1 calc(100% - 6px));
+  transform: translateX(-50%);
+}
+
+/* ---- premier ---- */
+.premier {
+  position: absolute;
+  left: 1396px;
+  top: 765px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 380px;
+  height: 167px;
+  padding-left: 20px;
+  overflow: hidden;
+  background: linear-gradient(110deg, #1c1e22 55%, #2a2620);
+  box-shadow: inset 0 0 0 1px rgb(236 232 225 / 0.18);
+}
+
+.premier b {
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: 0.6px;
+}
+
+.premier small {
+  font-size: 13px;
+  color: rgb(236 232 225 / 0.5);
+}
+
+.premierMark {
+  position: absolute;
+  right: 26px;
+  top: 50%;
+  width: 104px;
+  height: 104px;
+  transform: translateY(-50%);
+}
+
+/* The battlepass view keeps the progress page where it sat on its own screen. */
+.pass {
+  position: absolute;
+  left: 4.85%;
+  top: 8%;
+  width: 90.3%;
+  height: 80%;
+}

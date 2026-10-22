@@ -1,0 +1,1074 @@
+/* VALORANT (current client) play-screen pieces. Colours are --val-* variables with the client's
+   values as fallbacks, so a colour prop in the inspector overrides one without touching CSS. */
+
+/* ---- featured banner ---- */
+.banner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* The art fills the corner down to the diagonal; the band runs along that edge. */
+.bannerArt {
+  position: absolute;
+  inset: 0;
+  /* Down to the stripe's line: x + y = 425 in the banner's 462 x 425 pixels. */
+  clip-path: polygon(0 0, 92% 0, 0 100%);
+  background: linear-gradient(135deg, rgb(30 30 30 / 0.6), transparent);
+}
+
+.bannerImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 20% 30%;
+}
+
+/* The featured art at the client's framing: the gun across the corner, the wolf plate by
+   the stripe (measured in the banner's own size, 461 x 425 on a 1080p screen). */
+.bannerFeatured {
+  position: absolute;
+  left: -25%;
+  top: -17.5%;
+  width: 229%;
+  max-width: none;
+}
+
+.bannerEmpty {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.bannerStripe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  fill: var(--val-stripe, var(--auto-stripe, #ff4655));
+}
+
+.corner {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  fill: var(--val-stripe, var(--auto-stripe, #ff4655));
+  pointer-events: none;
+}
+
+/* ---- mode card and party buttons ----
+   Measured on a 1920 x 1080 client: a 238 x 123 card inset 1 px, then 240 x 50 rows 5 px apart
+   (6 under the card), each with a 1 px warm-grey edge and a 3 px light bar inside it. */
+.mode {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 100%;
+  height: 100%;
+  font-family: var(--font-din);
+}
+
+.modeCard {
+  position: relative;
+  flex: none;
+  height: 123px;
+  margin: 0 1px 1px;
+  overflow: hidden;
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.1);
+}
+
+.modeImage,
+.modeEmpty {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 400ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.modeEmpty {
+  display: block;
+  background: linear-gradient(160deg, #3b4652, #18212b);
+}
+
+.modeCard:hover .modeImage {
+  transform: scale(1.05);
+}
+
+/* The mode's agent, cropped to a close-up like the client's card art. */
+.modeAgent {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: radial-gradient(circle at 70% 30%, #4a3a33, #1a1d22 75%);
+}
+
+.modeAgentBack {
+  position: absolute;
+  inset: -20% -10%;
+  width: 120%;
+  height: 140%;
+  object-fit: cover;
+  opacity: 0.18;
+  filter: grayscale(0.4);
+}
+
+.modeAgentFace {
+  position: absolute;
+  left: -40%;
+  top: -18%;
+  width: 190%;
+  max-width: none;
+  height: auto;
+  transition: transform 500ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.modeCard:hover .modeAgentFace {
+  transform: scale(1.04);
+}
+
+.modeShade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 45%, rgb(10 16 24 / 0.75));
+}
+
+.modeName {
+  position: absolute;
+  left: 11px;
+  bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-family: "Tungsten", "VAL Title", "Oswald Variable", "Bahnschrift Condensed", sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  color: #ffffff;
+  text-shadow: 0 1px 6px rgb(0 0 0 / 0.5);
+}
+
+.modeName svg {
+  flex: none;
+  margin-top: -2px;
+}
+
+/* The queue's own glyph from the asset tables, sized like the drawn ones it replaces. */
+.modeGlyph {
+  flex: none;
+  width: 22px;
+  height: 22px;
+  margin-top: -2px;
+  object-fit: contain;
+}
+
+/* The custom card's column is four rows longer; the client starts it 41 px higher (y 306). */
+.mode[data-custom] {
+  transform: translateY(-41px);
+}
+
+.modeButton {
+  position: relative;
+  flex: none;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 1px 17px 0 17px;
+  font: inherit;
+  font-size: 11px;
+  font-weight: 350;
+  font-stretch: 92%;
+  letter-spacing: 0.2px;
+  text-transform: uppercase;
+  text-align: left;
+  color: #ece8e1;
+  background: var(--val-button, #0f1923);
+  box-shadow: inset 0 0 0 1px rgb(52 51 50), inset 4px 0 0 var(--val-edge, #ece8e1);
+  transition: background 140ms ease;
+}
+
+/* The party-lock row is 2 px taller in the client, room for its knob. */
+.modeButton[data-size="toggle"] {
+  height: 52px;
+}
+
+.modeButton[data-size="short"] {
+  height: 30px;
+}
+
+.modeButton svg {
+  flex: none;
+}
+
+.modeButton:hover:not(:disabled) {
+  background: #1f2b36;
+}
+
+/* Greyed out like the client: flat grey, no light bar, the edge kept. */
+.modeButton:disabled {
+  color: rgb(236 232 225 / 0.3);
+  background: rgb(63 65 66);
+  box-shadow: inset 0 0 0 1px rgb(52 51 50);
+}
+
+.modeButton:disabled svg {
+  opacity: 0.45;
+}
+
+.toggle {
+  position: relative;
+  width: 52px;
+  height: 18px;
+  margin-right: 4px;
+}
+
+.toggle > svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.toggle > svg path {
+  fill: none;
+  stroke: #ece8e1;
+  stroke-width: 1.5;
+}
+
+/* The slate bar inside the outline, short of it by a dark gap like the client's. */
+.toggle > svg .toggleBar {
+  fill: rgb(66 84 94);
+  stroke: none;
+}
+
+.toggle[data-on] > svg .toggleBar {
+  fill: rgb(36 255 198 / 0.45);
+}
+
+.toggleKnob {
+  position: absolute;
+  left: -3px;
+  top: 50%;
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  color: #0f1923;
+  background: #ffffff;
+  transform: translateY(-50%);
+  transition: left 180ms ease;
+}
+
+.toggle[data-on] .toggleKnob {
+  left: calc(100% - 22px);
+}
+
+/* ---- daily bonuses and missions ----
+   Measured on the 1920 x 1080 client: text ends 13 px before the diamond's left point, 17 px
+   from its right point to the rule, 15 px from the rule to MISSIONS and 8 px from there to the
+   list icon. Whole-pixel line heights keep the 10 px caps crisp. */
+.dailies {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  font-family: var(--font-din);
+  color: var(--val-text, #ece8e1);
+}
+
+.dailyLabel,
+.missionLabel {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  font-size: 12.75px;
+  font-weight: 600;
+  line-height: 17px;
+  letter-spacing: 0.6px;
+  text-align: right;
+  text-transform: uppercase;
+}
+
+.dailyLabel {
+  max-width: 120px;
+}
+
+.dailyLabel b,
+.missionLabel b {
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+/* An open frame, 64 px point to point, with nothing filled inside: the streak number sits on
+   whatever is behind the bar. */
+.dailyDiamond {
+  flex: none;
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  margin: 0 17px 0 13px;
+}
+
+.dailyFrame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* 24 px tall with a 4 px stem: the client's numeral is lighter than a bold title. */
+.dailyDiamond b {
+  position: relative;
+  font-family: "Tungsten", "VAL Title", "Oswald Variable", sans-serif;
+  font-size: 33px;
+  font-weight: 500;
+  line-height: 1;
+  /* The client centres the stem, not the ink: the flag hangs 1 px left of the middle. */
+  transform: translateX(-1px);
+}
+
+.dailySep {
+  flex: none;
+  width: 1px;
+  height: 44px;
+  margin-right: 15px;
+  background: rgb(236 232 225 / 0.51);
+}
+
+.missionIcon {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  margin-left: 6px;
+  transform: translateY(-1px);
+}
+
+.missionIcon i {
+  width: 28px;
+  height: 5px;
+  background: rgb(106 121 129);
+}
+
+.missionIcon i:first-child {
+  background: linear-gradient(to right, #ece8e1 5px, rgb(110 125 135) 5px);
+}
+
+.missionIcon i:nth-child(2) {
+  height: 4px;
+  background: linear-gradient(to right, #ece8e1 2px, rgb(110 125 135) 2px);
+}
+
+/* ---- lineup ----
+   Measured on the 1920x1080 client: your banner 246 x 600 px; the side slots start 32 and 70 px
+   lower and all five end on one line. Colours sampled from the client. */
+.lineup {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  font-family: var(--font-din);
+}
+
+.slot {
+  position: absolute;
+  display: flex;
+}
+
+.slot[data-pos="outer"] {
+  top: 11.7%;
+  width: 23.3%;
+  height: 87.8%;
+  z-index: 1;
+}
+
+.slot[data-pos="inner"] {
+  top: 5.3%;
+  width: 23.3%;
+  height: 94.2%;
+  z-index: 2;
+}
+
+.slot[data-pos="center"] {
+  left: 37.7%;
+  top: 0;
+  width: 24.6%;
+  height: 100%;
+  z-index: 3;
+}
+
+.slot[data-pos="outer"][data-side="left"] {
+  left: 0;
+}
+
+.slot[data-pos="inner"][data-side="left"] {
+  left: 12.1%;
+}
+
+.slot[data-pos="inner"][data-side="right"] {
+  left: 64.6%;
+}
+
+.slot[data-pos="outer"][data-side="right"] {
+  left: 76.7%;
+}
+
+.empty {
+  position: relative;
+  flex: 1;
+  display: grid;
+  place-items: center;
+  /* Sampled: 14 24 32 under the edge, darkest (9 15 22) just under the middle. */
+  background: linear-gradient(to bottom, rgb(14 24 32 / 0.97), rgb(9 15 22 / 0.97) 45%, rgb(10 17 23 / 0.97));
+  clip-path: polygon(0 0, 100% 0, 100% 79.6%, 50% 100%, 0 79.6%);
+  box-shadow: inset 0 3px 0 var(--val-slotEdge, rgb(107 122 129));
+  transition: background 160ms ease;
+}
+
+.empty:hover:not(:disabled) {
+  background: linear-gradient(to bottom, rgb(22 36 46 / 0.96), rgb(14 24 32 / 0.96));
+}
+
+.emptyLines {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.emptyLines path {
+  fill: none;
+  stroke: rgb(170 186 190 / 0.32);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.emptyLines path:first-child {
+  stroke: rgb(170 186 190 / 0.45);
+}
+
+.plus {
+  position: relative;
+  display: grid;
+  place-items: center;
+  transition: transform 160ms ease;
+}
+
+/* The outer slots' marks sit 8 px further out than their slot's middle, as in the client. */
+.slot[data-pos="outer"][data-side="left"] .plus {
+  left: -8px;
+}
+
+.slot[data-pos="outer"][data-side="right"] .plus {
+  left: 8px;
+}
+
+.empty:hover:not(:disabled) .plus {
+  transform: scale(1.08);
+}
+
+.markHalo {
+  fill: rgb(8 14 20 / 0.4);
+}
+
+.markHairline {
+  fill: none;
+  stroke: rgb(236 232 225 / 0.12);
+  stroke-width: 1;
+}
+
+.markRing {
+  fill: rgb(15 25 35);
+  stroke: rgb(41 51 58);
+  stroke-width: 3;
+}
+
+.markPlus {
+  fill: none;
+  stroke: #ece8e1;
+  stroke-width: 3;
+}
+
+.empty:hover:not(:disabled) .markRing {
+  stroke: rgb(236 232 225 / 0.45);
+}
+
+.banner2 {
+  position: relative;
+  flex: 1;
+  overflow: visible;
+}
+
+.cardArt,
+.cardShade {
+  position: absolute;
+  inset: 0;
+  mask-image: linear-gradient(to bottom, black 78%, transparent 100%);
+}
+
+.cardArt {
+  background: var(--art) center top / cover no-repeat, linear-gradient(to bottom, #2a3540, #121a22);
+}
+
+/* The client's cream strip along the top of every banner. */
+.cardArt::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 7px;
+  background: var(--val-cardEdge, #e9e5dc);
+}
+
+.cardShade {
+  background: linear-gradient(to bottom, transparent 46%, rgb(8 14 20 / 0.35) 57%, rgb(8 14 20 / 0.5) 61%, rgb(8 14 20 / 0.62));
+}
+
+.cardLines {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.cardLines path {
+  fill: none;
+  stroke: rgb(236 232 225 / 0.16);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.level {
+  position: absolute;
+  left: 50%;
+  top: -9px;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 50px;
+  height: 25px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: 1px;
+  color: #ece8e1;
+  transform: translateX(-50%);
+}
+
+.level svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.levelBody {
+  fill: #2d2926;
+  stroke: #655f5d;
+  stroke-width: 2;
+  stroke-linejoin: round;
+}
+
+.levelBraceEdge,
+.levelBrace {
+  fill: none;
+  stroke-linecap: square;
+  stroke-linejoin: miter;
+}
+
+.levelBraceEdge {
+  stroke: #655f5d;
+  stroke-width: 4;
+}
+
+.levelBrace {
+  stroke: var(--val-cardEdge, #e9e5dc);
+  stroke-width: 2;
+}
+
+.level span {
+  position: relative;
+  margin-left: 1px;
+}
+
+.ping {
+  position: absolute;
+  right: 10px;
+  top: -24px;
+  display: flex;
+  align-items: flex-end;
+  gap: 1.5px;
+  height: 17px;
+}
+
+.ping i {
+  width: 4.5px;
+  background: rgb(236 232 225 / 0.2);
+}
+
+.ping i:nth-child(1) {
+  height: 30%;
+}
+
+.ping i:nth-child(2) {
+  height: 53%;
+}
+
+.ping i:nth-child(3) {
+  height: 76%;
+}
+
+.ping i:nth-child(4) {
+  height: 100%;
+}
+
+.ping i[data-on] {
+  background: var(--val-ping, rgb(57 245 193));
+}
+
+.kick {
+  position: absolute;
+  right: 6px;
+  top: 10px;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  color: #ece8e1;
+  background: rgb(10 16 22 / 0.7);
+  opacity: 0;
+  transition: opacity 120ms ease;
+}
+
+.banner2:hover .kick {
+  opacity: 1;
+}
+
+/* Text under the art, placed from the top like the client (your banner: READY at 58%). */
+.cardInfo {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 56%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.readyText {
+  height: 20px;
+  /* The word sits 6 px over its line, as in the client; the line itself doesn't move. */
+  margin-top: 5px;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 20px;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  color: rgb(236 232 225 / 0.6);
+}
+
+.readyText[data-ready] {
+  color: var(--val-ready, rgb(36 255 198));
+}
+
+.readyLine {
+  width: 100%;
+  height: 3px;
+  margin-top: 0;
+  background: rgb(236 232 225 / 0.3);
+}
+
+.readyLine[data-ready] {
+  background: var(--val-ready, rgb(36 255 198));
+}
+
+.cardName {
+  max-width: 92%;
+  margin-top: 13px;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 18px;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #ffffff;
+}
+
+.banner2[data-self] .cardName {
+  color: var(--val-gold, #f0cb74);
+}
+
+.cardTitle {
+  margin-top: 1px;
+  font-size: 11.5px;
+  line-height: 14px;
+  color: rgb(236 232 225 / 0.85);
+}
+
+.chevrons {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  width: calc(100% - 42px);
+  height: 65px;
+  margin-top: 24px;
+  color: #ffffff;
+}
+
+.chevrons i {
+  width: 42px;
+  height: 65px;
+  background: var(--val-gold, #e8c35f);
+}
+
+.chevrons i[data-side="l"] {
+  clip-path: polygon(0 0, 100% 65%, 100% 100%, 0 36%);
+}
+
+.chevrons i[data-side="r"] {
+  clip-path: polygon(100% 0, 100% 36%, 0 100%, 0 65%);
+}
+
+.banner2:not([data-self]) .chevrons i {
+  visibility: hidden;
+}
+
+.mute {
+  position: absolute;
+  left: 50%;
+  top: 44px;
+  transform: translateX(-50%);
+}
+
+.rank {
+  display: block;
+  width: 40px;
+  height: 40px;
+  margin-top: 4px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 6px rgb(0 0 0 / 0.5));
+}
+
+/* ---- FIND MATCH ---- */
+.find {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  width: 100%;
+  height: 100%;
+}
+
+.queueClock {
+  position: absolute;
+  bottom: calc(100% + 6px);
+  font-family: var(--font-din);
+  font-size: 14px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #ece8e1;
+}
+
+.findButton {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding: 4px;
+  container-type: size;
+  box-shadow: inset 0 0 0 1px var(--val-frame, rgb(236 232 225 / 0.9));
+}
+
+/* The frame's little ticks either side, like the client's. */
+.findButton::before,
+.findButton::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 5px;
+  height: 1px;
+  background: var(--val-frame, rgb(236 232 225 / 0.9));
+}
+
+.findButton::before {
+  right: 100%;
+}
+
+.findButton::after {
+  left: 100%;
+}
+
+.findButton span {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  font-family: "Tungsten", "VAL Title", "Oswald Variable", "Bahnschrift Condensed", sans-serif;
+  font-size: min(64cqh, 15cqw);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+  text-transform: uppercase;
+  color: var(--val-label, #fbe9e2);
+  background: var(--val-fill, #ff4655);
+  transition: background 140ms ease;
+}
+
+.findButton:hover:not(:disabled) span {
+  background: color-mix(in oklch, var(--val-fill, #ff4655) 85%, white);
+}
+
+.findButton[data-searching] span {
+  background: #2b3540;
+}
+
+.findButton:disabled span {
+  opacity: 0.55;
+}
+
+/* ---- news tiles ----
+   Measured on the client: a 319 px feature, two 159 px tiles and the 58 px patch notes bar,
+   5 px apart, each with a thin light frame; text sits 16 px in from the left. */
+.news {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 100%;
+  height: 100%;
+  font-family: var(--font-din);
+}
+
+.tile {
+  position: relative;
+  min-height: 0;
+  overflow: hidden;
+  text-decoration: none;
+  color: #ece8e1;
+  background: #1a2530;
+}
+
+/* The frame sits over the art so the picture never covers it. */
+.tile::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  box-shadow: inset 0 0 0 1px rgb(150 158 168 / 0.45);
+  pointer-events: none;
+  transition: box-shadow 140ms ease;
+}
+
+.tile:hover::after {
+  box-shadow: inset 0 0 0 1px rgb(236 232 225 / 0.8);
+}
+
+.tile[data-size="big"] {
+  flex: 319 1 0;
+}
+
+.tile[data-size="mid"] {
+  flex: 159 1 0;
+}
+
+.tileImage,
+.tileEmpty {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 400ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.tileEmpty {
+  display: block;
+  background: linear-gradient(160deg, #34404c, #151d25);
+}
+
+.tile:hover .tileImage {
+  transform: scale(1.04);
+}
+
+.tileShade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 45%, rgb(8 12 18 / 0.85));
+}
+
+.tileText {
+  position: absolute;
+  left: 16px;
+  right: 14px;
+  bottom: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.tileTitle {
+  font-family: "Tungsten", "VAL Title", "Oswald Variable", "Bahnschrift Condensed", sans-serif;
+  font-size: 31px;
+  font-weight: 700;
+  line-height: 1;
+  text-transform: uppercase;
+  color: #ece8e1;
+}
+
+.tileSub {
+  margin-top: 4px;
+  font-size: 13.5px;
+  line-height: 17.5px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.tileDesc {
+  margin-top: 2px;
+  font-size: 11.5px;
+  line-height: 13.5px;
+  letter-spacing: 0.2px;
+  color: rgb(236 232 225 / 0.9);
+}
+
+.tile[data-size="mid"] .tileText {
+  bottom: 14px;
+}
+
+/* The carousel's headline: two lines of bold caps above the dots. */
+.slideTitle {
+  margin-bottom: 18px;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 13.5px;
+  letter-spacing: 0.2px;
+  text-transform: uppercase;
+}
+
+.external {
+  margin-left: 4px;
+  vertical-align: -1px;
+}
+
+.dots {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 4px;
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+}
+
+.dot {
+  position: relative;
+  width: 10px;
+  height: 10px;
+  padding: 0;
+}
+
+.dot::before {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  border-radius: 1px;
+  background: #ece8e1;
+}
+
+/* The shown slide: a teal dot inside four corner ticks. */
+.dot[data-active]::before {
+  background: rgb(104 222 196);
+}
+
+.dot[data-active]::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  background:
+    linear-gradient(135deg, rgb(104 222 196) 0 2px, transparent 2px) top left / 3px 3px no-repeat,
+    linear-gradient(225deg, rgb(104 222 196) 0 2px, transparent 2px) top right / 3px 3px no-repeat,
+    linear-gradient(45deg, rgb(104 222 196) 0 2px, transparent 2px) bottom left / 3px 3px no-repeat,
+    linear-gradient(315deg, rgb(104 222 196) 0 2px, transparent 2px) bottom right / 3px 3px no-repeat;
+}
+
+.patch {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 3px;
+  height: 58px;
+  padding: 0 10px 0 13px;
+  font-size: 12px;
+  text-decoration: none;
+  color: #ece8e1;
+  background: rgb(15 25 35 / 0.9);
+  box-shadow: inset 3px 0 0 #ff4655, inset 0 0 0 1px rgb(150 158 168 / 0.45);
+}
+
+.patchTitle {
+  font-family: "Tungsten", "VAL Title", "Oswald Variable", "Bahnschrift Condensed", sans-serif;
+  font-size: 23px;
+  font-weight: 700;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+/* ---- party chat ---- */
+.chat {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  height: 100%;
+  padding: 0 8px 0 11px;
+  font-family: var(--font-din);
+  background: rgb(0 0 0 / 0.5);
+}
+
+.chatLabel {
+  flex: none;
+  font-size: 15px;
+  font-weight: 400;
+  letter-spacing: 0.3px;
+  color: rgb(143 139 163);
+}
+
+.chat input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  background: none;
+  font: inherit;
+  font-size: 15px;
+  color: #ece8e1;
+  user-select: text;
+}
+
+.chat input:focus {
+  outline: none;
+}
+
+.chatIcon {
+  flex: none;
+  width: 25px;
+  height: 25px;
+  color: #e4e2e6;
+}

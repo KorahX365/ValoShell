@@ -1,0 +1,48 @@
+{
+  "Enabled": true,
+  "EnabledMaps": ["/Game/Maps/Ascent/Ascent", "/Game/Maps/Triad/Triad"],
+  "EnabledModes": ["/Game/GameModes/Bomb/BombGameMode.BombGameMode_C"],
+  "Queues": [
+    {
+      "QueueID": "competitive",
+      "Enabled": true,
+      "TeamSize": 5,
+      "NumTeams": 2,
+      "MaxPartySize": 5,
+      "MinPartySize": 1,
+      "InvalidPartySizes": [4],
+      "MaxPartySizeHighSkill": 3,
+      "HighSkillTier": 21,
+      "MaxSkillTier": 27,
+      "Mode": "/Game/GameModes/Bomb/BombGameMode.BombGameMode_C",
+      "IsRanked": true,
+      "IsTournament": false,
+      "RequireRoster": false,
+      "Priority": 3,
+      "PartyMaxCompetitiveTierRange": 6,
+      "FullPartyMaxCompetitiveTierRange": 7,
+      "UseAccountLevelRequirement": true,
+      "MinimumAccountLevelRequired": 20,
+      "GameRules": {
+        "AllowGameModifiers": "false",
+        "IsOvertimeWinByTwo": "true",
+        "PlayOutAllRounds": "false",
+        "SkipMatchHistory": "false",
+        "TournamentMode": "false"
+      },
+      "SupportedPlatformTypes": ["PC"],
+      "DisabledContent": [],
+      "MapWeights": ["Ascent:1", "Bind:1"],
+      "NextScheduleChangeSeconds": 0,
+      "TimeUntilNextScheduleChangeSeconds": 0
+    }
+  ],
+  "GamePodPingServiceInfo": {
+    "aresriot.aws-eus2-prod.eu-gp-madrid-1": {
+      "SecurityHash": 0,
+      "ObfuscatedIP": 0,
+      "PingProxyAddress": "10.0.0.1",
+      "PingProxyAddresses": ["10.0.0.1"]
+    }
+  }
+}

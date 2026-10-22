@@ -1,0 +1,40 @@
+{
+  "Subject": "fd3c3401-63b1-5edb-be98-fcf55f83fd72",
+  "Version": 524,
+  "Guns": [
+    {
+      "ID": "9c82e19d-4575-0200-1a81-3eacf00cf872",
+      "SkinID": "27f21d97-4c4b-bd1c-1f08-31830ab0be84",
+      "SkinLevelID": "1ab72e66-4da3-33a0-164f-908113e075a4",
+      "ChromaID": "19629ae1-4996-ae98-7742-24a240d41f99",
+      "CharmInstanceID": "54c0efe7-eb74-4296-b315-c3f30d618190",
+      "CharmID": "f2f07eae-4518-15eb-546b-018961e0dd60",
+      "CharmLevelID": "6c3b1a9e-4067-7ed6-fc6c-fea61e0a057c",
+      "Attachments": [],
+      "FutureGunField": { "keep": true }
+    },
+    {
+      "ID": "2f59173c-4bed-b6c3-2191-dea9b58be9c7",
+      "SkinID": "12cc9ed2-4430-d2fe-3064-f7a19b1ba7c7",
+      "SkinLevelID": "854938f3-4532-b300-d9a2-379d987d7469",
+      "ChromaID": "cac83e5c-47a1-3519-5420-1db1fdbc4892",
+      "Attachments": []
+    }
+  ],
+  "ActiveExpressions": [
+    { "TypeID": "d5f120f8-ff8c-4aac-92ea-f2b5acbe9475", "AssetID": "7e2ba2e8-4597-060a-b41e-81acedca414e", "Slot": 0 },
+    { "TypeID": "d5f120f8-ff8c-4aac-92ea-f2b5acbe9475", "AssetID": "fe86a4c5-4e92-324b-4c0d-a7a837d0d548" },
+    { "TypeID": "03a572de-4234-31ed-d344-ababa488f981", "AssetID": "7e85d0ab-4cc5-d869-5485-798aae7e8656" }
+  ],
+  "DynamicOptions": { "Experiment": "A" },
+  "Identity": {
+    "PlayerCardID": "1711d20d-4b1c-c64a-14be-d4ae58a457c6",
+    "PlayerTitleID": "48d870a2-4493-ebf8-7d6f-979be914dc43",
+    "AccountLevel": 120,
+    "PreferredLevelBorderID": "ebc736cd-4b6a-137b-e2b0-1486e31312c9",
+    "HideAccountLevel": false,
+    "FutureIdentityField": 7
+  },
+  "Incognito": false,
+  "FutureTopLevelField": "kept"
+}

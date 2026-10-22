@@ -1,0 +1,25 @@
+{
+  "Loadouts": [
+    {
+      "CharacterID": "add6443a-41bd-e414-f6ad-e58d267f4e95",
+      "Loadout": {
+        "Subject": "b47236a3-0000",
+        "Sprays": {
+          "SpraySelections": [{ "SocketID": "socket-pre", "SprayID": "spray-1", "LevelID": "level-1" }]
+        },
+        "Expressions": {
+          "AESSelections": [{ "SocketID": "socket-flex", "AssetID": "flex-1", "TypeID": "03a572de-4234-31ed-d344-ababa488f981" }]
+        },
+        "Items": {
+          "weapon-1": {
+            "ID": "weapon-1",
+            "TypeID": "e7c63390-eda7-46e0-bb7a-a6abdacd2433",
+            "Sockets": {
+              "socket-skin": { "ID": "socket-skin", "Item": { "ID": "skin-level-1", "TypeID": "e7c63390-eda7-46e0-bb7a-a6abdacd2433" } }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

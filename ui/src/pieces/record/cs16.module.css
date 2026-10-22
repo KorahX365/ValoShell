@@ -1,0 +1,275 @@
+/* CS 1.6 VGUI dialog: olive window, 1px bevels (light top-left, dark bottom-right; reversed
+   when sunken), Tahoma 12-13px, yellow selection, the segmented progress bar. */
+
+.window {
+  --olive: #4c5844;
+  --olive-dark: #3e4637;
+  --olive-list: #3e4637;
+  --light: #8c9284;
+  --dark: #292c21;
+  --ink: #dedfd6;
+  --muted: #a0aa95;
+  --pick: #958831;
+  --raised: inset 1px 1px 0 var(--light), inset -1px -1px 0 var(--dark);
+  --sunken: inset 1px 1px 0 var(--dark), inset -1px -1px 0 var(--light);
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  font-family: Tahoma, Verdana, sans-serif;
+  font-size: 13px;
+  color: var(--ink);
+  background: var(--olive);
+  box-shadow: var(--raised), 0 0 0 1px #000000;
+  animation: open 160ms steps(2, end) both;
+}
+
+.titleBar {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 10px 6px 12px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.close {
+  display: grid;
+  place-items: center;
+  width: 18px;
+  height: 16px;
+  font-size: 11px;
+  line-height: 1;
+  color: var(--ink);
+  box-shadow: var(--raised);
+}
+
+.close:active:not(:disabled) {
+  box-shadow: var(--sunken);
+}
+
+/* ---- property sheet ---- */
+
+.tabs {
+  flex: none;
+  display: flex;
+  gap: 2px;
+  padding: 4px 12px 0;
+}
+
+.tab {
+  position: relative;
+  min-width: 96px;
+  padding: 5px 14px 4px;
+  font-family: inherit;
+  font-size: 13px;
+  color: var(--muted);
+  background: var(--olive-dark);
+  box-shadow: inset 1px 1px 0 var(--light), inset -1px 0 0 var(--dark);
+}
+
+.tab[aria-selected="true"] {
+  z-index: 1;
+  margin-bottom: -1px;
+  padding-bottom: 5px;
+  color: var(--ink);
+  background: var(--olive);
+}
+
+.tab:hover {
+  color: var(--ink);
+}
+
+.sheet {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 0 12px;
+  padding: 14px;
+  box-shadow: var(--raised);
+}
+
+.groups {
+  flex: none;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0;
+  padding: 10px 12px 12px;
+  border: 1px solid;
+  border-color: var(--dark) var(--light) var(--light) var(--dark);
+}
+
+.group legend {
+  padding: 0 4px;
+  color: var(--ink);
+}
+
+.field {
+  display: grid;
+  grid-template-columns: 120px minmax(0, 1fr);
+  align-items: center;
+  gap: 10px;
+  color: var(--muted);
+}
+
+.box {
+  overflow: hidden;
+  padding: 3px 6px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: var(--ink);
+  background: var(--olive-list);
+  box-shadow: var(--sunken);
+}
+
+.hint {
+  padding-left: 130px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.hint b {
+  color: var(--ink);
+}
+
+/* The VGUI progress bar: separate blocks on a sunken track. */
+.progress {
+  display: grid;
+  grid-template-columns: repeat(20, 1fr);
+  gap: 2px;
+  height: 20px;
+  padding: 3px;
+  background: var(--olive-list);
+  box-shadow: var(--sunken);
+}
+
+.progress i {
+  background: transparent;
+}
+
+.progress i[data-lit] {
+  background: #c4b550;
+  box-shadow: inset -1px -1px 0 #8f8237;
+  animation: block 1ms steps(1, end) both;
+  animation-delay: calc(250ms + var(--stagger) * 45ms);
+}
+
+/* ---- list view ---- */
+
+.listView {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--olive-list);
+  box-shadow: var(--sunken);
+  padding: 1px;
+}
+
+.columns,
+.rowItem {
+  display: grid;
+  align-items: center;
+}
+
+.matchColumns {
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr) minmax(0, 0.7fr) minmax(0, 0.6fr) minmax(0, 1.6fr);
+}
+
+.mapColumns {
+  grid-template-columns: minmax(0, 1.6fr) repeat(4, minmax(0, 1fr));
+}
+
+.columns {
+  flex: none;
+}
+
+.columns span {
+  padding: 4px 8px;
+  white-space: nowrap;
+  background: var(--olive);
+  box-shadow: var(--raised);
+}
+
+.rows {
+  flex: 1;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  overflow: auto;
+  list-style: none;
+}
+
+.rowItem {
+  min-height: 24px;
+  cursor: default;
+  animation: block 1ms steps(1, end) both;
+  animation-delay: calc(120ms + var(--stagger, 0) * 40ms);
+}
+
+.rowItem span {
+  overflow: hidden;
+  padding: 3px 8px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.rowItem[data-picked] {
+  color: #ffffff;
+  background: var(--pick);
+}
+
+/* ---- buttons ---- */
+
+.footer {
+  flex: none;
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 12px;
+}
+
+.button {
+  min-width: 84px;
+  padding: 5px 14px;
+  font-family: inherit;
+  font-size: 13px;
+  color: var(--ink);
+  background: var(--olive);
+  box-shadow: var(--raised);
+}
+
+.button:hover:not(:disabled) {
+  color: #ffffff;
+}
+
+.button:active:not(:disabled) {
+  box-shadow: var(--sunken);
+}
+
+.button:disabled {
+  color: var(--muted);
+}
+
+/* VGUI never fades: things pop in on a frame. */
+@keyframes block {
+  from {
+    visibility: hidden;
+  }
+}
+
+@keyframes open {
+  from {
+    opacity: 0;
+  }
+}

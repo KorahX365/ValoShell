@@ -1,0 +1,205 @@
+/* The post-match screen in each style's own clothes, through the piece's data-part hooks:
+   CS 1.6's TAB scoreboard, CS:GO's team-tinted rows, Minecraft's red death screen, Fortnite's
+   Victory Royale, Halo's carnage report, a console printout. */
+
+/* ---- CS 1.6: the TAB scoreboard: black glass, team-coloured rows, plain Tahoma. ---- */
+:root[data-skin="cs16"] [data-part="post-match"] {
+  background: rgb(0 0 0 / 0.72);
+  box-shadow: inset 0 0 0 1px rgb(255 176 0 / 0.35);
+}
+
+:root[data-skin="cs16"] [data-part="post-match"] > :first-child {
+  opacity: 0.25;
+}
+
+:root[data-skin="cs16"] [data-part="post-match-banner"] h1 {
+  font-family: Tahoma, Verdana, sans-serif;
+  font-size: clamp(26px, 4cqi, 44px);
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: none;
+  color: #dedfd6;
+  text-shadow: 1px 1px 0 #000000;
+}
+
+:root[data-skin="cs16"] [data-part="scoreboard-row"] {
+  min-height: 26px;
+  background: transparent;
+  box-shadow: none;
+  color: #9fc6ff;
+}
+
+:root[data-skin="cs16"] [data-part="scoreboard-row"][data-side="enemy"] {
+  color: #ff8f7a;
+}
+
+:root[data-skin="cs16"] [data-part="scoreboard-row"] * {
+  color: inherit !important;
+}
+
+:root[data-skin="cs16"] [data-part="scoreboard-row"][data-self] {
+  background: rgb(255 255 255 / 0.12);
+}
+
+:root[data-skin="cs16"] [data-part="stat-tile"] {
+  background: rgb(76 88 68 / 0.85);
+  box-shadow: inset 1px 1px 0 #8c9284, inset -1px -1px 0 #292c21;
+  backdrop-filter: none;
+}
+
+/* ---- CS:GO: slate, blue and gold team tints, the result on a bright bar. ---- */
+:root[data-skin="csgo"] [data-part="post-match-banner"] h1 {
+  padding: 0.08em 0.3em;
+  font-style: italic;
+  color: #ffffff;
+  text-shadow: none;
+  background: linear-gradient(90deg, var(--result), transparent);
+}
+
+:root[data-skin="csgo"] [data-part="scoreboard-row"] {
+  background: linear-gradient(90deg, rgb(93 121 174 / 0.35), rgb(44 53 62 / 0.85) 60%);
+  box-shadow: none;
+}
+
+:root[data-skin="csgo"] [data-part="scoreboard-row"][data-side="enemy"] {
+  background: linear-gradient(90deg, rgb(222 155 53 / 0.3), rgb(44 53 62 / 0.85) 60%);
+}
+
+:root[data-skin="csgo"] [data-part="scoreboard-row"][data-self] {
+  box-shadow: inset 0 0 0 1px #de9b35;
+}
+
+:root[data-skin="cs2"] [data-part="post-match-banner"] h1 {
+  letter-spacing: 0.12em;
+  text-shadow: none;
+}
+
+/* ---- Minecraft: a red wash on defeat ("You Died!"), pixel type, slot-like tiles. ---- */
+:root[data-skin="minecraft"] [data-part="post-match"] {
+  background: rgb(0 0 0 / 0.5);
+}
+
+:root[data-skin="minecraft"] [data-part="post-match"][data-result="defeat"] {
+  background: linear-gradient(to bottom, rgb(120 0 0 / 0.6), rgb(60 0 0 / 0.75));
+}
+
+:root[data-skin="minecraft"] [data-part="post-match-banner"] h1 {
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  color: #ffffff;
+  text-shadow: 4px 4px 0 #3f3f3f;
+}
+
+/* The pixel face garbles digits when synthesised bold; keep figures at its real weight. */
+:root[data-skin="minecraft"] [data-part="post-match"] .num,
+:root[data-skin="minecraft"] [data-part="post-match"] b {
+  font-weight: 400;
+}
+
+:root[data-skin="minecraft"] [data-part="stat-tile"] {
+  background: #8b8b8b;
+  color: #ffffff;
+  box-shadow: inset 3px 3px 0 #373737, inset -3px -3px 0 #ffffff;
+  backdrop-filter: none;
+  text-shadow: 2px 2px 0 #3f3f3f;
+}
+
+:root[data-skin="minecraft"] [data-part="scoreboard-row"] {
+  background: rgb(0 0 0 / 0.55);
+  box-shadow: none;
+}
+
+:root[data-skin="minecraft"] [data-part="scoreboard-row"][data-self] {
+  box-shadow: inset 0 0 0 2px #ffffff;
+}
+
+/* ---- Fortnite: the yellow, outlined, italic Victory Royale and blue rarity tiles. ---- */
+:root[data-skin="fortnite"] [data-part="post-match-banner"] h1 {
+  font-family: "Oswald Variable", var(--font-display);
+  font-style: italic;
+  font-weight: 700;
+  letter-spacing: 0;
+  color: #fbe925;
+  -webkit-text-stroke: 2px #121212;
+  text-shadow: 0 6px 0 #121212;
+  transform: skewX(-6deg);
+}
+
+:root[data-skin="fortnite"] [data-part="post-match"][data-result="defeat"] [data-part="post-match-banner"] h1 {
+  color: #ffffff;
+}
+
+:root[data-skin="fortnite"] [data-part="stat-tile"] {
+  background: linear-gradient(to bottom, #3d7bff, #1a3ac4);
+  box-shadow: inset 0 -4px 0 rgb(0 0 0 / 0.3);
+  backdrop-filter: none;
+}
+
+:root[data-skin="fortnite"] [data-part="scoreboard-row"] {
+  background: rgb(10 22 90 / 0.8);
+  box-shadow: inset 4px 0 0 #3d7bff;
+}
+
+:root[data-skin="fortnite"] [data-part="scoreboard-row"][data-self] {
+  background: linear-gradient(90deg, rgb(251 233 37 / 0.35), rgb(10 22 90 / 0.8));
+  box-shadow: inset 4px 0 0 #fbe925;
+}
+
+/* ---- Halo 3: carnage report, frosted blue stripes with a bright top edge. ---- */
+:root[data-skin="halo"] [data-part="post-match-banner"] h1 {
+  font-weight: 300;
+  letter-spacing: 0.25em;
+  color: #e8f8ff;
+  text-shadow: 0 0 24px rgb(111 212 255 / 0.8);
+}
+
+:root[data-skin="halo"] [data-part="scoreboard-row"] {
+  background: rgb(14 52 92 / 0.55);
+  box-shadow: inset 0 1px 0 rgb(111 212 255 / 0.35);
+}
+
+:root[data-skin="halo"] [data-part="scoreboard-row"]:nth-child(even) {
+  background: rgb(18 60 104 / 0.75);
+}
+
+:root[data-skin="halo"] [data-part="scoreboard-row"][data-self] {
+  background: rgb(111 212 255 / 0.3);
+  box-shadow: inset 0 0 0 1px #6fd4ff;
+}
+
+:root[data-skin="halo"] [data-part="stat-tile"] {
+  background: rgb(14 52 92 / 0.55);
+  box-shadow: inset 0 1px 0 rgb(111 212 255 / 0.45);
+}
+
+/* ---- Terminal: a printout: dashed rules, no fills, the result as an exit code. ---- */
+:root[data-skin="terminal"] [data-part="post-match-banner"] h1 {
+  font-size: clamp(28px, 4.4cqi, 56px);
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: none;
+  text-shadow: 0 0 12px color-mix(in oklch, var(--result) 60%, transparent);
+}
+
+:root[data-skin="terminal"] [data-part="post-match"] > :first-child {
+  opacity: 0.12;
+  filter: grayscale(1);
+}
+
+:root[data-skin="terminal"] [data-part="scoreboard-row"],
+:root[data-skin="terminal"] [data-part="stat-tile"] {
+  background: transparent;
+  box-shadow: none;
+  border-bottom: 1px dashed rgb(var(--text-rgb) / 0.25);
+  backdrop-filter: none;
+}
+
+:root[data-skin="terminal"] [data-part="scoreboard-row"][data-self] {
+  color: #000000;
+  background: var(--accent);
+}
+
+:root[data-skin="terminal"] [data-part="scoreboard-row"][data-self] * {
+  color: #000000 !important;
+}

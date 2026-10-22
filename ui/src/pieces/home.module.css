@@ -1,0 +1,433 @@
+/* ---- lineup ---- */
+.lineup {
+  container-type: size;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* A percentage of this row: container units here would measure an outer container. */
+  column-gap: 2.4%;
+  width: 100%;
+  height: 100%;
+}
+
+/* Cut-corner cards: the angled silhouette is what makes it read as a game, not a web card.
+   Height follows the piece: as tall as it can be while five still fit across. */
+.card {
+  --card-cut: var(--cut, 18px);
+  position: relative;
+  flex: none;
+  /* Five across, the own card 8% larger: 5.08 card widths. */
+  height: min(100cqh, calc((100cqw - 4 * 2.4cqw) / 5.08 * 19 / 9));
+  /* Width comes from the height alone; long text (a monospace face) must not widen it. */
+  min-width: 0;
+  aspect-ratio: 9 / 19;
+  clip-path: polygon(var(--card-cut) 0, 100% 0, 100% calc(100% - var(--card-cut)), calc(100% - var(--card-cut)) 100%, 0 100%, 0 var(--card-cut));
+  background: #131318;
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.06);
+  animation: rise 560ms var(--ease-decelerate) both;
+  animation-delay: calc(var(--stagger) * 70ms);
+}
+
+.own {
+  height: min(100cqh, calc((100cqw - 4 * 2.4cqw) / 5.08 * 19 / 9 * 1.08));
+  border-bottom: 3px solid var(--accent);
+  background: #17171d;
+}
+
+.cardArt {
+  position: absolute;
+  inset: 0;
+  background-image: var(--card-art, none);
+  background-size: cover;
+  background-position: center top;
+  transition: transform 700ms var(--ease-decelerate);
+}
+
+.card:hover .cardArt {
+}
+
+.cardShade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgb(6 6 9 / 0.96) 0%, rgb(6 6 9 / 0.65) 30%, transparent 62%);
+}
+
+.cardInfo {
+  position: absolute;
+  inset: auto 0 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 7% 8% 9%;
+}
+
+.cardName {
+  font-family: var(--font-display);
+  font-stretch: calc(112% * var(--stretch, 1));
+  font-size: clamp(14px, 1.5vw, 22px);
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  line-height: 1.05;
+  text-transform: uppercase;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cardMeta {
+  display: flex;
+  gap: 8px;
+  font-size: 11px;
+  color: var(--text-2);
+}
+
+.ping {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.rank {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--rank);
+}
+
+.rank img {
+  width: 22px;
+  height: 22px;
+}
+
+.rankDot {
+  width: 10px;
+  height: 10px;
+  transform: rotate(45deg);
+  background: var(--rank);
+}
+
+.ready {
+  margin-top: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+
+.ready[data-ready] {
+  color: var(--positive);
+}
+
+.owner {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  color: #ffd76a;
+}
+
+.kick {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  color: var(--text-1);
+  background: rgb(0 0 0 / 0.6);
+  opacity: 0;
+  transform: translateX(-50%) scale(0.8);
+  transition: opacity var(--dur-fast) var(--ease-standard), transform var(--dur-fast) var(--ease-standard);
+}
+
+.card:hover .kick {
+  opacity: 1;
+  transform: translateX(-50%) scale(1);
+}
+
+.pulse {
+  width: 8px;
+  height: 8px;
+  margin-top: 6px;
+  border-radius: 50%;
+  background: var(--warning);
+}
+
+.invite {
+  background: rgb(255 255 255 / 0.025);
+  outline: 1px dashed var(--border-default);
+  outline-offset: -8px;
+  transition: background var(--dur-fast) var(--ease-standard), transform var(--dur-base) var(--ease-decelerate);
+}
+
+.invite:hover {
+  background: rgb(255 255 255 / 0.06);
+}
+
+.inviteButton {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  width: 100%;
+  height: 100%;
+  color: var(--text-3);
+  transition: color var(--dur-fast) var(--ease-standard);
+}
+
+.inviteButton:hover:not(:disabled) {
+  color: var(--text-1);
+}
+
+.inviteButton:disabled {
+  cursor: default;
+  opacity: 0.5;
+}
+
+.inviteForm {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--space-2);
+  height: 100%;
+  padding: var(--space-3);
+  animation: fadeIn var(--dur-base) var(--ease-decelerate);
+}
+
+.inviteInput {
+  width: 100%;
+  height: 34px;
+  padding: 0 var(--space-2);
+  border: none;
+  border-bottom: 2px solid var(--accent);
+  background: rgb(0 0 0 / 0.4);
+  color: var(--text-1);
+  user-select: text;
+}
+
+.inviteInput:focus {
+  outline: none;
+}
+
+.inviteSend {
+  height: 32px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: var(--on-accent);
+  background: var(--accent);
+}
+
+.inviteSend:disabled {
+  opacity: 0.4;
+}
+
+/* ---- play bar ---- */
+.playBar {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  gap: var(--space-2);
+  width: 100%;
+  height: 100%;
+  animation: rise 520ms var(--ease-decelerate) 200ms both;
+}
+
+.queueWrap {
+  position: relative;
+  display: flex;
+}
+
+.queue {
+  min-width: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding: var(--space-2) var(--space-5);
+  background: var(--panel);
+  box-shadow: inset 0 0 0 1px var(--border-default);
+  clip-path: polygon(14px 0, 100% 0, 100% 100%, 0 100%, 0 14px);
+  transition: box-shadow var(--dur-fast) var(--ease-standard);
+}
+
+.queue:hover:not(:disabled) {
+  box-shadow: inset 0 0 0 1px var(--border-strong);
+}
+
+.queue:disabled {
+  cursor: default;
+}
+
+.queueName {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-display);
+  font-stretch: calc(112% * var(--stretch, 1));
+  font-size: var(--text-h3);
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+.chevron {
+  display: inline-flex;
+  color: var(--text-3);
+  transition: transform var(--dur-base) var(--ease-standard);
+}
+
+.chevron[data-open] {
+  transform: rotate(180deg);
+}
+
+.picker {
+  position: absolute;
+  left: 0;
+  bottom: calc(100% + 8px);
+  z-index: 5;
+  min-width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 6px;
+  background: var(--panel-strong);
+  box-shadow: inset 0 0 0 1px var(--border-default), 0 20px 40px rgb(0 0 0 / 0.5);
+  animation: popUp 260ms cubic-bezier(0.34, 1.4, 0.64, 1) both;
+  transform-origin: bottom left;
+}
+
+.pickerItem {
+  padding: 9px 14px;
+  text-align: left;
+  font-family: var(--font-display);
+  font-stretch: calc(110% * var(--stretch, 1));
+  font-weight: 600;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--text-2);
+  transition: background var(--dur-instant) var(--ease-standard), color var(--dur-instant) var(--ease-standard);
+}
+
+.pickerItem:hover {
+  color: var(--text-1);
+  background: rgb(255 255 255 / 0.07);
+}
+
+.pickerItem[data-active] {
+  color: var(--accent);
+}
+
+/* clip-path also clips shadows, so the glow lives on an unclipped wrapper. */
+.playGlow {
+  flex: 1;
+  display: flex;
+  max-width: 380px;
+}
+
+.play {
+  flex: 1;
+  min-width: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  font-family: var(--font-display);
+  font-stretch: calc(118% * var(--stretch, 1));
+  font-size: clamp(20px, 2vw, 30px);
+  font-weight: 800;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  color: var(--on-play);
+  background: var(--play);
+  clip-path: polygon(0 0, calc(100% - var(--cut, 18px)) 0, 100% var(--cut, 18px), 100% 100%, 0 100%);
+  transition: background var(--dur-fast) var(--ease-standard), letter-spacing var(--dur-base) var(--ease-decelerate);
+}
+
+.play:hover:not(:disabled) {
+  background: var(--play-hover);
+}
+
+.play:active:not(:disabled) {
+  background: var(--play-pressed);
+}
+
+.play:disabled {
+  cursor: not-allowed;
+  filter: saturate(0.4) brightness(0.7);
+}
+
+.play[data-secondary] {
+  color: var(--text-1);
+  background: color-mix(in oklch, var(--positive) 35%, #0d1a12);
+}
+
+.searching {
+  background: var(--play-pressed);
+  letter-spacing: 3px;
+}
+
+
+.searchLabel {
+  font-size: 0.6em;
+}
+
+.searchTime {
+  font-size: 0.9em;
+  letter-spacing: 1px;
+}
+
+.cancel {
+  font-size: 0.42em;
+  padding: 4px 8px;
+  background: rgb(0 0 0 / 0.25);
+  letter-spacing: 2px;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes popUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.94);
+  }
+}
+
+@keyframes pulse {
+  50% {
+    opacity: 0.35;
+    transform: scale(0.8);
+  }
+}
+
+@keyframes sweep {
+  from {
+    background-position: 100% 0;
+  }
+  to {
+    background-position: -200% 0;
+  }
+}

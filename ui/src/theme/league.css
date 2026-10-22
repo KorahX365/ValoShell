@@ -1,0 +1,49 @@
+/* League client: a 1280 x 720 window (not fullscreen), an 80 px bar with the PLAY crest, the
+   social column down the right, dark navy panels framed in hextech gold, serif small caps for
+   titles. --u is one pixel of a 1280-wide client, so the look holds at 1600 x 900 too. */
+:root[data-skin="league"] {
+  --u: calc(100vw / 1280);
+  --nav-top: calc(80 * var(--u));
+  --nav-right: calc(225 * var(--u));
+  --lol-serif: "Beaufort for LOL", "Cinzel Variable", Georgia, serif;
+  --lol-sans: "Spiegel", "Inter Variable", "Segoe UI", sans-serif;
+  --font-text: var(--lol-sans);
+  --panel: rgb(1 10 19 / 0.88);
+  --panel-strong: rgb(10 20 40 / 0.95);
+  --border-subtle: rgb(120 90 40 / 0.35);
+  --border-default: rgb(120 90 40 / 0.7);
+  --border-strong: #c8aa6e;
+  --play: #1e2328;
+  --play-hover: #1e282d;
+  --play-pressed: #010a13;
+  --on-play: #cdfafa;
+  --radius-xs: 0px;
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-outer: 0px;
+}
+
+/* Shared pieces sit in thin gold frames like the client's panels. */
+:root[data-skin="league"] [data-part="piece"]:not([data-kind^="lol-"]) > * {
+  border-radius: 0;
+  box-shadow: inset 0 0 0 1px rgb(120 90 40 / 0.55);
+}
+
+:root[data-skin="league"] [data-part="piece"]:not([data-kind^="lol-"], [data-kind="store-front"]) :is(h1, h2, h3) {
+  font-family: var(--lol-serif);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #f0e6d2;
+}
+
+/* Every PLAY-type button is a hextech button: dark fill, gold rim, pale teal text. */
+:root[data-skin="league"] [data-part="piece"]:not([data-kind^="lol-"]) [data-part="play"] {
+  border-radius: 0;
+  box-shadow:
+    inset 0 0 0 2px #0ac8b9,
+    inset 0 0 calc(14 * var(--u)) rgb(10 200 185 / 0.3);
+  font-family: var(--lol-serif);
+  letter-spacing: 0.08em;
+}

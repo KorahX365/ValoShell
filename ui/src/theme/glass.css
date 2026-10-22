@@ -1,0 +1,30 @@
+/* VALORANT Glass: frosted, rounded, Inter, floating capsules over a blurred backdrop. Its own
+   pieces (glass-*) style themselves; the rules here pull the shared ones into the same look. */
+:root[data-skin="glass"] {
+  --nav-top: 84px;
+  --panel: rgb(24 26 32 / 0.5);
+  --panel-strong: rgb(30 32 40 / 0.72);
+  --border-subtle: rgb(255 255 255 / 0.1);
+  --border-default: rgb(255 255 255 / 0.18);
+  --play: #ff4655;
+  --play-hover: #ff5c69;
+  --play-pressed: #e03a48;
+  --on-play: #ffffff;
+}
+
+/* Every other piece on a Glass screen gets the same rounded corners. */
+:root[data-skin="glass"] [data-part="piece"] > * {
+  border-radius: 24px;
+}
+
+/* Shared pieces speak its type: sentence case, no wide tracking. The store keeps VALORANT's
+   own type, as its art is drawn for it. */
+:root[data-skin="glass"] [data-part="piece"]:not([data-kind^="glass-"], [data-kind="store-front"]) * {
+  text-transform: none;
+  letter-spacing: -0.005em;
+}
+
+:root[data-skin="glass"] [data-part="piece"]:not([data-kind^="glass-"], [data-kind="store-front"]) :is(h1, h2, h3) {
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}

@@ -1,0 +1,163 @@
+/* ---- custom-game lobby ----
+   Measured on the 1920 x 1080 client: three 380 px columns 5 px apart, a 45 px header, 74 px
+   rows 4 px apart (5 a side, 2 spectators), the buttons 18 px under the last row. Header and
+   row tints are the team colours at 40 % and 20 % over the dimmed map. */
+.lobby {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  width: 100%;
+  height: 100%;
+  font-family: var(--font-din);
+  color: #ece8e1;
+}
+
+.columns {
+  display: flex;
+  align-items: flex-start;
+  gap: 5px;
+}
+
+.column {
+  --team: 236 232 225;
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.column[data-team="attackers"] {
+  --team: 255 70 85;
+}
+
+.column[data-team="defenders"] {
+  --team: 34 255 197;
+}
+
+.header {
+  display: grid;
+  place-items: center;
+  height: 45px;
+  margin-bottom: -1px;
+  font-size: 13.5px;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  background: rgb(var(--team) / 0.4);
+}
+
+.row {
+  display: grid;
+  place-items: center;
+  height: 74px;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  color: #ece8e1;
+  background: rgb(var(--team) / 0.2);
+  transition: background 140ms ease;
+}
+
+button.row:hover:not(:disabled) {
+  background: rgb(var(--team) / 0.3);
+}
+
+.member {
+  display: flex;
+  align-items: center;
+  height: 74px;
+  background: rgb(var(--team) / 0.2);
+}
+
+.avatar {
+  flex: none;
+  width: 76px;
+  height: 74px;
+  object-fit: cover;
+  background: rgb(0 0 0 / 0.3);
+}
+
+.who {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin-left: 17px;
+}
+
+.name {
+  overflow: hidden;
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.1;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* Your own name is the client's gold. */
+.member[data-self] .name {
+  color: #f0cb74;
+}
+
+.state {
+  font-size: 13px;
+  line-height: 1.1;
+  text-transform: uppercase;
+  color: rgb(236 232 225 / 0.6);
+}
+
+.state[data-ready] {
+  color: #22ffc5;
+}
+
+.ping {
+  flex: none;
+  margin-right: 18px;
+  font-size: 11px;
+  color: #ece8e1;
+}
+
+.mute {
+  flex: none;
+  display: grid;
+  place-items: center;
+  align-self: stretch;
+  width: 36px;
+  color: #ece8e1;
+  background: rgb(var(--team) / 0.2);
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+}
+
+.action {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 50px;
+  padding: 0 30px;
+  font: inherit;
+  font-size: 14px;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  color: #ece8e1;
+  background: rgb(41 49 56);
+  border: 1px solid rgb(84 90 94);
+  transition: background 140ms ease;
+}
+
+.action:hover:not(:disabled) {
+  background: rgb(54 64 72);
+}
+
+.action:disabled {
+  color: rgb(125 128 128);
+}
+
+/* MODE: STANDARD - the value keeps the label's weight, like the client. */
+.rowValue {
+  font-weight: inherit;
+}

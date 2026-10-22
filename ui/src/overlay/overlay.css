@@ -1,0 +1,10 @@
+/* The overlay window is transparent: only the pieces draw. */
+html,
+body,
+#root {
+  background: transparent !important;
+}
+
+#root {
+  position: relative;
+}

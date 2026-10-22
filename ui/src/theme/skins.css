@@ -1,0 +1,343 @@
+/* Menu styles: `data-skin` on <html> (set from the Studio theme) restyles every scene through
+   the style knobs in tokens.css, plus structural touches through `data-part` hooks (scene,
+   piece, nav, tab, play). Navs that differ per style live in menu/NavVariants.module.css;
+   colours, display font and cut corners come with the style's bundle (studio/skins.ts). */
+
+/* ---- CS2: near-black panels, a topographic top bar in condensed caps, the selected tab as
+   a solid light block, flat corners and a green PLAY. ---- */
+:root[data-skin="cs2"] {
+  --stretch: 0.7;
+  --nav-shade:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='480' height='72' viewBox='0 0 480 72'%3E%3Cg fill='none' stroke='white' stroke-opacity='0.07'%3E%3Cpath d='M0 26 C40 -4 100 46 180 16 S320 -14 480 12'/%3E%3Cpath d='M0 38 C50 8 110 58 190 28 S330 -2 480 24'/%3E%3Cpath d='M0 50 C60 20 120 70 200 40 S340 10 480 36'/%3E%3Cpath d='M0 62 C70 34 130 82 210 52 S350 22 480 48'/%3E%3C/g%3E%3C/svg%3E")
+      repeat-x top / 480px 72px,
+    linear-gradient(to bottom, rgb(12 14 18 / 0.96), rgb(12 14 18 / 0.9));
+  --panel: rgb(14 17 22 / 0.86);
+  --panel-strong: rgb(20 24 30 / 0.95);
+  --border-subtle: rgb(255 255 255 / 0.06);
+  --border-default: rgb(255 255 255 / 0.1);
+  --play: #4f9d3d;
+  --play-hover: #5cb048;
+  --play-pressed: #428533;
+  --on-play: #ffffff;
+}
+
+:root[data-skin="cs2"] [data-part="nav"] {
+  box-shadow: inset 0 -1px 0 rgb(255 255 255 / 0.08);
+}
+
+:root[data-skin="cs2"] [data-part="tab"] {
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+}
+
+:root[data-skin="cs2"] [data-part="tab"]::after {
+  display: none;
+}
+
+:root[data-skin="cs2"] [data-part="tab"][aria-current="page"] {
+  color: var(--ground);
+  background: var(--text-1);
+}
+
+/* ---- VALORANT Beta: dark teal-black, thin white lines, a centre line and a dot grid behind
+   the scene, pale yellow and pale cyan as the only colours. ---- */
+:root[data-skin="beta"] {
+  --nav-top: 64px;
+  --panel: rgb(20 26 29 / 0.9);
+  --panel-strong: rgb(26 33 36 / 0.96);
+  --border-subtle: rgb(255 255 255 / 0.1);
+  --border-default: rgb(255 255 255 / 0.22);
+  --play: #bfe1dd;
+  --play-hover: #d1ebe8;
+  --play-pressed: #a9d2cd;
+  --on-play: #253035;
+}
+
+:root[data-skin="beta"] [data-part="scene"]::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(to right, transparent calc(50% - 0.5px), rgb(255 255 255 / 0.14) calc(50% - 0.5px), rgb(255 255 255 / 0.14) calc(50% + 0.5px), transparent calc(50% + 0.5px)),
+    radial-gradient(circle, rgb(255 255 255 / 0.5) 1.2px, transparent 1.6px) center / 20% 33%;
+}
+
+/* ---- VALORANT (today's client): 48 px icon bar, a 60 px social strip down the right edge,
+   navy panels, DIN-style body type, no cut corners. ---- */
+:root[data-skin="current"] {
+  --nav-top: 48px;
+  --nav-right: 60px;
+  --stretch: 0.9;
+  --panel: rgb(15 25 35 / 0.86);
+  --panel-strong: rgb(21 31 42 / 0.96);
+  --border-subtle: rgb(236 232 225 / 0.08);
+  --border-default: rgb(236 232 225 / 0.16);
+  --play: #ff4655;
+  --play-hover: #ff5a68;
+  --play-pressed: #e23a49;
+  --on-play: #ffffff;
+}
+
+/* ---- VALORANT 2022: the side menu, navy and red, tall condensed type. ---- */
+:root[data-skin="valnow"] {
+  --nav-top: 56px;
+  --nav-left: 340px;
+  --stretch: 0.9;
+  --panel: rgb(15 25 35 / 0.88);
+  --panel-strong: rgb(21 33 45 / 0.96);
+  --border-default: rgb(236 232 225 / 0.14);
+}
+
+/* ---- CS:GO Panorama: slate panels under a segmented bar, on a bright haze. ---- */
+:root[data-skin="csgo"] {
+  --nav-top: 56px;
+  --stretch: 0.9;
+  --panel: rgb(44 53 62 / 0.94);
+  --panel-strong: rgb(52 62 72 / 0.97);
+  --border-subtle: rgb(255 255 255 / 0.06);
+  --border-default: rgb(255 255 255 / 0.1);
+  --play: #5a9a3a;
+  --play-hover: #67ad44;
+  --play-pressed: #4a8230;
+  --on-play: #ffffff;
+}
+
+:root[data-skin="csgo"] [data-part="play"] {
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.25), inset 0 -2px 0 rgb(0 0 0 / 0.25);
+}
+
+/* ---- CS 1.6: olive VGUI everywhere, Tahoma, no caps, 1px bevels on every piece. ---- */
+:root[data-skin="cs16"] {
+  --nav-top: 44px;
+  --nav-left: 250px;
+  --panel: #4c5844;
+  --panel-strong: #4c5844;
+  --surface-raised: #4c5844;
+  --surface-sunken: #3e4637;
+  --surface-popup: #4c5844;
+  --border-subtle: #3e4637;
+  --border-default: #8c9284;
+  --play: #4c5844;
+  --play-hover: #58654f;
+  --play-pressed: #3e4637;
+  --on-play: #dedfd6;
+}
+
+:root[data-skin="cs16"] [data-part="scene"] * {
+  font-family: Tahoma, Verdana, sans-serif !important;
+  letter-spacing: normal !important;
+  text-transform: none !important;
+}
+
+:root[data-skin="cs16"] [data-part="piece"]::after,
+:root[data-skin="terminal"] [data-part="piece"]::after,
+:root[data-skin="halo"] [data-part="piece"]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+:root[data-skin="cs16"] [data-part="piece"]::after {
+  box-shadow: inset 1px 1px 0 #8c9284, inset -1px -1px 0 #292c21;
+}
+
+:root[data-skin="cs16"] [data-part="play"] {
+  box-shadow: inset 1px 1px 0 #8c9284, inset -1px -1px 0 #292c21;
+}
+
+:root[data-skin="cs16"] [data-part="icon-button"],
+:root[data-skin="cs16"] [data-part="wallet"] {
+  color: #dedfd6;
+}
+
+/* ---- Terminal: everything monospace on black, dashed phosphor outlines, green art. ---- */
+:root[data-skin="terminal"] {
+  --nav-top: 40px;
+  --panel: rgb(0 0 0 / 0.82);
+  --panel-strong: rgb(0 0 0 / 0.92);
+  --surface-raised: rgb(0 0 0 / 0.9);
+  --surface-popup: #000000;
+  --border-subtle: rgb(var(--text-rgb) / 0.18);
+  --border-default: rgb(var(--text-rgb) / 0.35);
+  --play: var(--accent);
+  --play-hover: var(--accent);
+  --play-pressed: var(--accent-2);
+  --on-play: #000000;
+}
+
+:root[data-skin="terminal"] [data-part="scene"] * {
+  font-family: var(--font-mono) !important;
+  letter-spacing: normal !important;
+}
+
+:root[data-skin="terminal"] [data-part="piece"]::after {
+  outline: 1px dashed rgb(var(--text-rgb) / 0.35);
+  outline-offset: -1px;
+}
+
+:root[data-skin="terminal"] [data-part="scene"] img {
+  filter: grayscale(1) sepia(1) hue-rotate(70deg) saturate(2.4) brightness(0.85);
+}
+
+/* ---- Fortnite: royal blue bar, heavy italic tabs, the open tab on a slanted yellow block. */
+:root[data-skin="fortnite"] {
+  --nav-shade: linear-gradient(to bottom, #1c3fc4, #142a8c);
+  --panel: rgb(10 22 90 / 0.82);
+  --panel-strong: rgb(16 32 120 / 0.92);
+  --border-default: rgb(255 255 255 / 0.18);
+  --play: #fbe925;
+  --play-hover: #fff35c;
+  --play-pressed: #d9c80a;
+  --on-play: #121212;
+}
+
+:root[data-skin="fortnite"] [data-part="nav"] {
+  box-shadow: inset 0 -4px 0 rgb(0 0 0 / 0.25);
+}
+
+:root[data-skin="fortnite"] [data-part="tab"] {
+  font-family: "Oswald Variable", var(--font-display);
+  font-size: 21px;
+  font-weight: 700;
+  font-style: italic;
+  letter-spacing: 0.5px;
+  color: rgb(255 255 255 / 0.78);
+}
+
+:root[data-skin="fortnite"] [data-part="tab"]::after {
+  display: none;
+}
+
+:root[data-skin="fortnite"] [data-part="tab"][aria-current="page"] {
+  color: #121212;
+  background: #fbe925;
+  transform: skewX(-8deg);
+}
+
+/* ---- Minecraft: pixel type everywhere, dark translucent lists with a black outline. ---- */
+:root[data-skin="minecraft"] {
+  --nav-top: 60px;
+  --panel: rgb(0 0 0 / 0.55);
+  --panel-strong: rgb(0 0 0 / 0.7);
+  --border-default: rgb(255 255 255 / 0.25);
+  --play: #6f6f6f;
+  --play-hover: #7b86bd;
+  --play-pressed: #4a4a4a;
+  --on-play: #ffffff;
+}
+
+:root[data-skin="minecraft"] [data-part="scene"] * {
+  font-family: "Pixelify Sans Variable", monospace !important;
+  letter-spacing: normal !important;
+}
+
+/* The pixel face has no tabular figures; its alternates garble digits. */
+:root[data-skin="minecraft"] .num {
+  font-variant-numeric: normal;
+}
+
+/* ---- Halo 3: frosted cyan panels with a bright top edge, under the side menu. ---- */
+:root[data-skin="halo"] {
+  --nav-top: 56px;
+  --nav-left: 300px;
+  --panel: rgb(14 52 92 / 0.5);
+  --panel-strong: rgb(18 60 104 / 0.78);
+  --border-default: rgb(111 212 255 / 0.3);
+  --play: #6fd4ff;
+  --play-hover: #9ae2ff;
+  --play-pressed: #4bb8e6;
+  --on-play: #04101c;
+}
+
+:root[data-skin="halo"] [data-part="piece"]::after {
+  box-shadow: inset 0 1px 0 rgb(111 212 255 / 0.45);
+}
+
+/* ---- Pip-Boy: phosphor green on black, mono caps with a glow, scanlines and a rolling
+   refresh band over the whole screen, art drawn in the one green. ---- */
+:root[data-skin="pipboy"] {
+  --nav-top: 72px;
+  --panel: rgb(26 255 128 / 0.06);
+  --panel-strong: rgb(4 24 12 / 0.94);
+  --surface-raised: rgb(26 255 128 / 0.08);
+  --surface-sunken: rgb(0 0 0 / 0.4);
+  --surface-popup: #031208;
+  --border-subtle: rgb(26 255 128 / 0.22);
+  --border-default: rgb(26 255 128 / 0.45);
+  --play: var(--accent);
+  --play-hover: #6dffad;
+  --play-pressed: #12c463;
+  --on-play: #031208;
+  --text-2: rgb(26 255 128 / 0.8);
+  --text-3: rgb(26 255 128 / 0.55);
+}
+
+:root[data-skin="pipboy"] [data-part="scene"] *,
+:root[data-skin="pipboy"] [data-part="nav"] * {
+  font-family: "Share Tech Mono", var(--font-mono) !important;
+  letter-spacing: 0.04em;
+  text-shadow: 0 0 6px rgb(26 255 128 / 0.4);
+}
+
+:root[data-skin="pipboy"] [data-part="scene"] {
+  text-transform: uppercase;
+}
+
+:root[data-skin="pipboy"] [data-part="piece"] {
+  /* One phosphor: whatever colours a borrowed layout brings (Halo's cyan, rank art, skins)
+     come out as shades of the screen's green. */
+  filter: grayscale(1) sepia(1) hue-rotate(78deg) saturate(3.4) brightness(1.05);
+}
+
+/* Pictures behind the menu (agent select's map) go green with the rest of the screen. */
+:root[data-skin="pipboy"] [data-part="backdrop"] {
+  filter: grayscale(1) sepia(1) hue-rotate(78deg) saturate(3) brightness(0.8);
+}
+
+:root[data-skin="pipboy"] [data-part="piece"]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* The screen: fine scanlines, a slow bright band rolling down, and the tube's dark corners. */
+:root[data-skin="pipboy"] body::after,
+:root[data-skin="pipboy"] body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 2147483000;
+  pointer-events: none;
+}
+
+:root[data-skin="pipboy"] body::after {
+  background:
+    repeating-linear-gradient(to bottom, rgb(0 0 0 / 0) 0 2px, rgb(0 0 0 / 0.18) 2px 3px),
+    radial-gradient(130% 120% at 50% 50%, transparent 62%, rgb(0 0 0 / 0.55) 100%);
+}
+
+:root[data-skin="pipboy"] body::before {
+  background: linear-gradient(to bottom, transparent, rgb(26 255 128 / 0.045) 50%, transparent);
+  height: 22vh;
+  animation: pipRoll 7s linear infinite;
+}
+
+@keyframes pipRoll {
+  from {
+    transform: translateY(-25vh);
+  }
+  to {
+    transform: translateY(105vh);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root[data-skin="pipboy"] body::before {
+    animation: none;
+    display: none;
+  }
+}

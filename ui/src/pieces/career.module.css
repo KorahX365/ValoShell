@@ -1,0 +1,287 @@
+.rank {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: var(--space-6);
+  width: 100%;
+  height: 100%;
+  padding: var(--space-6);
+  background: var(--panel);
+  border-left: 3px solid var(--rank);
+  box-shadow: inset 0 0 0 1px var(--border-subtle);
+  clip-path: polygon(var(--cut, 18px) 0, 100% 0, 100% calc(100% - var(--cut, 18px)), calc(100% - var(--cut, 18px)) 100%, 0 100%, 0 var(--cut, 18px));
+  animation: rise 560ms var(--ease-decelerate) both;
+}
+
+.emblem {
+  display: grid;
+  place-items: center;
+  width: clamp(110px, 12vw, 190px);
+  aspect-ratio: 1;
+}
+
+.emblem img {
+  width: 100%;
+}
+
+.emblemFallback {
+  width: 60%;
+  aspect-ratio: 1;
+  transform: rotate(45deg);
+  background: linear-gradient(135deg, var(--rank), transparent);
+}
+
+.rankInfo {
+  container-type: inline-size;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.rankName {
+  font-family: var(--font-display);
+  font-stretch: calc(125% * var(--stretch, 1));
+  /* Sized to its column, so "Ascendant 3" stays on one line in a narrow card or a wide face. */
+  font-size: clamp(18px, min(3.4vw, 12cqi), 56px);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: 2px;
+  white-space: nowrap;
+  text-transform: uppercase;
+  color: var(--rank);
+}
+
+.placements {
+  color: var(--text-2);
+}
+
+.rrRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.rrBar {
+  flex: 1;
+  height: 8px;
+  overflow: hidden;
+  background: rgb(255 255 255 / 0.08);
+}
+
+.rrFill {
+  display: block;
+  height: 100%;
+  background: var(--rank);
+  animation: fill 900ms var(--ease-decelerate) both 200ms;
+  transform-origin: left;
+}
+
+.rr {
+  font-size: 26px;
+  font-weight: 700;
+}
+
+.rr small {
+  margin-left: 4px;
+  font-size: 11px;
+  color: var(--text-3);
+}
+
+.stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  color: var(--text-2);
+}
+
+.stats b {
+  color: var(--text-1);
+}
+
+.peak {
+  font-size: var(--text-caption);
+  color: var(--text-3);
+}
+
+.peak b {
+  color: var(--peak);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.history {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  padding: var(--space-5);
+  background: var(--panel);
+  box-shadow: inset 0 0 0 1px var(--border-subtle);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-stretch: calc(118% * var(--stretch, 1));
+  font-size: clamp(18px, 1.6vw, 26px);
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.refresh {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 3px;
+  color: var(--text-3);
+}
+
+.refresh:hover:not(:disabled) {
+  color: var(--text-1);
+  background: rgb(255 255 255 / 0.08);
+}
+
+.trend {
+  flex: none;
+  width: 100%;
+  height: 70px;
+  overflow: visible;
+}
+
+.trend polyline {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 2;
+  vector-effect: non-scaling-stroke;
+  stroke-linejoin: round;
+  stroke-dasharray: 600;
+  stroke-dashoffset: 600;
+  animation: draw 1.4s var(--ease-decelerate) forwards 200ms;
+}
+
+.matches {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 0;
+  overflow: auto;
+  list-style: none;
+}
+
+.match {
+  display: grid;
+  grid-template-columns: 64px 1fr auto auto;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 46px;
+  padding-right: var(--space-3);
+  background: rgb(255 255 255 / 0.035);
+  box-shadow: inset 3px 0 0 var(--positive);
+  animation: slide 420ms var(--ease-decelerate) both;
+  animation-delay: calc(var(--stagger) * 40ms);
+}
+
+.match[data-result="down"] {
+  box-shadow: inset 3px 0 0 var(--negative);
+}
+
+.mapThumb {
+  height: 46px;
+  overflow: hidden;
+  background: rgb(255 255 255 / 0.05);
+}
+
+.mapThumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.matchText {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.matchMap {
+  font-family: var(--font-display);
+  font-stretch: calc(112% * var(--stretch, 1));
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.matchWhen {
+  font-size: var(--text-caption);
+  color: var(--text-3);
+}
+
+.movement {
+  padding: 2px 8px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--negative);
+  box-shadow: inset 0 0 0 1px currentColor;
+}
+
+.movement[data-up] {
+  color: var(--positive);
+}
+
+.delta {
+  min-width: 44px;
+  text-align: right;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--positive);
+}
+
+.match[data-result="down"] .delta {
+  color: var(--negative);
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+}
+
+@keyframes float {
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes fill {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+@keyframes draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes slide {
+  from {
+    opacity: 0;
+    transform: translateX(-16px);
+  }
+}

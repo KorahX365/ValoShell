@@ -1,0 +1,261 @@
+.lobby {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  padding: var(--space-4);
+  background: var(--panel);
+  box-shadow: inset 0 0 0 1px var(--border-subtle);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.live {
+  padding: 3px 10px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-2);
+  box-shadow: inset 0 0 0 1px var(--border-default);
+}
+
+.live[data-live] {
+  color: var(--on-accent);
+  background: var(--accent);
+  box-shadow: none;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-stretch: calc(115% * var(--stretch, 1));
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.loading {
+  margin-left: auto;
+  font-size: var(--text-caption);
+  color: var(--text-3);
+}
+
+.teams {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: var(--space-4);
+  overflow: auto;
+}
+
+.team {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.teamHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding-bottom: 6px;
+  border-bottom: 2px solid var(--ally);
+}
+
+.team[data-side="enemy"] .teamHead {
+  border-bottom-color: var(--enemy);
+}
+
+.teamTitle {
+  font-family: var(--font-display);
+  font-stretch: calc(112% * var(--stretch, 1));
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.average {
+  font-size: var(--text-caption);
+  color: var(--text-3);
+}
+
+.average b {
+  color: var(--rank);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.columns,
+.row {
+  display: grid;
+  grid-template-columns: 38px minmax(0, 1.6fr) minmax(0, 1.2fr) minmax(0, 1fr) 54px;
+  align-items: center;
+  gap: 10px;
+}
+
+.columns {
+  padding: 0 8px 0 6px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+
+.rows {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 0;
+  list-style: none;
+}
+
+.rows[data-compact] .row {
+  grid-template-columns: 30px minmax(0, 1fr) minmax(0, 1fr);
+}
+
+.row {
+  min-height: 44px;
+  padding: 3px 8px 3px 3px;
+  background: rgb(255 255 255 / 0.035);
+  box-shadow: inset 3px 0 0 var(--stack);
+  animation: rowIn 380ms var(--ease-decelerate) both;
+}
+
+.row[data-self] {
+  background: color-mix(in oklch, var(--accent) 14%, transparent);
+}
+
+.agent {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  overflow: hidden;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 12px;
+  text-transform: uppercase;
+  color: var(--text-3);
+  background: rgb(0 0 0 / 0.35);
+}
+
+.agent img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.who {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.name {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.stack {
+  flex: none;
+  padding: 1px 6px;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #0b0b0e;
+  background: var(--stack);
+}
+
+.meta {
+  display: flex;
+  gap: 8px;
+  font-size: 11px;
+  color: var(--text-3);
+}
+
+.rank {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--rank);
+}
+
+.rank img {
+  flex: none;
+  width: 24px;
+  height: 24px;
+}
+
+.rank[data-loading] {
+  color: var(--text-3);
+}
+
+.rankName {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.rankDot {
+  flex: none;
+  width: 9px;
+  height: 9px;
+  transform: rotate(45deg);
+  background: var(--rank);
+}
+
+.rr {
+  flex: none;
+  font-size: 11px;
+  color: var(--text-2);
+}
+
+.rr::after {
+  content: " RR";
+  font-size: 9px;
+  color: var(--text-3);
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.stat small {
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--text-3);
+}
+
+@keyframes rowIn {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+}
+
+@keyframes glow {
+  50% {
+  }
+}

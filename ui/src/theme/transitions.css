@@ -1,0 +1,66 @@
+/* View transitions (studio/transitions.ts). Pieces that stay glide to their new rect with a
+   little overshoot; new and removed pieces are animated per element from script; the nav and
+   side menu slide out and back in when a style swaps them; everything else cross-fades. */
+
+::view-transition-group(*) {
+  animation-duration: 560ms;
+  animation-timing-function: cubic-bezier(0.22, 1.25, 0.36, 1);
+}
+
+:root[data-transition="build"]::view-transition-group(*) {
+  animation-duration: 600ms;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 420ms;
+  animation-timing-function: cubic-bezier(0.2, 0, 0, 1);
+}
+
+[data-part="nav"] {
+  view-transition-name: vt-nav;
+}
+
+::view-transition-old(vt-nav) {
+  animation: vtNavOut 240ms cubic-bezier(0.3, 0, 1, 1) both;
+}
+
+::view-transition-new(vt-nav) {
+  animation: vtNavIn 560ms cubic-bezier(0.22, 1.2, 0.36, 1) 120ms both;
+}
+
+::view-transition-old(vt-side) {
+  animation: vtSideOut 260ms cubic-bezier(0.3, 0, 1, 1) both;
+}
+
+::view-transition-new(vt-side) {
+  animation: vtSideIn 620ms cubic-bezier(0.22, 1.2, 0.36, 1) 160ms both;
+}
+
+@keyframes vtNavOut {
+  to {
+    opacity: 0;
+    transform: translateY(-18px);
+  }
+}
+
+@keyframes vtNavIn {
+  from {
+    opacity: 0;
+    transform: translateY(-24px);
+  }
+}
+
+@keyframes vtSideOut {
+  to {
+    opacity: 0;
+    transform: translateX(-56px);
+  }
+}
+
+@keyframes vtSideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-72px);
+  }
+}

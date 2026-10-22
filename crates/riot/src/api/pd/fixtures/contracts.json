@@ -1,0 +1,42 @@
+{
+  "Version": 0,
+  "Subject": "fd3c3401-63b1-5edb-be98-fcf55f83fd72",
+  "Contracts": [
+    {
+      "ContractDefinitionID": "3f04583c-4c7a-6bdf-65ce-d4b6ff53c5e9",
+      "ContractProgression": {
+        "TotalProgressionEarned": 123456,
+        "TotalProgressionEarnedVersion": 0,
+        "HighestRewardedLevel": { "chapter-1": { "Amount": 12, "Version": 0 } }
+      },
+      "ProgressionLevelReached": 14,
+      "ProgressionTowardsNextLevel": 3200
+    }
+  ],
+  "ProcessedMatches": [
+    {
+      "ID": "m-1",
+      "StartTime": 1760000000000,
+      "XPGrants": {
+        "GamePlayed": 0, "GameWon": 1000, "RoundPlayed": 0, "RoundWon": 0, "Missions": {},
+        "Modifier": { "Value": 1, "BaseMultiplierValue": 0,
+                      "Modifiers": [{ "Value": 0.1, "Name": "SOCIAL_XP", "BaseOnly": true }] },
+        "NumAFKRounds": 0
+      },
+      "RewardGrants": null,
+      "MissionDeltas": null,
+      "ContractDeltas": { "c-1": { "ID": "c-1", "TotalXPBefore": 4000, "TotalXPAfter": 5000 } },
+      "CouldProgressMissions": true
+    },
+    { "ID": "m-2", "StartTime": 1760000100000, "ContractDeltas": null }
+  ],
+  "ActiveSpecialContract": "agent-contract",
+  "Missions": [
+    { "ID": "mission-1", "Objectives": { "obj-1": 3 }, "Complete": false, "ExpirationTime": "2026-10-21T00:00:00Z" }
+  ],
+  "MissionMetadata": {
+    "NPECompleted": true,
+    "WeeklyCheckpoint": "2026-10-18T00:00:00Z",
+    "WeeklyRefillTime": "2026-10-25T00:00:00Z"
+  }
+}

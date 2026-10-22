@@ -1,0 +1,20 @@
+.shell {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.scene {
+  position: absolute;
+  /* Styles with a side menu or a shorter bar move the scene (theme/skins.css). */
+  inset: var(--nav-top, 72px) var(--nav-right, 0px) 0 var(--nav-left, 0px);
+  z-index: 10;
+}
+
+/* While editing, the scene sits on a slightly lifted canvas so it reads as editable. */
+.shell[data-editing] .scene {
+  inset: var(--nav-top, 72px) calc(var(--nav-right, 0px) + 12px) 12px calc(var(--nav-left, 0px) + 12px);
+  border-radius: 3px;
+  transition: inset 420ms cubic-bezier(0.22, 1.2, 0.36, 1);
+}

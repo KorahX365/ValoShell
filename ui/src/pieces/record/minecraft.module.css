@@ -1,0 +1,272 @@
+/* Minecraft Statistics: white title with the quarter-colour shadow, stone tab buttons (the
+   open one greyed out, as the game does), a light grey GUI panel with a pixel bevel, sunken
+   item slots, dark grey row text, and the green experience bar with its outlined number. */
+
+.screen {
+  --mc-font: "Pixelify Sans Variable", "Silkscreen", monospace;
+  --mc-panel: #c6c6c6;
+  container-type: size;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  height: 100%;
+  font-family: var(--mc-font);
+}
+
+.title {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 400;
+  color: #ffffff;
+  text-shadow: 2px 2px 0 #3f3f3f;
+}
+
+.tabs {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  width: min(100%, 620px);
+}
+
+.tabButton {
+  height: 36px;
+  font-size: 16px;
+}
+
+/* The open tab is the disabled button, but it should not look broken. */
+.tabButton:disabled {
+  color: #ffffff;
+  text-shadow: 2px 2px 0 #3f3f3f;
+  background: #4a4a4a;
+  box-shadow: 0 0 0 2px #ffffff, inset 2px 2px 0 #6a6a6a, inset -2px -3px 0 #2c2c2c;
+}
+
+.panel {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: min(100%, 820px);
+  padding: 14px 16px 16px;
+  color: #3f3f3f;
+  background: var(--mc-panel);
+  box-shadow: 0 0 0 3px #000000, inset 3px 3px 0 #ffffff, inset -3px -3px 0 #555555;
+  animation: pop 260ms steps(4, end) both;
+}
+
+.rankLine {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.rankLine .icon {
+  width: 32px;
+  height: 32px;
+}
+
+.rankName {
+  font-size: 20px;
+  color: #3f3f3f;
+}
+
+.rankNext {
+  margin-left: auto;
+  font-size: 15px;
+  color: #5f5f5f;
+}
+
+/* ---- experience bar ---- */
+
+.xp {
+  position: relative;
+  padding-top: 28px;
+}
+
+.level {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  line-height: 1;
+  translate: -50% 0;
+  font-size: 22px;
+  color: #80ff20;
+  text-shadow:
+    2px 0 0 #000000,
+    -2px 0 0 #000000,
+    0 2px 0 #000000,
+    0 -2px 0 #000000;
+}
+
+.xpBar {
+  position: relative;
+  height: 12px;
+  overflow: hidden;
+  background:
+    repeating-linear-gradient(to right, transparent 0 calc(5.5% - 2px), rgb(0 0 0 / 0.55) calc(5.5% - 2px) 5.5%),
+    #2b2b2b;
+  box-shadow: 0 0 0 2px #000000;
+}
+
+.xpFill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  background:
+    linear-gradient(to bottom, #c8ff8a 0 3px, #80ff20 3px 8px, #4fae12 8px);
+  transform-origin: left;
+  animation: grow 900ms steps(18, end) both 200ms;
+}
+
+/* The segment marks stay on top of the fill. */
+.xpBar::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(to right, transparent 0 calc(5.5% - 2px), rgb(0 0 0 / 0.5) calc(5.5% - 2px) 5.5%);
+}
+
+/* ---- rows ---- */
+
+.list {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  margin-top: 6px;
+  padding: 3px;
+  overflow: auto;
+  background: #8b8b8b;
+  box-shadow: inset 3px 3px 0 #373737, inset -3px -3px 0 #ffffff;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  flex: 1 0 auto;
+  min-height: 42px;
+  max-height: 60px;
+  padding: 4px 12px;
+  font-size: 17px;
+  color: #ffffff;
+  text-shadow: 2px 2px 0 #3f3f3f;
+  animation: pop 200ms steps(3, end) both;
+  animation-delay: calc(var(--stagger, 0) * 45ms + 120ms);
+}
+
+.row:nth-child(odd) {
+  background: rgb(0 0 0 / 0.12);
+}
+
+.row:hover {
+  background: rgb(255 255 255 / 0.22);
+}
+
+.head,
+.head:hover {
+  min-height: 30px;
+  font-size: 14px;
+  color: #e0e0e0;
+  background: rgb(0 0 0 / 0.28);
+  animation: none;
+}
+
+.icon {
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+}
+
+.label {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.value {
+  color: #ffffff;
+}
+
+.mapRow {
+  grid-template-columns: 40px minmax(0, 1fr) repeat(4, 64px);
+  text-align: right;
+}
+
+.mapRow .label,
+.mapRow > span:nth-child(2) {
+  text-align: left;
+}
+
+.mapRow [data-sign="pos"] {
+  color: #80ff20;
+}
+
+.mapRow [data-sign="neg"] {
+  color: #ff6b6b;
+}
+
+.slot {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  background: #8b8b8b;
+  box-shadow: inset 2px 2px 0 #373737, inset -2px -2px 0 #ffffff;
+}
+
+.mobRow {
+  flex: 0 0 auto;
+  grid-template-columns: 40px minmax(0, 1fr) auto;
+  min-height: 72px;
+  max-height: none;
+  padding: 8px 12px;
+}
+
+.mobText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.mobLine {
+  font-size: 14px;
+  color: #e6e6e6;
+}
+
+.tierPips {
+  display: flex;
+  gap: 4px;
+}
+
+.tierPips i {
+  width: 10px;
+  height: 10px;
+  background: #555555;
+  box-shadow: 0 0 0 2px #000000;
+}
+
+.tierPips i[data-on] {
+  background: #80ff20;
+}
+
+.done {
+  width: min(100%, 400px);
+}
+
+@keyframes pop {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+}
+
+@keyframes grow {
+  from {
+    transform: scaleX(0);
+  }
+}

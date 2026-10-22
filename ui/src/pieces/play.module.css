@@ -1,0 +1,215 @@
+.title {
+  font-family: var(--font-display);
+  font-stretch: calc(118% * var(--stretch, 1));
+  font-size: clamp(22px, 2.4vw, 34px);
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.queues {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+}
+
+.queueGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  gap: var(--space-3);
+}
+
+/* A tall card on the mode's own art, its name and blurb over a shade at the foot. */
+.queueCard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 6px;
+  aspect-ratio: 3 / 4;
+  container-type: inline-size;
+  padding: var(--space-4);
+  overflow: hidden;
+  text-align: left;
+  /* The outline, redrawn by the shade above the art (an inset shadow paints under it). */
+  --ring: inset 0 0 0 1px var(--border-default);
+  background: var(--panel);
+  box-shadow: var(--ring);
+  clip-path: polygon(var(--cut, 18px) 0, 100% 0, 100% 100%, 0 100%, 0 var(--cut, 18px));
+  animation: rise 480ms var(--ease-decelerate) both;
+  animation-delay: calc(var(--stagger) * 45ms);
+  transition: background var(--dur-fast) var(--ease-standard), box-shadow var(--dur-fast) var(--ease-standard),
+    transform var(--dur-base) var(--ease-decelerate);
+}
+
+.queueCard::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: inherit;
+  background: linear-gradient(to top, rgb(var(--ground-rgb, 10 10 14) / 0.92) 8%, rgb(var(--ground-rgb, 10 10 14) / 0.35) 45%, transparent 70%);
+  box-shadow: var(--ring);
+  pointer-events: none;
+}
+
+.queueCard > :not(.queueArt) {
+  position: relative;
+  z-index: 2;
+}
+
+.queueArt {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.85;
+  transition: transform var(--dur-slow) var(--ease-decelerate), opacity var(--dur-fast) var(--ease-standard);
+}
+
+.queueCard:hover:not(:disabled) {
+  --ring: inset 0 0 0 1px var(--border-strong);
+  background: rgb(255 255 255 / 0.06);
+}
+
+.queueCard:hover:not(:disabled) .queueArt {
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+.queueCard:disabled {
+  cursor: default;
+}
+
+.queueCard[data-active] {
+  --ring: inset 0 0 0 2px var(--accent);
+  background: color-mix(in oklch, var(--accent) 12%, rgb(var(--ground-rgb, 10 10 14)));
+}
+
+.queueCard[data-active] .queueArt {
+  opacity: 1;
+}
+
+.queueCard[data-active]::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  z-index: 2;
+  width: 100%;
+  height: 3px;
+  background: var(--accent);
+}
+
+.queueName {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  min-width: 0;
+}
+
+.queueGlyph {
+  flex: none;
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+}
+
+.queueLabel {
+  font-family: var(--font-display);
+  font-stretch: calc(115% * var(--stretch, 1));
+  /* Wide display faces must fit "COMPETITIVE" on one line of a narrow card. */
+  font-size: min(18px, 9.5cqi);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.queueBlurb {
+  font-size: var(--text-caption);
+  line-height: 1.35;
+  color: var(--text-2);
+}
+
+/* Glass: rounded, hairline-edged cards in sentence case; the picked one ringed in accent. */
+:global(:root[data-skin="glass"]) .queueCard {
+  --ring: inset 0 0 0 0.5px rgb(255 255 255 / 0.22);
+  border-radius: 22px;
+  clip-path: none;
+  box-shadow: 0 18px 40px rgb(0 0 0 / 0.3);
+  transition: transform 500ms cubic-bezier(0.2, 1.35, 0.35, 1), box-shadow var(--dur-fast) var(--ease-standard);
+}
+
+:global(:root[data-skin="glass"]) .queueCard:hover:not(:disabled) {
+  transform: translateY(-4px);
+}
+
+:global(:root[data-skin="glass"]) .queueCard[data-active] {
+  --ring: inset 0 0 0 2px var(--accent);
+  box-shadow: 0 18px 50px color-mix(in srgb, var(--accent) 30%, transparent);
+}
+
+:global(:root[data-skin="glass"]) .queueCard[data-active]::after {
+  display: none;
+}
+
+.note {
+  color: var(--text-3);
+}
+
+.tools {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  width: 100%;
+  height: 100%;
+  padding: var(--space-5);
+  overflow: auto;
+  background: var(--panel);
+  box-shadow: inset 0 0 0 1px var(--border-subtle);
+}
+
+.block {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.row {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.code {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 44px;
+  padding: 0 var(--space-4);
+  font-size: 20px;
+  letter-spacing: 6px;
+  color: var(--text-1);
+  background: rgb(0 0 0 / 0.35);
+  box-shadow: inset 0 0 0 1px var(--accent-border);
+}
+
+.code:hover {
+  background: rgb(255 255 255 / 0.06);
+}
+
+.spacer {
+  flex: 1;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+}

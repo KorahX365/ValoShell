@@ -1,0 +1,1917 @@
+/* The store front's looks, one block per game. Each block sets --glyph-a / --glyph-b, the
+   colours an item's silhouette takes when its picture is missing. */
+
+/* ---- shared ---- */
+
+.tag {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.tag s {
+  font-size: 0.78em;
+  opacity: 0.55;
+}
+
+.tag small {
+  font-size: 0.68em;
+  font-weight: 700;
+  letter-spacing: 1px;
+  opacity: 0.7;
+}
+
+/* A band of light that crosses the featured item now and then. */
+.sheen {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+  background: linear-gradient(105deg, transparent 38%, rgb(255 255 255 / 0.13) 47%, rgb(255 255 255 / 0.02) 52%, transparent 60%);
+  translate: -110% 0;
+  animation: sheen 6s var(--ease-standard) 1.4s infinite;
+}
+
+@keyframes sheen {
+  0% {
+    translate: -110% 0;
+  }
+  28%,
+  100% {
+    translate: 110% 0;
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    translate: 0 16px;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    translate: -18px 0;
+  }
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+}
+
+/* Pictures and silhouettes fill their box; the silhouette keeps its own proportions. */
+.goArt > *,
+.goHeroArt > *,
+.c2Art > *,
+.c2HeroArt > *,
+.vgPreview > *,
+.haloPreview > img,
+.haloPreview > svg,
+.btArt > *,
+.btFeatureArt > *,
+.btListArt > *,
+.vnArt > *,
+.vnHeroArt > * {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* ---- CS:GO Panorama store ---- */
+
+.go {
+  --glyph-a: #f4f7fa;
+  --glyph-b: #8e9baa;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  color: #e6eaee;
+  background: rgb(28 34 41 / 0.9);
+  box-shadow:
+    0 0 0 1px rgb(0 0 0 / 0.45),
+    0 24px 60px rgb(0 0 0 / 0.35);
+  animation: fade 300ms var(--ease-decelerate) both;
+}
+
+.goHead {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  height: 52px;
+  padding: 0 18px;
+  background: linear-gradient(to bottom, #3c4854, #2a323b);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.08),
+    inset 0 -1px 0 rgb(0 0 0 / 0.5);
+}
+
+.goTitle {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #ffffff;
+}
+
+.goTabs {
+  display: flex;
+  align-self: stretch;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.goTabs button {
+  position: relative;
+  padding: 0 14px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  white-space: nowrap;
+  text-transform: uppercase;
+  color: #9eabb6;
+  transition: color var(--dur-fast) var(--ease-standard), background var(--dur-fast) var(--ease-standard);
+}
+
+.goTabs button:hover {
+  color: #ffffff;
+  background: rgb(255 255 255 / 0.04);
+}
+
+.goTabs button[data-active] {
+  color: #ffffff;
+  background: rgb(255 255 255 / 0.08);
+}
+
+.goTabs button::after {
+  content: "";
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  bottom: 0;
+  height: 3px;
+  background: #de9b35;
+  scale: 0 1;
+  transition: scale var(--dur-base) var(--ease-standard);
+}
+
+.goTabs button[data-active]::after {
+  scale: 1 1;
+}
+
+.goTimer {
+  margin-left: auto;
+  font-size: 12px;
+  white-space: nowrap;
+  color: #8f9ba6;
+}
+
+.goBody {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1.12fr) minmax(0, 1fr);
+  gap: 10px;
+  padding: 12px;
+}
+
+.goHero {
+  container-type: size;
+  position: relative;
+  min-height: 0;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 70% 55% at 52% 42%, rgb(124 160 196 / 0.35), transparent 70%),
+    linear-gradient(165deg, #4a5f74, #26313d 62%, #1c242d);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.14),
+    inset 0 -5px 0 #e4ae39;
+  animation: rise 520ms var(--ease-decelerate) both;
+}
+
+.goHeroArt {
+  position: absolute;
+  inset: 8% 6% 32%;
+  filter: drop-shadow(0 18px 22px rgb(0 0 0 / 0.55));
+  transition: scale 700ms var(--ease-decelerate);
+}
+
+.goHero:hover .goHeroArt {
+  scale: 1.04;
+}
+
+.goHeroArt img {
+  object-fit: cover;
+}
+
+.goRibbon {
+  position: absolute;
+  top: 14px;
+  left: 0;
+  z-index: 2;
+  padding: 4px 14px 4px 12px;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #1c1406;
+  background: #de9b35;
+  clip-path: polygon(0 0, 100% 0, calc(100% - 8px) 100%, 0 100%);
+}
+
+.goSale {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 2;
+  padding: 2px 8px;
+  font-size: 12px;
+  font-weight: 800;
+  color: #ffffff;
+  background: #4b8a2c;
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.25);
+}
+
+.goHero .goSale {
+  top: 14px;
+  right: 14px;
+  font-size: 14px;
+}
+
+.goHeroFoot {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 5px;
+  z-index: 3;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas:
+    "kicker price"
+    "name price";
+  align-items: end;
+  column-gap: 16px;
+  padding: 40px 18px 16px;
+  background: linear-gradient(to top, rgb(16 21 27 / 0.95), rgb(16 21 27 / 0.75) 55%, transparent);
+}
+
+.goKicker {
+  grid-area: kicker;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #b7c7d6;
+}
+
+.goHeroName {
+  grid-area: name;
+  font-family: var(--font-display);
+  font-size: clamp(20px, 7cqw, 34px);
+  font-weight: 700;
+  line-height: 1.1;
+  color: #ffffff;
+}
+
+.goHeroFoot .goPrice {
+  grid-area: price;
+  padding: 7px 14px;
+  font-size: 18px;
+  background: rgb(0 0 0 / 0.35);
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.14);
+}
+
+.goPrice b {
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.goGrid {
+  min-height: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-auto-rows: minmax(0, 1fr);
+  gap: 10px;
+}
+
+/* An odd count lets the first tile take the whole top row. */
+.goGrid[data-count="3"] .goTile:first-child {
+  grid-column: span 2;
+}
+
+.goTile {
+  container-type: inline-size;
+  position: relative;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto auto;
+  gap: 4px;
+  min-height: 0;
+  padding: 10px 12px 14px;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 100%, color-mix(in srgb, var(--grade) 30%, transparent), transparent 70%),
+    linear-gradient(to bottom, #4a5560, #2e3740);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.12),
+    inset 0 -4px 0 var(--grade);
+  animation: rise 420ms var(--ease-decelerate) both;
+  animation-delay: calc(var(--stagger, 0) * 55ms + 120ms);
+  transition:
+    translate 260ms cubic-bezier(0.34, 1.4, 0.64, 1),
+    box-shadow var(--dur-base) var(--ease-standard),
+    filter var(--dur-base) var(--ease-standard);
+}
+
+.goTile:hover {
+  translate: 0 -3px;
+  filter: brightness(1.12);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.2),
+    inset 0 -4px 0 var(--grade),
+    0 0 0 1px rgb(255 255 255 / 0.25),
+    0 14px 28px rgb(0 0 0 / 0.45);
+}
+
+.goArt {
+  position: relative;
+  min-height: 0;
+  margin: 6px 8%;
+  filter: drop-shadow(0 10px 10px rgb(0 0 0 / 0.55));
+  transition: scale 500ms var(--ease-decelerate);
+}
+
+.goTile:hover .goArt {
+  scale: 1.06;
+}
+
+.goName {
+  overflow: hidden;
+  font-size: 13px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: #c5ccd3;
+}
+
+.goName i {
+  font-style: normal;
+  color: #6b747c;
+}
+
+.goName b {
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.goFoot {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.goGrade {
+  overflow: hidden;
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: var(--grade);
+}
+
+.goFoot .goPrice {
+  font-size: 14px;
+}
+
+/* ---- CS2: flat dark grid, condensed type ---- */
+
+.c2 {
+  --glyph-a: #eef1f5;
+  --glyph-b: #77838f;
+  --c2-font: "Oswald Variable", var(--font-display);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;
+  height: 100%;
+  color: #f0f2f5;
+}
+
+.c2Head {
+  flex: none;
+  display: flex;
+  align-items: baseline;
+  gap: 18px;
+  animation: fade 300ms var(--ease-decelerate) both;
+}
+
+.c2Title {
+  font-family: var(--c2-font);
+  font-size: clamp(30px, 3vw, 44px);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.c2Timer {
+  font-family: var(--c2-font);
+  font-size: 14px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #8a94a1;
+}
+
+.c2Refresh {
+  display: grid;
+  place-items: center;
+  align-self: center;
+  width: 30px;
+  height: 30px;
+  margin-left: auto;
+  color: #8a94a1;
+  background: rgb(255 255 255 / 0.04);
+  transition: color var(--dur-fast) var(--ease-standard), background var(--dur-fast) var(--ease-standard);
+}
+
+.c2Refresh:hover:not(:disabled) {
+  color: #ffffff;
+  background: rgb(255 255 255 / 0.1);
+}
+
+.c2Grid {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  grid-template-rows: minmax(0, 1fr) minmax(0, 1fr) auto minmax(0, 0.85fr);
+  gap: 8px;
+}
+
+.c2Hero {
+  container-type: size;
+  position: relative;
+  grid-column: span 6;
+  grid-row: span 2;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 60% 60% at 62% 38%, rgb(143 177 212 / 0.22), transparent 70%),
+    linear-gradient(150deg, #222a35, #12161c 70%);
+  animation: rise 480ms var(--ease-decelerate) both;
+}
+
+.c2HeroArt {
+  position: absolute;
+  inset: 6% 4% 36% 10%;
+  filter: drop-shadow(0 20px 24px rgb(0 0 0 / 0.6));
+  transition: scale 700ms var(--ease-decelerate), translate 700ms var(--ease-decelerate);
+}
+
+.c2Hero:hover .c2HeroArt {
+  scale: 1.04;
+  translate: 1% 0;
+}
+
+.c2HeroArt img {
+  object-fit: cover;
+}
+
+.c2HeroInfo {
+  position: absolute;
+  left: 22px;
+  right: 22px;
+  bottom: 20px;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.c2Kicker {
+  font-family: var(--c2-font);
+  font-size: 13px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #8fb1d4;
+}
+
+.c2HeroName {
+  font-family: var(--c2-font);
+  font-size: clamp(34px, 11cqw, 76px);
+  font-weight: 600;
+  line-height: 0.95;
+  text-transform: uppercase;
+}
+
+.c2HeroItems {
+  font-size: 13px;
+  color: #8a94a1;
+}
+
+.c2HeroFoot {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding-top: 10px;
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.1);
+}
+
+.c2Price {
+  font-family: var(--c2-font);
+  font-size: 26px;
+}
+
+.c2Price b {
+  font-weight: 500;
+}
+
+.c2Card {
+  container-type: inline-size;
+  position: relative;
+  grid-column: span 3;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-rows: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 6px 10px;
+  min-height: 0;
+  padding: 12px 14px;
+  overflow: hidden;
+  background:
+    linear-gradient(to top, color-mix(in srgb, var(--grade) 20%, transparent), transparent 55%),
+    #181c22;
+  box-shadow: inset 0 -2px 0 var(--grade);
+  animation: rise 420ms var(--ease-decelerate) both;
+  animation-delay: calc(var(--stagger, 0) * 45ms + 100ms);
+  transition: background-color var(--dur-base) var(--ease-standard), translate 240ms var(--ease-standard);
+}
+
+/* Section labels share row 3 and their cards row 4, whichever sections exist. */
+.c2Card[data-small] {
+  grid-row: 4;
+  grid-column: span 2;
+  padding: 10px 12px;
+}
+
+.c2Card:hover {
+  translate: 0 -3px;
+  background-color: #222831;
+}
+
+.c2Art {
+  position: relative;
+  grid-column: 1 / -1;
+  align-self: stretch;
+  min-height: 0;
+  margin: 4px 6%;
+  filter: drop-shadow(0 10px 12px rgb(0 0 0 / 0.6));
+  transition: scale 500ms var(--ease-decelerate);
+}
+
+.c2Card:hover .c2Art {
+  scale: 1.06;
+}
+
+.c2Name {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+  font-family: var(--c2-font);
+  font-size: clamp(15px, 9cqw, 20px);
+  font-weight: 500;
+  line-height: 1.05;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+}
+
+.c2Name small {
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 1.5px;
+  color: #8a94a1;
+}
+
+.c2Card[data-small] .c2Name {
+  font-size: clamp(13px, 8cqw, 16px);
+}
+
+.c2CardPrice {
+  font-family: var(--c2-font);
+  font-size: 16px;
+}
+
+.c2Card[data-small] .c2CardPrice {
+  font-size: 14px;
+}
+
+/* Narrow cards stack the price under the name. */
+@container (max-width: 190px) {
+  .c2CardPrice {
+    grid-column: 1 / -1;
+  }
+}
+
+.c2Sale {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  z-index: 1;
+  padding: 1px 7px;
+  font-family: var(--c2-font);
+  font-size: 13px;
+  color: #0d1015;
+  background: #b6e36b;
+}
+
+.c2Label {
+  grid-row: 3;
+  grid-column: span 6;
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding-top: 6px;
+  font-family: var(--c2-font);
+  font-size: 15px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #c9d0d8;
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.08);
+}
+
+.c2Label i {
+  font-style: normal;
+  font-size: 13px;
+  color: #8a94a1;
+}
+
+/* ---- CS 1.6: a VGUI dialog ---- */
+
+.vg {
+  --glyph-a: #e3e6db;
+  --glyph-b: #868e7b;
+  --vg-light: #8c9284;
+  --vg-dark: #292c21;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  font-family: Tahoma, Verdana, sans-serif;
+  font-size: 12px;
+  color: #dedfd6;
+  background: #4c5844;
+  box-shadow:
+    inset 1px 1px 0 var(--vg-light),
+    inset -1px -1px 0 var(--vg-dark),
+    4px 6px 0 rgb(0 0 0 / 0.25);
+}
+
+.vgTitle {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 30px;
+  padding: 0 12px;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.vgTitleTimer {
+  margin-left: auto;
+  font-size: 11px;
+  font-weight: 400;
+  color: #a0aa95;
+}
+
+.vgBody {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(220px, 1fr);
+  gap: 10px;
+  padding: 2px 12px 8px;
+}
+
+.vgList {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  background: #3e4637;
+  box-shadow:
+    inset 1px 1px 0 var(--vg-dark),
+    inset -1px -1px 0 var(--vg-light);
+}
+
+.vgList:focus {
+  outline: none;
+}
+
+.vgList:focus-visible {
+  outline: 1px dotted #c4b550;
+  outline-offset: -3px;
+}
+
+.vgColumns,
+.vgRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(70px, 0.4fr) minmax(76px, 0.4fr);
+}
+
+.vgColumns {
+  flex: none;
+  margin: 1px;
+}
+
+.vgColumns span {
+  padding: 3px 6px;
+  background: #4c5844;
+  box-shadow:
+    inset 1px 1px 0 var(--vg-light),
+    inset -1px -1px 0 var(--vg-dark);
+}
+
+.vgRows {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding: 2px 1px;
+  scrollbar-color: #8c9284 #3e4637;
+}
+
+.vgGroup {
+  display: flex;
+  justify-content: space-between;
+  padding: 7px 6px 2px;
+  font-weight: 700;
+  color: #c4b550;
+}
+
+.vgGroup span {
+  font-weight: 400;
+  color: #a0aa95;
+}
+
+.vgRow {
+  cursor: default;
+}
+
+.vgRow span {
+  overflow: hidden;
+  padding: 2px 6px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.vgRow:hover {
+  background: rgb(255 255 255 / 0.05);
+}
+
+.vgRow[data-selected] {
+  color: #ffffff;
+  background: #958831;
+}
+
+.vgSide {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 0;
+}
+
+.vgPreview {
+  position: relative;
+  flex: 1;
+  min-height: 90px;
+  background: #3e4637;
+  box-shadow:
+    inset 1px 1px 0 var(--vg-dark),
+    inset -1px -1px 0 var(--vg-light);
+}
+
+.vgPreview > * {
+  inset: 14%;
+  width: 72%;
+  height: 72%;
+  filter: drop-shadow(1px 1px 0 #292c21);
+}
+
+.vgInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 6px 8px;
+  box-shadow:
+    inset 1px 1px 0 var(--vg-dark),
+    inset -1px -1px 0 var(--vg-light);
+}
+
+.vgInfo b {
+  font-size: 13px;
+  color: #ffffff;
+}
+
+.vgNote {
+  margin-top: 4px;
+  color: #a0aa95;
+}
+
+.vgFoot {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 2px 12px 12px;
+}
+
+.vgStatus {
+  flex: 1;
+  padding: 3px 6px;
+  color: #a0aa95;
+  box-shadow:
+    inset 1px 1px 0 var(--vg-dark),
+    inset -1px -1px 0 var(--vg-light);
+}
+
+.vgButton {
+  min-width: 84px;
+  padding: 4px 14px;
+  color: #dedfd6;
+  background: #4c5844;
+  box-shadow:
+    inset 1px 1px 0 var(--vg-light),
+    inset -1px -1px 0 var(--vg-dark);
+}
+
+.vgButton:hover:not(:disabled) {
+  color: #ffffff;
+}
+
+.vgButton:active:not(:disabled) {
+  padding: 5px 13px 3px 15px;
+  box-shadow:
+    inset 1px 1px 0 var(--vg-dark),
+    inset -1px -1px 0 var(--vg-light);
+}
+
+.vgButton:disabled {
+  color: #8c9284;
+}
+
+/* ---- Terminal: tmux with two panes ---- */
+
+.tty {
+  --phosphor: #3dff7a;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: var(--font-mono);
+  font-size: clamp(10.5px, 0.84vw, 13.5px);
+  line-height: 1.5;
+  color: #b8ffc9;
+  text-shadow: 0 0 6px rgb(61 255 122 / 0.35);
+  background: rgb(0 4 1 / 0.88);
+}
+
+/* Faint CRT scanlines over the whole console. */
+.tty::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(to bottom, rgb(0 0 0 / 0.22) 0 1px, transparent 1px 3px);
+}
+
+.ttyPanes {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(0, 1fr);
+}
+
+.ttyPane {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  margin: 0;
+  padding: 14px 18px;
+  overflow: auto;
+  font: inherit;
+  white-space: pre;
+  scrollbar-width: none;
+}
+
+.ttyPane + .ttyPane {
+  box-shadow: inset 1px 0 0 rgb(61 255 122 / 0.4);
+}
+
+.ttyLine {
+  display: block;
+  width: fit-content;
+  min-width: 100%;
+  animation: type 360ms steps(22, end) both;
+  animation-delay: calc(var(--line) * 45ms + 120ms);
+}
+
+@keyframes type {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+.ttyLine[data-tone="logo"] {
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--phosphor);
+  text-shadow: 0 0 10px rgb(61 255 122 / 0.6);
+}
+
+.ttyLine[data-tone="prompt"] {
+  font-weight: 700;
+  color: var(--phosphor);
+}
+
+.ttyLine[data-tone="dim"] {
+  color: rgb(184 255 201 / 0.45);
+}
+
+.ttyLine[data-tone="head"] {
+  font-weight: 700;
+  color: #eaffef;
+}
+
+.ttyLine[data-tone="hot"] {
+  min-width: 0;
+  padding: 0 6px;
+  font-weight: 700;
+  color: #021006;
+  text-shadow: none;
+  background: var(--phosphor);
+}
+
+.ttyLine[data-tone="row"] {
+  transition: background var(--dur-instant) linear, color var(--dur-instant) linear;
+}
+
+.ttyLine[data-tone="row"]:hover {
+  color: #021006;
+  text-shadow: none;
+  background: rgb(61 255 122 / 0.85);
+}
+
+.ttyCursor {
+  display: inline-block;
+  width: 0.62em;
+  height: 1.15em;
+  vertical-align: text-bottom;
+  background: var(--phosphor);
+  box-shadow: 0 0 8px rgb(61 255 122 / 0.7);
+  animation: blink 1.05s steps(1, end) infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+.ttyBar {
+  flex: none;
+  display: flex;
+  gap: 14px;
+  padding: 1px 10px;
+  font-weight: 600;
+  white-space: nowrap;
+  color: #021006;
+  text-shadow: none;
+  background: var(--phosphor);
+}
+
+.ttySession {
+  font-weight: 800;
+}
+
+.ttyClock {
+  margin-left: auto;
+}
+
+/* ---- Halo 3: menu list beside a frosted info pane ---- */
+
+.halo {
+  --glyph-a: #f1fbff;
+  --glyph-b: #6fd4ff;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  height: 100%;
+  color: #c7ecff;
+}
+
+.haloHead {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  animation: fade 400ms var(--ease-decelerate) both;
+}
+
+.haloTitle {
+  font-family: var(--font-display);
+  font-size: clamp(30px, 2.8vw, 46px);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #ffffff;
+  text-shadow: 0 0 18px rgb(111 212 255 / 0.45);
+}
+
+.haloSub {
+  font-size: 13px;
+  color: #6fd4ff;
+}
+
+.haloCols {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+  gap: 26px;
+}
+
+.haloMenu {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 0;
+  overflow: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgb(111 212 255 / 0.4) transparent;
+}
+
+.haloGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.haloGroupName {
+  padding: 0 14px 3px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgb(111 212 255 / 0.7);
+}
+
+.haloOption {
+  position: relative;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  padding: 6px 14px;
+  text-align: left;
+  font-family: var(--font-display);
+  font-size: clamp(14px, 1.15vw, 19px);
+  font-weight: 500;
+  text-transform: uppercase;
+  color: #c7ecff;
+  animation: slideIn 380ms var(--ease-decelerate) both;
+  animation-delay: calc(var(--stagger, 0) * 40ms + 100ms);
+  transition: color var(--dur-fast) var(--ease-standard), background var(--dur-fast) var(--ease-standard);
+}
+
+.haloOption span:last-child {
+  font-size: 0.82em;
+  color: rgb(199 236 255 / 0.6);
+}
+
+.haloOption:hover {
+  background: rgb(111 212 255 / 0.08);
+}
+
+.haloOption:focus-visible {
+  outline: none;
+}
+
+.haloOption[data-active] {
+  color: #ffffff;
+  text-shadow: 0 0 10px rgb(199 236 255 / 0.8);
+  background: linear-gradient(90deg, rgb(111 212 255 / 0.55), rgb(111 212 255 / 0.14) 75%, rgb(111 212 255 / 0.04));
+  box-shadow:
+    inset 0 1px 0 rgb(220 245 255 / 0.85),
+    inset 0 -1px 0 rgb(111 212 255 / 0.5),
+    0 0 22px rgb(111 212 255 / 0.22);
+}
+
+.haloOption[data-active] span:last-child {
+  color: #ffffff;
+}
+
+.haloPane {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 0;
+  padding: 16px 18px 18px;
+  overflow: hidden;
+  background: linear-gradient(180deg, rgb(30 88 142 / 0.5), rgb(8 32 60 / 0.62));
+  backdrop-filter: blur(12px) saturate(1.3);
+  box-shadow:
+    inset 0 1px 0 rgb(220 245 255 / 0.9),
+    inset 0 0 0 1px rgb(111 212 255 / 0.35),
+    0 0 40px rgb(0 0 0 / 0.35);
+  animation: fade 500ms var(--ease-decelerate) 150ms both;
+}
+
+/* Fine static scanlines over the frosted glass. */
+.haloPane::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(to bottom, rgb(199 236 255 / 0.035) 0 1px, transparent 1px 3px);
+}
+
+.haloPaneTitle {
+  padding-bottom: 8px;
+  font-family: var(--font-display);
+  font-size: clamp(18px, 1.6vw, 26px);
+  font-weight: 500;
+  text-transform: uppercase;
+  color: #ffffff;
+  box-shadow: inset 0 -1px 0 rgb(111 212 255 / 0.35);
+}
+
+.haloPreview {
+  position: relative;
+  flex: 1;
+  min-height: 110px;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 60% 55% at 50% 55%, rgb(111 212 255 / 0.22), transparent 72%),
+    repeating-linear-gradient(0deg, rgb(111 212 255 / 0.07) 0 1px, transparent 1px 28px),
+    repeating-linear-gradient(90deg, rgb(111 212 255 / 0.07) 0 1px, transparent 1px 28px),
+    rgb(2 14 28 / 0.55);
+  box-shadow: inset 0 0 0 1px rgb(111 212 255 / 0.28);
+  animation: fade 360ms var(--ease-decelerate) both;
+}
+
+.haloPreview > img,
+.haloPreview > svg {
+  inset: 12% 10%;
+  width: 80%;
+  height: 76%;
+  filter: drop-shadow(0 0 14px rgb(111 212 255 / 0.55));
+  animation: rise 460ms var(--ease-decelerate) both;
+}
+
+/* A bright band sweeping down the preview, like Halo's hologram readouts. */
+.haloScan {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 22%;
+  pointer-events: none;
+  background: linear-gradient(to bottom, transparent, rgb(199 236 255 / 0.16) 70%, rgb(220 245 255 / 0.45) 72%, transparent 74%);
+  animation: scan 3.4s linear infinite;
+}
+
+@keyframes scan {
+  from {
+    translate: 0 -100%;
+  }
+  to {
+    translate: 0 460%;
+  }
+}
+
+.haloStats {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 4px 18px;
+  margin: 0;
+}
+
+.haloStats dt {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #6fd4ff;
+}
+
+.haloStats dd {
+  margin: 0;
+  color: #ffffff;
+}
+
+.haloStats em {
+  font-style: normal;
+  color: #6fd4ff;
+}
+
+.haloBlurb {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.45;
+  color: rgb(199 236 255 / 0.85);
+}
+
+/* ---- VALORANT beta: hairlines, pale cyan and pale yellow ---- */
+
+.bt {
+  --bt-cyan: #bfe1dd;
+  --bt-yellow: #ecebbd;
+  --bt-line: rgb(191 225 221 / 0.22);
+  display: grid;
+  grid-template-rows: auto minmax(0, 1.1fr) minmax(0, 1fr);
+  gap: 18px;
+  width: 100%;
+  height: 100%;
+  color: #eef1f0;
+}
+
+/* Line art: the beta drew everything in hairlines, its silhouettes too. */
+.bt [data-part="item-glyph"] path {
+  fill: rgb(191 225 221 / 0.06);
+  stroke: var(--bt-cyan);
+  stroke-width: 1;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.btHead {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  animation: fade 400ms var(--ease-decelerate) both;
+}
+
+.btTitle {
+  font-family: var(--font-display);
+  font-size: clamp(22px, 2vw, 30px);
+  font-weight: 300;
+  letter-spacing: 0.5em;
+  text-transform: uppercase;
+  color: var(--bt-yellow);
+}
+
+.btRule {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, rgb(191 225 221 / 0.55), rgb(191 225 221 / 0.06));
+}
+
+.btTimer {
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--bt-cyan);
+}
+
+.btTop {
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1.75fr) minmax(0, 1fr);
+  gap: 18px;
+}
+
+.corner {
+  position: absolute;
+  z-index: 2;
+  width: 10px;
+  height: 10px;
+  pointer-events: none;
+  border: 0 solid var(--bt-yellow);
+  transition: width var(--dur-base) var(--ease-standard), height var(--dur-base) var(--ease-standard);
+}
+
+.corner[data-at="tl"] {
+  top: -1px;
+  left: -1px;
+  border-width: 1px 0 0 1px;
+}
+
+.corner[data-at="tr"] {
+  top: -1px;
+  right: -1px;
+  border-width: 1px 1px 0 0;
+}
+
+.corner[data-at="bl"] {
+  bottom: -1px;
+  left: -1px;
+  border-width: 0 0 1px 1px;
+}
+
+.corner[data-at="br"] {
+  right: -1px;
+  bottom: -1px;
+  border-width: 0 1px 1px 0;
+}
+
+.btFeature:hover .corner,
+.btCard:hover .corner {
+  width: 22px;
+  height: 22px;
+}
+
+.btFeature {
+  container-type: inline-size;
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  min-height: 0;
+  background:
+    radial-gradient(ellipse 55% 70% at 30% 50%, rgb(191 225 221 / 0.09), transparent 70%),
+    linear-gradient(135deg, rgb(191 225 221 / 0.05), rgb(10 16 18 / 0.55));
+  box-shadow: inset 0 0 0 1px var(--bt-line);
+  animation: rise 520ms var(--ease-decelerate) both;
+}
+
+.btFeatureArt {
+  position: relative;
+  margin: 8% 4% 8% 8%;
+}
+
+.btFeatureArt img {
+  object-fit: cover;
+}
+
+.btFeatureInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+  min-width: 0;
+  padding: 20px 26px 20px 8px;
+}
+
+.btOverline {
+  font-size: 11px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--bt-cyan);
+}
+
+.btOverline i {
+  margin-left: 8px;
+  font-style: normal;
+  color: rgb(191 225 221 / 0.55);
+}
+
+.btFeatureName {
+  font-family: var(--font-display);
+  font-size: clamp(24px, 5cqw, 40px);
+  font-weight: 300;
+  line-height: 1.1;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #ffffff;
+}
+
+.btPrice {
+  color: var(--bt-yellow);
+}
+
+.btPrice b {
+  font-weight: 500;
+}
+
+.btFeatureInfo > .btPrice {
+  font-size: 22px;
+}
+
+.btBundleList {
+  display: flex;
+  flex-direction: column;
+  margin: 6px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.btBundleList li {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 6px 0;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgb(238 241 240 / 0.8);
+  box-shadow: inset 0 -1px 0 var(--bt-line);
+}
+
+.btBundleList li span:last-child {
+  color: var(--bt-yellow);
+}
+
+.btSide {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-height: 0;
+  overflow: auto;
+  scrollbar-width: none;
+}
+
+.btShelf {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  animation: fade 500ms var(--ease-decelerate) 200ms both;
+}
+
+.btList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.btList li {
+  display: grid;
+  grid-template-columns: 54px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  padding: 7px 8px;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  box-shadow: inset 0 -1px 0 var(--bt-line);
+  transition: background var(--dur-fast) var(--ease-standard);
+}
+
+.btList li:hover {
+  background: rgb(191 225 221 / 0.06);
+}
+
+.btListArt {
+  position: relative;
+  height: 20px;
+}
+
+.btListName {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.btDaily {
+  min-height: 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.btCard {
+  position: relative;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto auto;
+  gap: 8px;
+  min-height: 0;
+  padding: 14px 16px 16px;
+  background: linear-gradient(to bottom, rgb(191 225 221 / 0.05), rgb(10 16 18 / 0.45));
+  box-shadow: inset 0 0 0 1px var(--bt-line);
+  animation: rise 480ms var(--ease-decelerate) both;
+  animation-delay: calc(var(--stagger, 0) * 70ms + 160ms);
+  transition:
+    translate 300ms var(--ease-standard),
+    box-shadow var(--dur-base) var(--ease-standard),
+    background var(--dur-base) var(--ease-standard);
+}
+
+.btCard:hover {
+  translate: 0 -4px;
+  background: linear-gradient(to bottom, rgb(191 225 221 / 0.1), rgb(10 16 18 / 0.45));
+  box-shadow: inset 0 0 0 1px rgb(191 225 221 / 0.5);
+}
+
+.btIndex {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  color: var(--bt-yellow);
+}
+
+.btIndex i {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: auto;
+  font-size: 10px;
+  font-style: normal;
+  text-transform: uppercase;
+  color: var(--bt-cyan);
+}
+
+.btIndex i::before {
+  content: "";
+  width: 5px;
+  height: 5px;
+  background: var(--edition);
+  rotate: 45deg;
+}
+
+.btArt {
+  position: relative;
+  min-height: 0;
+  margin: 4px 4%;
+  transition: scale 500ms var(--ease-decelerate);
+}
+
+.btCard:hover .btArt {
+  scale: 1.05;
+}
+
+.btCardName {
+  overflow: hidden;
+  font-size: 13px;
+  letter-spacing: 0.16em;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+}
+
+.btCard .btPrice {
+  font-size: 15px;
+}
+
+/* ---- VALORANT 2022: tall condensed type, navy and red ---- */
+
+.vn {
+  --glyph-a: #f4f1ec;
+  --glyph-b: #8d98a4;
+  --vn-red: #ff4655;
+  --vn-ink: #ece8e1;
+  --vn-font: "Oswald Variable", var(--font-display);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  height: 100%;
+  color: var(--vn-ink);
+}
+
+.vnTabs {
+  flex: none;
+  display: flex;
+  gap: 32px;
+  box-shadow: inset 0 -1px 0 rgb(236 232 225 / 0.12);
+  animation: fade 300ms var(--ease-decelerate) both;
+}
+
+.vnTabs button {
+  position: relative;
+  padding: 0 0 10px;
+  font-family: var(--vn-font);
+  font-size: clamp(16px, 1.5vw, 24px);
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: rgb(236 232 225 / 0.5);
+  transition: color var(--dur-fast) var(--ease-standard);
+}
+
+.vnTabs button:hover {
+  color: var(--vn-ink);
+}
+
+.vnTabs button::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 3px;
+  background: var(--vn-red);
+  scale: 0 1;
+  transition: scale var(--dur-base) var(--ease-standard);
+}
+
+.vnTabs button[data-active] {
+  color: var(--vn-ink);
+}
+
+.vnTabs button[data-active]::after {
+  scale: 1 1;
+}
+
+.vnBody {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1.8fr) minmax(250px, 1fr);
+  gap: 16px;
+}
+
+.vnHero {
+  container-type: size;
+  position: relative;
+  min-height: 0;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 55% 60% at 68% 32%, rgb(255 70 85 / 0.3), transparent 70%),
+    linear-gradient(160deg, #1e2b38, #0f1923 72%);
+  box-shadow: inset 0 0 0 1px rgb(236 232 225 / 0.08);
+  animation: rise 520ms var(--ease-decelerate) both;
+}
+
+.vnHeroArt {
+  position: absolute;
+  inset: 3% 2% 50% 38%;
+  filter: drop-shadow(0 24px 28px rgb(0 0 0 / 0.6));
+  transition: scale 800ms var(--ease-decelerate);
+}
+
+.vnHero:hover .vnHeroArt {
+  scale: 1.04;
+}
+
+.vnHeroArt img {
+  object-fit: cover;
+}
+
+.vnHeroShade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgb(15 25 35 / 0.95) 18%, transparent 58%);
+}
+
+.vnHeroInfo {
+  position: absolute;
+  left: 26px;
+  right: 26px;
+  bottom: calc(clamp(110px, 30cqh, 170px) + 28px);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.vnBadge {
+  display: inline-flex;
+  align-items: stretch;
+  font-family: var(--vn-font);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #0f1923;
+  background: var(--vn-red);
+}
+
+.vnBadge,
+.vnBadge b {
+  padding: 3px 10px;
+}
+
+.vnBadge b {
+  margin: -3px -10px -3px 10px;
+  font-weight: 500;
+  color: var(--vn-ink);
+  background: rgb(15 25 35 / 0.85);
+  box-shadow: inset 0 0 0 1px var(--vn-red);
+}
+
+.vnHeroName {
+  font-family: var(--vn-font);
+  font-size: clamp(44px, 13cqw, 120px);
+  font-weight: 700;
+  line-height: 0.88;
+  text-transform: uppercase;
+  text-shadow: 0 6px 30px rgb(0 0 0 / 0.5);
+}
+
+.vnHeroPrice {
+  font-family: var(--vn-font);
+  font-size: 24px;
+}
+
+.vnHeroPrice b {
+  font-weight: 600;
+}
+
+.vnStrip {
+  position: absolute;
+  left: 26px;
+  right: 26px;
+  bottom: 22px;
+  z-index: 2;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  gap: 10px;
+  height: clamp(110px, 30cqh, 170px);
+}
+
+.vnShelf {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 0;
+}
+
+.vnShelfHead {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  font-family: var(--vn-font);
+  font-size: 28px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.vnShelfHead b {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--vn-red);
+}
+
+.vnShelfGrid {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  gap: 12px;
+}
+
+.vnOffers {
+  display: grid;
+  grid-template-rows: auto;
+  grid-auto-rows: minmax(0, 1fr);
+  gap: 8px;
+  min-height: 0;
+}
+
+.vnOffersHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  font-family: var(--vn-font);
+  font-size: clamp(18px, 1.7vw, 26px);
+  font-weight: 600;
+  text-transform: uppercase;
+  animation: fade 300ms var(--ease-decelerate) both;
+}
+
+.vnOffersHead b {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--vn-red);
+}
+
+.vnCard {
+  container-type: inline-size;
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-rows: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 4px 10px;
+  min-height: 0;
+  padding: 10px 14px 12px;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 60% 90% at 75% 40%, color-mix(in srgb, var(--edition) 22%, transparent), transparent 70%),
+    linear-gradient(135deg, #1d2834, #131c26);
+  box-shadow: inset 0 0 0 1px rgb(236 232 225 / 0.08);
+  animation: rise 440ms var(--ease-decelerate) both;
+  animation-delay: calc(var(--stagger, 0) * 60ms + 140ms);
+  transition:
+    translate 280ms cubic-bezier(0.34, 1.4, 0.64, 1),
+    box-shadow var(--dur-base) var(--ease-standard);
+}
+
+.vnCard:hover {
+  translate: 0 -3px;
+  box-shadow:
+    inset 0 0 0 1px rgb(236 232 225 / 0.4),
+    0 14px 30px rgb(0 0 0 / 0.4);
+}
+
+.vnArt {
+  position: relative;
+  grid-column: 1 / -1;
+  align-self: stretch;
+  min-height: 0;
+  margin: 2px 6%;
+  filter: drop-shadow(0 10px 12px rgb(0 0 0 / 0.55));
+  transition: translate 500ms var(--ease-decelerate), scale 500ms var(--ease-decelerate);
+}
+
+.vnCard:hover .vnArt {
+  scale: 1.05;
+}
+
+/* Offer rows: the art on the right, name and price under it like the game's side list. */
+.vnCard[data-row] .vnArt {
+  grid-area: 1 / 1 / 3 / 3;
+  margin: 3% 0 3% 30%;
+}
+
+.vnCard[data-row]:hover .vnArt {
+  translate: -3% 0;
+}
+
+.vnName {
+  position: relative;
+  min-width: 0;
+  overflow: hidden;
+  font-family: var(--vn-font);
+  font-size: clamp(15px, 7.5cqw, 22px);
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+}
+
+.vnCard[data-row] .vnName {
+  align-self: end;
+}
+
+.vnPrice {
+  position: relative;
+  font-family: var(--vn-font);
+  font-size: 15px;
+}
+
+.vnPrice b {
+  font-weight: 500;
+}
+
+/* Narrow cards (bundle strip) stack the price under the name. */
+@container (max-width: 220px) {
+  .vnCard:not([data-row]) .vnPrice {
+    grid-column: 1 / -1;
+  }
+}
+
+.vnEdition {
+  position: absolute;
+  top: 12px;
+  left: 14px;
+  z-index: 1;
+  width: 9px;
+  height: 9px;
+  background: var(--edition);
+  rotate: 45deg;
+  box-shadow: 0 0 10px var(--edition);
+}
+
+.vnSale {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 1;
+  padding: 1px 7px;
+  font-family: var(--vn-font);
+  font-size: 13px;
+  font-weight: 600;
+  color: #0f1923;
+  background: var(--vn-red);
+}
+
+/* ---- reduced motion: everything simply appears ---- */
+
+@media (prefers-reduced-motion: reduce) {
+  .go *,
+  .c2 *,
+  .tty *,
+  .halo *,
+  .bt *,
+  .vn *,
+  .go,
+  .sheen {
+    animation: none !important;
+  }
+}
+
+:root[data-motion="reduced"] :is(.go, .c2, .tty, .halo, .bt, .vn, .go *, .c2 *, .tty *, .halo *, .bt *, .vn *) {
+  animation: none !important;
+}

@@ -1,0 +1,440 @@
+/* VALORANT 2022 career: navy panels, red accents, off-white tall condensed caps, teal and red
+   result bands. */
+
+.career {
+  --red: #ff4655;
+  --win: #46e3b7;
+  --navy: rgb(15 25 35 / 0.9);
+  --bone: #ece8e1;
+  container-type: size;
+  font-variant-numeric: tabular-nums;
+  display: grid;
+  grid-template-columns: minmax(280px, 0.72fr) minmax(0, 1.28fr);
+  gap: 3cqh;
+  width: 100%;
+  height: 100%;
+  color: var(--bone);
+}
+
+.label,
+.kicker {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgb(236 232 225 / 0.55);
+}
+
+/* ---- rank column ---- */
+
+.rankColumn {
+  container-type: inline-size;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  padding: 3cqh 28px 24px;
+  background:
+    linear-gradient(to bottom, color-mix(in srgb, var(--rank) 16%, transparent), transparent 45%),
+    var(--navy);
+  box-shadow: inset 0 3px 0 var(--red), inset 0 0 0 1px rgb(236 232 225 / 0.1);
+  animation: rise 560ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.kicker {
+  color: var(--red);
+}
+
+.emblem {
+  position: relative;
+  display: grid;
+  place-items: center;
+  align-self: center;
+  width: clamp(110px, 26vh, 250px);
+  aspect-ratio: 1;
+  margin: 1cqh 0;
+  animation: emblem 900ms cubic-bezier(0.2, 1.2, 0.3, 1) both 150ms;
+}
+
+.emblem img,
+.emblemSvg {
+  position: relative;
+  width: 86%;
+  height: 86%;
+  object-fit: contain;
+  filter: drop-shadow(0 10px 24px rgb(0 0 0 / 0.45));
+}
+
+.glow {
+  position: absolute;
+  inset: 8%;
+  border-radius: 50%;
+  background: radial-gradient(circle, color-mix(in srgb, var(--rank) 45%, transparent), transparent 70%);
+  animation: breathe 4s ease-in-out infinite;
+}
+
+.rankName {
+  font-family: var(--font-display);
+  font-stretch: 75%;
+  font-size: min(76px, 14cqi);
+  font-weight: 700;
+  line-height: 0.95;
+  text-align: center;
+  white-space: nowrap;
+  text-transform: uppercase;
+  color: #ffffff;
+}
+
+.ratingRow {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-top: 2cqh;
+}
+
+.rating {
+  font-family: var(--font-display);
+  font-size: 34px;
+  font-weight: 700;
+  line-height: 1;
+  color: #ffffff;
+}
+
+.rating small {
+  font-size: 16px;
+  color: rgb(236 232 225 / 0.5);
+}
+
+.ratingBar {
+  position: relative;
+  height: 8px;
+  margin-top: 8px;
+  background:
+    repeating-linear-gradient(to right, transparent 0 calc(10% - 2px), rgb(15 25 35) calc(10% - 2px) 10%),
+    rgb(236 232 225 / 0.12);
+}
+
+.ratingFill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  background: linear-gradient(to right, color-mix(in srgb, var(--rank) 60%, #ffffff), var(--rank));
+  box-shadow: 0 0 14px color-mix(in srgb, var(--rank) 70%, transparent);
+  transform-origin: left;
+  animation: fill 1100ms cubic-bezier(0.2, 0.8, 0.2, 1) both 300ms;
+}
+
+.facts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  margin-top: 3cqh;
+  background: rgb(236 232 225 / 0.1);
+}
+
+.fact .label {
+  letter-spacing: 1.2px;
+  white-space: nowrap;
+}
+
+.fact {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 14px;
+  background: rgb(15 25 35 / 0.95);
+  animation: rise 420ms ease-out both;
+  animation-delay: calc(500ms + var(--stagger) * 70ms);
+}
+
+.fact b {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1;
+  color: #ffffff;
+}
+
+.fact b[data-sign="pos"] {
+  color: var(--win);
+}
+
+.fact b[data-sign="neg"] {
+  color: var(--red);
+}
+
+.act {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-top: auto;
+  padding-top: 18px;
+  border-top: 1px solid rgb(236 232 225 / 0.12);
+}
+
+.triangle {
+  flex: none;
+  width: clamp(80px, 17cqh, 128px);
+}
+
+.pip {
+  fill: rgb(236 232 225 / 0.08);
+  stroke: rgb(15 25 35);
+  stroke-width: 0.9;
+}
+
+.pip[data-on] {
+  fill: var(--rank);
+  animation: pip 240ms ease-out both;
+  animation-delay: calc(500ms + var(--stagger) * 14ms);
+}
+
+.actText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.actName {
+  font-family: var(--font-display);
+  font-stretch: 75%;
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+  text-transform: uppercase;
+}
+
+.actWins {
+  font-size: 13px;
+  color: rgb(236 232 225 / 0.6);
+}
+
+.actWins b {
+  color: #ffffff;
+}
+
+/* ---- history column ---- */
+
+.historyColumn {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  animation: rise 560ms cubic-bezier(0.2, 0.8, 0.2, 1) both 120ms;
+}
+
+.tabs {
+  display: flex;
+  gap: 28px;
+  border-bottom: 1px solid rgb(236 232 225 / 0.15);
+}
+
+.tabs span {
+  padding: 4px 0 10px;
+  font-family: var(--font-display);
+  font-stretch: 75%;
+  font-size: 22px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: rgb(236 232 225 / 0.4);
+}
+
+.tabs span[data-active] {
+  color: #ffffff;
+  box-shadow: inset 0 -3px 0 var(--red);
+}
+
+.summary {
+  display: flex;
+  gap: 28px;
+  padding: 14px 0;
+  font-size: 13px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: rgb(236 232 225 / 0.55);
+}
+
+.summary b {
+  margin-left: 8px;
+  font-size: 16px;
+  color: #ffffff;
+}
+
+.summary b[data-sign="pos"] {
+  color: var(--win);
+}
+
+.summary b[data-sign="neg"] {
+  color: var(--red);
+}
+
+.matches {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  overflow: auto;
+  list-style: none;
+}
+
+.match {
+  flex: 1 0 44px;
+  max-height: 72px;
+  display: grid;
+  grid-template-columns: 84px 128px minmax(0, 1fr) minmax(0, 0.9fr) 64px;
+  align-items: center;
+  gap: 16px;
+  padding-right: 18px;
+  background: linear-gradient(to right, rgb(70 227 183 / 0.16), rgb(15 25 35 / 0.88) 42%);
+  box-shadow: inset 4px 0 0 var(--win);
+  animation: slide 420ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  animation-delay: calc(250ms + var(--stagger) * 45ms);
+}
+
+.match[data-result="loss"] {
+  background: linear-gradient(to right, rgb(255 70 85 / 0.16), rgb(15 25 35 / 0.88) 42%);
+  box-shadow: inset 4px 0 0 var(--red);
+}
+
+.match:hover {
+  background-color: rgb(236 232 225 / 0.06);
+}
+
+.mapArt {
+  position: relative;
+  align-self: stretch;
+  display: grid;
+  place-items: center;
+  margin-left: 4px;
+  overflow: hidden;
+  background:
+    repeating-linear-gradient(135deg, rgb(236 232 225 / 0.05) 0 6px, transparent 6px 12px),
+    rgb(236 232 225 / 0.06);
+}
+
+.mapArt img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.mapInitial {
+  font-family: var(--font-display);
+  font-stretch: 75%;
+  font-size: 22px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: rgb(236 232 225 / 0.35);
+}
+
+.result {
+  font-family: var(--font-display);
+  font-stretch: 75%;
+  font-size: 26px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--win);
+}
+
+.match[data-result="loss"] .result {
+  color: var(--red);
+}
+
+.mapText {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.mapName {
+  font-family: var(--font-display);
+  font-stretch: 75%;
+  font-size: 20px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #ffffff;
+}
+
+.when {
+  font-size: 12px;
+  color: rgb(236 232 225 / 0.5);
+}
+
+.after {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow: hidden;
+  white-space: nowrap;
+  font-size: 13px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: rgb(236 232 225 / 0.65);
+}
+
+.after em {
+  font-size: 12px;
+  font-style: normal;
+  color: var(--red);
+}
+
+.after em[data-up] {
+  color: var(--win);
+}
+
+.match:has(em[data-up]) .after {
+  color: #ffffff;
+}
+
+.delta {
+  text-align: right;
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+}
+
+@keyframes emblem {
+  from {
+    opacity: 0;
+    transform: scale(0.7);
+  }
+}
+
+@keyframes breathe {
+  50% {
+    opacity: 0.6;
+    transform: scale(0.94);
+  }
+}
+
+@keyframes fill {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+@keyframes pip {
+  from {
+    fill: rgb(236 232 225 / 0.08);
+  }
+}
+
+@keyframes slide {
+  from {
+    opacity: 0;
+    transform: translateX(24px);
+  }
+}

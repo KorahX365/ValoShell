@@ -1,0 +1,562 @@
+/* The wall measures itself so five weapon tiles and two headings fill a column exactly. */
+.wall {
+  container-type: size;
+  width: 100%;
+  height: 100%;
+}
+
+.columns {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-4);
+  height: 100%;
+}
+
+/* Every gun fits: each category grows by its number of weapons and the tiles share it. */
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+  min-height: 0;
+}
+
+/* Too narrow for four columns: two, scrolling. */
+@container (max-width: 640px) {
+  .columns {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-content: start;
+    overflow: auto;
+    padding-right: 4px;
+  }
+
+  .category,
+  .weapon {
+    flex: none;
+  }
+
+  .weapon {
+    height: 96px;
+  }
+}
+
+.category {
+  flex: var(--n, 1) var(--n, 1) 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-height: 0;
+}
+
+.categoryName {
+  line-height: 12px;
+  font-family: var(--font-display);
+  font-stretch: calc(112% * var(--stretch, 1));
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 2.4px;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+
+.categoryGrid {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-height: 0;
+}
+
+.weapon {
+  position: relative;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto auto;
+  flex: 1 1 0;
+  min-height: 52px;
+  max-height: 170px;
+  padding: 8px 12px;
+  text-align: left;
+  background: var(--panel);
+  box-shadow: inset 0 0 0 1px var(--border-subtle);
+  clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 0 100%);
+  animation: rise 420ms var(--ease-decelerate) both;
+  animation-delay: calc(var(--stagger) * 25ms);
+  transition: box-shadow var(--dur-fast) var(--ease-standard), background var(--dur-fast) var(--ease-standard);
+}
+
+.weapon:hover {
+  background: rgb(255 255 255 / 0.06);
+  box-shadow: inset 0 0 0 1px var(--border-strong);
+}
+
+.weapon[data-selected] {
+  box-shadow: inset 0 0 0 2px var(--accent);
+}
+
+.weaponArt {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 0;
+}
+
+.weaponArt img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: 92%;
+  margin: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 6px 10px rgb(0 0 0 / 0.5));
+  transition: transform 400ms var(--ease-decelerate);
+}
+
+.weapon:hover .weaponArt img {
+}
+
+.weaponInitial {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 22px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgb(255 255 255 / 0.12);
+}
+
+.weaponName {
+  font-family: var(--font-display);
+  font-stretch: calc(112% * var(--stretch, 1));
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.skinName {
+  font-size: 11px;
+  color: var(--text-3);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.picker {
+  display: grid;
+  grid-template-rows: auto minmax(160px, 1.5fr) auto minmax(0, 1fr) auto;
+  gap: var(--space-3);
+  width: 100%;
+  height: 100%;
+  padding: var(--space-5);
+  background: var(--panel);
+  box-shadow: inset 0 0 0 1px var(--border-subtle);
+}
+
+.pickerTitle {
+  font-family: var(--font-display);
+  font-stretch: calc(120% * var(--stretch, 1));
+  font-size: clamp(22px, 2vw, 32px);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.picker:focus {
+  outline: none;
+}
+
+.pickerHead {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.titleRow {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 8px;
+}
+
+.titleRow .pickerTitle {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.stepButton {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  font-size: 20px;
+  line-height: 1;
+  color: var(--text-2);
+  background: rgb(255 255 255 / 0.05);
+  box-shadow: inset 0 0 0 1px var(--border-subtle);
+  transition: color var(--dur-fast) var(--ease-standard), background var(--dur-fast) var(--ease-standard);
+}
+
+.stepButton:hover {
+  color: var(--text-1);
+  background: rgb(255 255 255 / 0.12);
+}
+
+/* ---- inspect stage: edition light from below, the gun floating over its reflection ---- */
+
+.stage {
+  --edition: var(--accent);
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 0;
+  overflow: hidden;
+  cursor: grab;
+  touch-action: none;
+  background:
+    radial-gradient(70% 55% at 50% 78%, color-mix(in oklch, var(--edition) 34%, transparent), transparent 70%),
+    radial-gradient(120% 90% at 50% 0%, rgb(255 255 255 / 0.05), transparent 60%),
+    rgb(0 0 0 / 0.28);
+  box-shadow: inset 0 0 0 1px var(--border-subtle);
+}
+
+.stage:active {
+  cursor: grabbing;
+}
+
+.stageFloor {
+  position: absolute;
+  inset: auto 8% 16% 8%;
+  height: 22%;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, color-mix(in oklch, var(--edition) 45%, transparent), transparent);
+  filter: blur(6px);
+  opacity: 0.7;
+  animation: floorBreath 4s ease-in-out infinite alternate;
+}
+
+.model {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 88%;
+  height: 72%;
+  animation: swap 520ms cubic-bezier(0.34, 1.3, 0.64, 1) both, float 5s ease-in-out 520ms infinite alternate;
+}
+
+/* The pointer's tilt, apart from the entrance so the two transforms never fight. */
+.modelTilt {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  transition: transform 260ms var(--ease-decelerate);
+}
+
+.modelImage {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 22px 26px rgb(0 0 0 / 0.65));
+  pointer-events: none;
+  user-select: none;
+}
+
+.sheen {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(105deg, transparent 35%, rgb(255 255 255 / 0.28) 48%, transparent 60%);
+  background-size: 260% 100%;
+  mix-blend-mode: overlay;
+  animation: sheen 1.4s var(--ease-decelerate) 200ms both;
+}
+
+.reflection {
+  position: absolute;
+  bottom: 2%;
+  left: 50%;
+  width: 70%;
+  max-height: 22%;
+  object-fit: contain;
+  transform: translateX(-50%) scaleY(-1);
+  opacity: 0.16;
+  filter: blur(2px);
+  -webkit-mask-image: linear-gradient(to top, #000, transparent 80%);
+  mask-image: linear-gradient(to top, #000, transparent 80%);
+  pointer-events: none;
+}
+
+.edition {
+  position: absolute;
+  top: 10px;
+  left: 12px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: var(--edition);
+}
+
+.edition i {
+  width: 10px;
+  height: 10px;
+  transform: rotate(45deg);
+  background: var(--edition);
+  box-shadow: 0 0 10px var(--edition);
+}
+
+.stageHint {
+  position: absolute;
+  right: 10px;
+  bottom: 8px;
+  font-size: 10px;
+  color: var(--text-3);
+  opacity: 0;
+  transition: opacity var(--dur-base) var(--ease-standard);
+  pointer-events: none;
+}
+
+.stage:hover .stageHint {
+  opacity: 1;
+}
+
+.showcase {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  background: #000000;
+  animation: fadeIn 240ms var(--ease-standard) both;
+}
+
+.showcaseVideo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.showcaseClose {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 28px;
+  height: 28px;
+  font-size: 18px;
+  color: #ffffff;
+  background: rgb(0 0 0 / 0.6);
+}
+
+/* ---- upgrades: the level track and the variant swatches ---- */
+
+.upgrades {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.levelTrack {
+  display: grid;
+  grid-auto-columns: minmax(0, 1fr);
+  grid-auto-flow: column;
+  gap: 3px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.level {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  height: 30px;
+  padding: 0 8px;
+  overflow: hidden;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--text-3);
+  background: rgb(255 255 255 / 0.04);
+  box-shadow: inset 0 -2px 0 rgb(255 255 255 / 0.08);
+}
+
+.level b {
+  font-size: 13px;
+}
+
+.level span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.level[data-owned] {
+  color: var(--text-1);
+  box-shadow: inset 0 -2px 0 var(--accent);
+}
+
+.level:not(:disabled):hover {
+  background: rgb(255 255 255 / 0.1);
+}
+
+.level:disabled {
+  cursor: default;
+}
+
+.chromas {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.chroma {
+  width: 34px;
+  height: 34px;
+  overflow: hidden;
+  border-radius: 3px;
+  background: rgb(255 255 255 / 0.08);
+  box-shadow: inset 0 0 0 1px var(--border-default);
+  transition: transform 220ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.chroma img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.chroma:hover:not(:disabled) {
+}
+
+.chroma:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.chroma[data-active] {
+  box-shadow: 0 0 0 2px var(--accent);
+}
+
+.chromaName {
+  min-width: 0;
+  overflow: hidden;
+  font-size: 11px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: var(--text-3);
+}
+
+.swatchFallback {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2, var(--accent)));
+}
+
+.levels {
+  margin-left: auto;
+  font-size: var(--text-caption);
+  color: var(--text-3);
+}
+
+.skinList {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  align-content: start;
+  gap: 6px;
+  min-height: 0;
+  overflow: auto;
+}
+
+.skin {
+  display: grid;
+  grid-template-rows: 48px auto;
+  gap: 4px;
+  padding: 8px;
+  text-align: left;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-2);
+  background: rgb(255 255 255 / 0.04);
+  box-shadow: inset 0 0 0 1px var(--border-subtle);
+  transition: background var(--dur-fast) var(--ease-standard), box-shadow var(--dur-fast) var(--ease-standard);
+}
+
+.skin img {
+  width: 100%;
+  height: 48px;
+  object-fit: contain;
+}
+
+.skin:hover {
+  color: var(--text-1);
+  background: rgb(255 255 255 / 0.08);
+}
+
+.skin {
+  border-left: 3px solid var(--edition, transparent);
+}
+
+.skin[data-equipped] {
+  box-shadow: inset 0 0 0 1px var(--positive);
+}
+
+.skin[data-picked] {
+  color: var(--text-1);
+  box-shadow: inset 0 0 0 2px var(--accent);
+}
+
+.loading {
+  color: var(--text-3);
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+
+@keyframes swap {
+  from {
+    opacity: 0;
+    transform: translateX(30px) scale(0.92);
+  }
+}
+
+@keyframes float {
+  to {
+    translate: 0 -6px;
+  }
+}
+
+@keyframes sheen {
+  from {
+    background-position: 100% 0;
+  }
+  to {
+    background-position: -60% 0;
+  }
+}
+
+@keyframes floorBreath {
+  to {
+    opacity: 0.45;
+    transform: scaleX(0.92);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+}

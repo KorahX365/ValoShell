@@ -1,0 +1,411 @@
+/* Inventory, agents and agent select per menu style. These screens are shared pieces; each
+   style reshapes their tiles, panels and lock button through `data-part` hooks:
+   screen-board (the panel), weapon-card, skin-row, skin-stage, skin-level, skin-chroma,
+   category-name, agent-tile, map-tile, chip, ally, spotlight, lock. */
+
+/* ======================================================================================
+   Minecraft: the inventory GUI. Light grey panel with a pixel bevel, sunken slots, white
+   item names with a hard shadow, stone buttons that turn blue-violet on hover.
+   ====================================================================================== */
+:root[data-skin="minecraft"] [data-part="screen-board"] {
+  --text-1: #3f3f3f;
+  --text-2: #4a4a4a;
+  --text-3: #6b6b6b;
+  --panel: transparent;
+  --border-subtle: #555555;
+  --border-default: #373737;
+  background: #c6c6c6;
+  box-shadow:
+    inset 3px 3px 0 #ffffff,
+    inset -3px -3px 0 #555555,
+    0 0 0 3px #000000;
+}
+
+:root[data-skin="minecraft"] [data-part="weapon-card"],
+:root[data-skin="minecraft"] [data-part="skin-row"],
+:root[data-skin="minecraft"] [data-part="agent-tile"],
+:root[data-skin="minecraft"] [data-part="map-tile"],
+:root[data-skin="minecraft"] [data-part="skin-chroma"] {
+  border-radius: 0;
+  clip-path: none;
+  color: #ffffff;
+  text-shadow: 2px 2px 0 #3f3f3f;
+  background: #8b8b8b;
+  box-shadow:
+    inset 3px 3px 0 #373737,
+    inset -3px -3px 0 #ffffff;
+}
+
+:root[data-skin="minecraft"] [data-part="weapon-card"]:hover,
+:root[data-skin="minecraft"] [data-part="skin-row"]:hover,
+:root[data-skin="minecraft"] [data-part="agent-tile"]:hover:not(:disabled),
+:root[data-skin="minecraft"] [data-part="map-tile"]:hover {
+  background: #a5a5a5;
+}
+
+/* Selected slot: the white wash the game draws over a hovered slot. */
+:root[data-skin="minecraft"] [data-part="weapon-card"][data-selected],
+:root[data-skin="minecraft"] [data-part="skin-row"][data-picked],
+:root[data-skin="minecraft"] [data-part="agent-tile"][data-active],
+:root[data-skin="minecraft"] [data-part="agent-tile"][data-own],
+:root[data-skin="minecraft"] [data-part="map-tile"][data-selected],
+:root[data-skin="minecraft"] [data-part="skin-chroma"][data-active] {
+  background: #c5c5c5;
+  box-shadow:
+    inset 3px 3px 0 #373737,
+    inset -3px -3px 0 #ffffff,
+    0 0 0 3px #ffffff;
+}
+
+:root[data-skin="minecraft"] [data-part="skin-stage"],
+:root[data-skin="minecraft"] [data-part="spotlight"] {
+  --text-1: #ffffff;
+  --text-2: #e0e0e0;
+  --text-3: #a0a0a0;
+  background: #000000;
+  box-shadow:
+    inset 3px 3px 0 #373737,
+    inset -3px -3px 0 #ffffff;
+}
+
+:root[data-skin="minecraft"] [data-part="category-name"] {
+  color: #3f3f3f;
+  letter-spacing: normal;
+  text-transform: none;
+}
+
+:root[data-skin="minecraft"] [data-part="lock"],
+:root[data-skin="minecraft"] [data-part="screen-board"] [data-part="play"] {
+  clip-path: none;
+  color: #ffffff;
+  text-shadow: 2px 2px 0 #3f3f3f;
+  text-transform: none;
+  background: #6f6f6f;
+  box-shadow:
+    inset 2px 2px 0 #a8a8a8,
+    inset -2px -2px 0 #4a4a4a,
+    0 0 0 2px #000000;
+}
+
+:root[data-skin="minecraft"] [data-part="lock"]:hover:not(:disabled),
+:root[data-skin="minecraft"] [data-part="screen-board"] [data-part="play"]:hover:not(:disabled) {
+  background: #7b86bd;
+  box-shadow:
+    inset 2px 2px 0 #bcc6f5,
+    inset -2px -2px 0 #4f5a8e,
+    0 0 0 2px #ffffff;
+}
+
+:root[data-skin="minecraft"] [data-part="ally"] {
+  background: rgb(0 0 0 / 0.55);
+  box-shadow: 0 0 0 2px #000000;
+}
+
+/* ======================================================================================
+   CS:GO Panorama: slate item tiles with a rarity bar along the bottom, orange selection,
+   a bevelled green accept-style button.
+   ====================================================================================== */
+:root[data-skin="csgo"] [data-part="weapon-card"],
+:root[data-skin="csgo"] [data-part="skin-row"],
+:root[data-skin="csgo"] [data-part="agent-tile"],
+:root[data-skin="csgo"] [data-part="map-tile"] {
+  clip-path: none;
+  background: linear-gradient(to bottom, #3c4752, #2a323a);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.08),
+    inset 0 -4px 0 var(--edition, #4b69ff);
+}
+
+:root[data-skin="csgo"] [data-part="agent-tile"],
+:root[data-skin="csgo"] [data-part="map-tile"] {
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.08);
+}
+
+:root[data-skin="csgo"] [data-part="weapon-card"]:hover,
+:root[data-skin="csgo"] [data-part="skin-row"]:hover,
+:root[data-skin="csgo"] [data-part="agent-tile"]:hover:not(:disabled),
+:root[data-skin="csgo"] [data-part="map-tile"]:hover {
+  background: linear-gradient(to bottom, #4a5764, #333c46);
+}
+
+:root[data-skin="csgo"] [data-part="weapon-card"][data-selected],
+:root[data-skin="csgo"] [data-part="skin-row"][data-picked],
+:root[data-skin="csgo"] [data-part="agent-tile"][data-active],
+:root[data-skin="csgo"] [data-part="agent-tile"][data-own],
+:root[data-skin="csgo"] [data-part="map-tile"][data-selected] {
+  box-shadow:
+    0 0 0 2px #de9b35,
+    inset 0 -4px 0 var(--edition, #4b69ff);
+}
+
+:root[data-skin="csgo"] [data-part="skin-stage"] {
+  background:
+    radial-gradient(70% 60% at 50% 70%, color-mix(in oklch, var(--edition) 25%, transparent), transparent 70%),
+    linear-gradient(to bottom, #1f262d, #12171c);
+}
+
+:root[data-skin="csgo"] [data-part="category-name"] {
+  color: #aab4bd;
+  letter-spacing: 0.5px;
+  text-transform: none;
+}
+
+:root[data-skin="csgo"] [data-part="lock"],
+:root[data-skin="csgo"] [data-part="screen-board"] [data-part="play"] {
+  clip-path: none;
+  color: #ffffff;
+  background: linear-gradient(to bottom, #67ad44, #4a8230);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.3), inset 0 -2px 0 rgb(0 0 0 / 0.25);
+}
+
+/* ======================================================================================
+   CS2: near-black flat tiles lit from below in the rarity colour, white hairline when chosen.
+   ====================================================================================== */
+:root[data-skin="cs2"] [data-part="weapon-card"],
+:root[data-skin="cs2"] [data-part="skin-row"],
+:root[data-skin="cs2"] [data-part="agent-tile"],
+:root[data-skin="cs2"] [data-part="map-tile"] {
+  clip-path: none;
+  background:
+    radial-gradient(90% 60% at 50% 120%, color-mix(in oklch, var(--edition, #4b69ff) 40%, transparent), transparent 70%),
+    #14171c;
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.06);
+}
+
+:root[data-skin="cs2"] [data-part="weapon-card"][data-selected],
+:root[data-skin="cs2"] [data-part="skin-row"][data-picked],
+:root[data-skin="cs2"] [data-part="agent-tile"][data-active],
+:root[data-skin="cs2"] [data-part="agent-tile"][data-own],
+:root[data-skin="cs2"] [data-part="map-tile"][data-selected] {
+  box-shadow: inset 0 0 0 1px #ffffff;
+}
+
+:root[data-skin="cs2"] [data-part="lock"],
+:root[data-skin="cs2"] [data-part="screen-board"] [data-part="play"] {
+  clip-path: none;
+  background: #4f9d3d;
+  color: #ffffff;
+}
+
+/* ======================================================================================
+   CS 1.6: olive VGUI. Raised bevels, the yellow-olive selection bar, no caps.
+   ====================================================================================== */
+:root[data-skin="cs16"] [data-part="screen-board"] {
+  background: #4c5844;
+  box-shadow: inset 1px 1px 0 #8c9284, inset -1px -1px 0 #292c21;
+}
+
+:root[data-skin="cs16"] [data-part="weapon-card"],
+:root[data-skin="cs16"] [data-part="skin-row"],
+:root[data-skin="cs16"] [data-part="agent-tile"],
+:root[data-skin="cs16"] [data-part="map-tile"],
+:root[data-skin="cs16"] [data-part="skin-level"] {
+  clip-path: none;
+  color: #dedfd6;
+  background: #4c5844;
+  box-shadow: inset 1px 1px 0 #8c9284, inset -1px -1px 0 #292c21;
+}
+
+:root[data-skin="cs16"] [data-part="weapon-card"][data-selected],
+:root[data-skin="cs16"] [data-part="skin-row"][data-picked],
+:root[data-skin="cs16"] [data-part="agent-tile"][data-active],
+:root[data-skin="cs16"] [data-part="agent-tile"][data-own],
+:root[data-skin="cs16"] [data-part="map-tile"][data-selected] {
+  color: #ffffff;
+  background: #958831;
+  box-shadow: inset 1px 1px 0 #292c21, inset -1px -1px 0 #8c9284;
+}
+
+:root[data-skin="cs16"] [data-part="skin-stage"],
+:root[data-skin="cs16"] [data-part="spotlight"] {
+  background: #3e4637;
+  box-shadow: inset 1px 1px 0 #292c21, inset -1px -1px 0 #8c9284;
+}
+
+:root[data-skin="cs16"] [data-part="lock"],
+:root[data-skin="cs16"] [data-part="screen-board"] [data-part="play"] {
+  clip-path: none;
+  color: #dedfd6;
+  background: #4c5844;
+  box-shadow: inset 1px 1px 0 #8c9284, inset -1px -1px 0 #292c21;
+}
+
+:root[data-skin="cs16"] [data-part="lock"]:active,
+:root[data-skin="cs16"] [data-part="screen-board"] [data-part="play"]:active {
+  box-shadow: inset 1px 1px 0 #292c21, inset -1px -1px 0 #8c9284;
+}
+
+/* ======================================================================================
+   Fortnite: the Locker. Rarity-gradient tiles with a dark name strip, a fat yellow outline
+   on the chosen one, tiles that pop on hover, a slanted yellow LOCK IN.
+   ====================================================================================== */
+:root[data-skin="fortnite"] [data-part="weapon-card"],
+:root[data-skin="fortnite"] [data-part="skin-row"],
+:root[data-skin="fortnite"] [data-part="map-tile"] {
+  --rarity: var(--edition, #2f8cff);
+  clip-path: none;
+  background:
+    radial-gradient(circle at 50% 35%, color-mix(in oklch, var(--rarity) 55%, white), var(--rarity) 45%, color-mix(in oklch, var(--rarity) 60%, black) 100%);
+  box-shadow: inset 0 0 0 2px rgb(255 255 255 / 0.25);
+  transition: transform 180ms cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 120ms ease;
+}
+
+:root[data-skin="fortnite"] [data-part="skin-row"][style*="transparent"],
+:root[data-skin="fortnite"] [data-part="weapon-card"] {
+  --rarity: #2f8cff;
+}
+
+/* Agents read as Epic. */
+:root[data-skin="fortnite"] [data-part="agent-tile"] {
+  clip-path: none;
+  background: radial-gradient(circle at 50% 35%, #d39cff, #9d4dea 45%, #4d1a8a 100%);
+  box-shadow: inset 0 0 0 2px rgb(255 255 255 / 0.25);
+  transition: transform 180ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+:root[data-skin="fortnite"] [data-part="weapon-card"]:hover,
+:root[data-skin="fortnite"] [data-part="skin-row"]:hover,
+:root[data-skin="fortnite"] [data-part="map-tile"]:hover,
+:root[data-skin="fortnite"] [data-part="agent-tile"]:hover:not(:disabled) {
+  transform: scale(1.04);
+}
+
+:root[data-skin="fortnite"] [data-part="weapon-card"][data-selected],
+:root[data-skin="fortnite"] [data-part="skin-row"][data-picked],
+:root[data-skin="fortnite"] [data-part="agent-tile"][data-active],
+:root[data-skin="fortnite"] [data-part="agent-tile"][data-own],
+:root[data-skin="fortnite"] [data-part="map-tile"][data-selected] {
+  box-shadow: inset 0 0 0 4px #fbe925;
+}
+
+:root[data-skin="fortnite"] [data-part="category-name"] {
+  font-family: "Oswald Variable", var(--font-display);
+  font-size: 18px;
+  font-style: italic;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+:root[data-skin="fortnite"] [data-part="skin-stage"] {
+  background:
+    radial-gradient(60% 55% at 50% 60%, color-mix(in oklch, var(--edition) 60%, white 10%), transparent 75%),
+    linear-gradient(to bottom, #1c3fc4, #0d1f6e);
+}
+
+:root[data-skin="fortnite"] [data-part="lock"],
+:root[data-skin="fortnite"] [data-part="screen-board"] [data-part="play"] {
+  clip-path: none;
+  font-family: "Oswald Variable", var(--font-display);
+  font-style: italic;
+  font-weight: 700;
+  color: #121212;
+  background: #fbe925;
+  box-shadow: inset 0 -5px 0 #cdbb0b;
+  transform: skewX(-6deg);
+}
+
+/* ======================================================================================
+   Halo 3: frosted cyan tiles with a bright top edge; the chosen one fills with cyan light.
+   ====================================================================================== */
+:root[data-skin="halo"] [data-part="weapon-card"],
+:root[data-skin="halo"] [data-part="skin-row"],
+:root[data-skin="halo"] [data-part="agent-tile"],
+:root[data-skin="halo"] [data-part="map-tile"] {
+  clip-path: none;
+  background: rgb(14 52 92 / 0.5);
+  box-shadow:
+    inset 0 1px 0 rgb(111 212 255 / 0.55),
+    inset 0 0 0 1px rgb(111 212 255 / 0.18);
+}
+
+:root[data-skin="halo"] [data-part="weapon-card"][data-selected],
+:root[data-skin="halo"] [data-part="skin-row"][data-picked],
+:root[data-skin="halo"] [data-part="agent-tile"][data-active],
+:root[data-skin="halo"] [data-part="agent-tile"][data-own],
+:root[data-skin="halo"] [data-part="map-tile"][data-selected] {
+  background: linear-gradient(to bottom, rgb(111 212 255 / 0.45), rgb(111 212 255 / 0.12));
+  box-shadow:
+    inset 0 1px 0 #ffffff,
+    0 0 18px rgb(111 212 255 / 0.35);
+}
+
+:root[data-skin="halo"] [data-part="lock"],
+:root[data-skin="halo"] [data-part="screen-board"] [data-part="play"] {
+  clip-path: none;
+  color: #04101c;
+  background: linear-gradient(to bottom, #9ae2ff, #4bb8e6);
+  box-shadow: 0 0 20px rgb(111 212 255 / 0.45);
+}
+
+/* ======================================================================================
+   Terminal: no fills, dashed outlines; the chosen item is inverted like a cursor line.
+   ====================================================================================== */
+:root[data-skin="terminal"] [data-part="weapon-card"],
+:root[data-skin="terminal"] [data-part="skin-row"],
+:root[data-skin="terminal"] [data-part="agent-tile"],
+:root[data-skin="terminal"] [data-part="map-tile"],
+:root[data-skin="terminal"] [data-part="skin-level"] {
+  clip-path: none;
+  background: transparent;
+  box-shadow: none;
+  outline: 1px dashed rgb(var(--text-rgb) / 0.35);
+  outline-offset: -1px;
+}
+
+:root[data-skin="terminal"] [data-part="weapon-card"][data-selected],
+:root[data-skin="terminal"] [data-part="skin-row"][data-picked],
+:root[data-skin="terminal"] [data-part="agent-tile"][data-active],
+:root[data-skin="terminal"] [data-part="agent-tile"][data-own],
+:root[data-skin="terminal"] [data-part="map-tile"][data-selected] {
+  --text-1: #000000;
+  --text-2: #000000;
+  --text-3: rgb(0 0 0 / 0.7);
+  color: #000000;
+  background: var(--accent);
+  outline-style: solid;
+}
+
+:root[data-skin="terminal"] [data-part="lock"] {
+  clip-path: none;
+}
+
+:root[data-skin="terminal"] [data-part="lock"]::before {
+  content: "[ ";
+}
+
+:root[data-skin="terminal"] [data-part="lock"]::after {
+  content: " ]";
+}
+
+/* ======================================================================================
+   VALORANT Beta: hairline boxes, no fills, pale yellow corner ticks on the chosen tile.
+   ====================================================================================== */
+:root[data-skin="beta"] [data-part="weapon-card"],
+:root[data-skin="beta"] [data-part="skin-row"],
+:root[data-skin="beta"] [data-part="agent-tile"],
+:root[data-skin="beta"] [data-part="map-tile"] {
+  clip-path: none;
+  background: rgb(20 26 29 / 0.6);
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.2);
+}
+
+:root[data-skin="beta"] [data-part="weapon-card"][data-selected],
+:root[data-skin="beta"] [data-part="skin-row"][data-picked],
+:root[data-skin="beta"] [data-part="agent-tile"][data-active],
+:root[data-skin="beta"] [data-part="agent-tile"][data-own],
+:root[data-skin="beta"] [data-part="map-tile"][data-selected] {
+  background:
+    linear-gradient(#f1e8ab, #f1e8ab) top left / 10px 2px no-repeat,
+    linear-gradient(#f1e8ab, #f1e8ab) top left / 2px 10px no-repeat,
+    linear-gradient(#f1e8ab, #f1e8ab) bottom right / 10px 2px no-repeat,
+    linear-gradient(#f1e8ab, #f1e8ab) bottom right / 2px 10px no-repeat,
+    rgb(241 232 171 / 0.08);
+  box-shadow: inset 0 0 0 1px rgb(241 232 171 / 0.6);
+}
+
+:root[data-skin="beta"] [data-part="lock"],
+:root[data-skin="beta"] [data-part="screen-board"] [data-part="play"] {
+  clip-path: none;
+  color: #253035;
+  background: #bfe1dd;
+}

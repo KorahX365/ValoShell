@@ -1,0 +1,67 @@
+{
+  "ID": "fe5ea6f4-a974-412a-8422-e0631171756b",
+  "MUCName": "fe5ea6f4-a974-412a-8422-e0631171756b@ares-parties.eu1.pvp.net",
+  "VoiceRoomID": "fe5ea6f4-a974-412a-8422-e0631171756b-pty",
+  "Version": 1702241006830,
+  "ClientVersion": "release-13.08-shipping-19-5698904",
+  "Members": [
+    {
+      "Subject": "d7ff5397-caf5-4451-9057-0db61e73ab33",
+      "CompetitiveTier": 14,
+      "PlayerIdentity": {
+        "Subject": "d7ff5397-caf5-4451-9057-0db61e73ab33",
+        "PlayerCardID": "9fb348bc-41a0-91ad-8a3e-818035c4e561",
+        "PlayerTitleID": "d13e579c-435e-44d4-cec2-6eae5a3c5ed4",
+        "AccountLevel": 239,
+        "PreferredLevelBorderID": "",
+        "Incognito": false,
+        "HideAccountLevel": true
+      },
+      "SeasonalBadgeInfo": null,
+      "IsOwner": true,
+      "QueueEligibleRemainingAccountLevels": 0,
+      "Pings": [{ "Ping": 19, "GamePodID": "aresriot.aws-eus2-prod.eu-gp-madrid-1" }],
+      "IsReady": true,
+      "IsModerator": false,
+      "UseBroadcastHUD": false,
+      "PlatformType": "PC"
+    }
+  ],
+  "State": "DEFAULT",
+  "PreviousState": "DEFAULT",
+  "StateTransitionReason": "NONE",
+  "Accessibility": "CLOSED",
+  "CustomGameData": {
+    "Settings": { "Map": "", "Mode": "", "UseBots": false, "GamePod": "", "GameRules": null },
+    "Membership": { "teamOne": null, "teamTwo": null, "teamSpectate": null, "teamOneCoaches": null, "teamTwoCoaches": null },
+    "MaxPartySize": 5,
+    "AutobalanceEnabled": true,
+    "AutobalanceMinPlayers": 6,
+    "HasRecoveryData": false
+  },
+  "MatchmakingData": {
+    "QueueID": "unrated",
+    "PreferredGamePods": ["aresriot.aws-eus2-prod.eu-gp-madrid-1"],
+    "SkillDisparityRRPenalty": 0
+  },
+  "Invites": null,
+  "Requests": [
+    {
+      "ID": "req-1",
+      "PartyID": "fe5ea6f4-a974-412a-8422-e0631171756b",
+      "RequestedBySubject": "11111111-2222-3333-4444-555555555555",
+      "Subjects": ["11111111-2222-3333-4444-555555555555"],
+      "CreatedAt": "2026-10-19T10:00:00Z",
+      "RefreshedAt": "2026-10-19T10:00:00Z",
+      "ExpiresIn": 300000000000
+    }
+  ],
+  "QueueEntryTime": "0001-01-01T00:00:00Z",
+  "ErrorNotification": { "ErrorType": "", "ErroredPlayers": null },
+  "RestrictedSeconds": 0,
+  "EligibleQueues": ["unrated", "competitive", "swiftplay", "spikerush", "deathmatch", "ggteam", "hurm"],
+  "QueueIneligibilities": [],
+  "CheatData": { "GamePodOverride": "", "ForcePostGameProcessing": false },
+  "XPBonuses": [{ "ID": "SOCIAL_XP", "Applied": false }],
+  "InviteCode": ""
+}

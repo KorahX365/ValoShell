@@ -1,0 +1,52 @@
+{
+  "MatchID": "0f6c5b0e-3b4c-4f0e-9c1e-aaaaaaaaaaaa",
+  "Version": 1700245999999,
+  "State": "IN_PROGRESS",
+  "MapID": "/Game/Maps/Triad/Triad",
+  "ModeID": "/Game/GameModes/Bomb/BombGameMode.BombGameMode_C",
+  "ProvisioningFlow": "Matchmaking",
+  "GamePodID": "aresriot.aws-eus2-prod.eu-gp-madrid-1",
+  "AllMUCName": "0f6c5b0e@ares-coregame.eu1.pvp.net",
+  "TeamMUCName": "0f6c5b0e-red@ares-coregame.eu1.pvp.net",
+  "TeamVoiceID": "0f6c5b0e-red",
+  "TeamMatchToken": "match-token-secret",
+  "IsReconnectable": true,
+  "ConnectionDetails": {
+    "GameServerHosts": ["10.1.1.1"],
+    "GameServerHost": "10.1.1.1",
+    "GameServerPort": 7777,
+    "GameServerObfuscatedIP": 12345,
+    "GameClientHash": 67890,
+    "PlayerKey": "join-key-secret"
+  },
+  "PostGameDetails": null,
+  "Players": [
+    {
+      "Subject": "b47236a3-0000-0000-0000-000000000001",
+      "TeamID": "Red",
+      "CharacterID": "add6443a-41bd-e414-f6ad-e58d267f4e95",
+      "PlayerIdentity": {
+        "Subject": "b47236a3-0000-0000-0000-000000000001",
+        "PlayerCardID": "card-1",
+        "PlayerTitleID": "title-1",
+        "AccountLevel": 120,
+        "PreferredLevelBorderID": "",
+        "Incognito": false,
+        "HideAccountLevel": false
+      },
+      "SeasonalBadgeInfo": { "SeasonID": "s", "NumberOfWins": 80, "WinsByTier": null, "Rank": 21, "LeaderboardRank": 42 },
+      "IsCoach": false,
+      "IsAssociated": true
+    },
+    {
+      "Subject": "b47236a3-0000-0000-0000-000000000002",
+      "TeamID": "Blue",
+      "CharacterID": "eb93336a-449b-9c1b-0a54-a891f7921d69",
+      "PlayerIdentity": { "Subject": "b47236a3-0000-0000-0000-000000000002", "Incognito": true },
+      "SeasonalBadgeInfo": null,
+      "IsCoach": false,
+      "IsAssociated": true
+    }
+  ],
+  "MatchmakingData": { "QueueID": "competitive", "IsRanked": true }
+}

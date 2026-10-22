@@ -1,0 +1,61 @@
+{
+  "matchInfo": {
+    "matchId": "post-1",
+    "mapId": "/Game/Maps/Ascent/Ascent",
+    "gameStartMillis": 1700000000000,
+    "gameLengthMillis": 2100000,
+    "queueID": "competitive",
+    "isCompleted": true
+  },
+  "players": [
+    {
+      "subject": "me", "gameName": "", "tagLine": "", "teamId": "Blue", "partyId": "p1",
+      "characterId": "add6443a-41bd-e414-f6ad-e58d267f4e95",
+      "stats": {"score": 5520, "roundsPlayed": 22, "kills": 21, "deaths": 14, "assists": 6}
+    },
+    {
+      "subject": "duo", "gameName": "", "tagLine": "", "teamId": "Blue", "partyId": "p1",
+      "characterId": "8e253930-4c05-31dd-1b6c-968525494517",
+      "stats": {"score": 3300, "roundsPlayed": 22, "kills": 12, "deaths": 15, "assists": 9}
+    },
+    {
+      "subject": "hidden", "gameName": "Secret", "tagLine": "007", "teamId": "Red", "partyId": "q1",
+      "characterId": "117ed9e3-49f3-6512-3ccf-0cada7e3823b",
+      "stats": {"score": 6160, "roundsPlayed": 22, "kills": 24, "deaths": 16, "assists": 2}
+    },
+    {
+      "subject": "stranger", "gameName": "Leaky", "tagLine": "1", "teamId": "Red", "partyId": "q2",
+      "characterId": "f94c3b30-42be-e959-889c-5aa313dba261",
+      "stats": {"score": 2860, "roundsPlayed": 22, "kills": 10, "deaths": 18, "assists": 4}
+    },
+    {"subject": "caster", "teamId": "Neutral", "isObserver": true}
+  ],
+  "teams": [
+    {"teamId": "Blue", "won": true, "roundsPlayed": 22, "roundsWon": 13},
+    {"teamId": "Red", "won": false, "roundsPlayed": 22, "roundsWon": 9}
+  ],
+  "roundResults": [
+    {
+      "roundNum": 0, "winningTeam": "Blue",
+      "playerStats": [
+        {"subject": "me",
+         "kills": [{"roundTime": 9000, "killer": "me", "victim": "stranger"}],
+         "damage": [{"receiver": "stranger", "damage": 150, "headshots": 1, "bodyshots": 1, "legshots": 0}]},
+        {"subject": "hidden",
+         "kills": [{"roundTime": 21000, "killer": "hidden", "victim": "duo"}],
+         "damage": [{"receiver": "duo", "damage": 140, "headshots": 0, "bodyshots": 4, "legshots": 0}]}
+      ]
+    },
+    {
+      "roundNum": 1, "winningTeam": "Red",
+      "playerStats": [
+        {"subject": "me",
+         "kills": [],
+         "damage": [{"receiver": "hidden", "damage": 66, "headshots": 0, "bodyshots": 2, "legshots": 1}]},
+        {"subject": "hidden",
+         "kills": [{"roundTime": 4000, "killer": "hidden", "victim": "me"}],
+         "damage": [{"receiver": "me", "damage": 150, "headshots": 1, "bodyshots": 0, "legshots": 0}]}
+      ]
+    }
+  ]
+}

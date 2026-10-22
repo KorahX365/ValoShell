@@ -1,0 +1,150 @@
+/* Glass rank card: a frosted capsule like the friends panel; the bar fills in the rank's own
+   colour and the dots pop in one after another. Pointer values come from glassMotion.ts. */
+.rank {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  height: 100%;
+  padding: 0 22px 0 16px;
+  border-radius: 26px;
+  font-family: "Inter Variable", "Segoe UI", sans-serif;
+  color: #f5f5f7;
+  background: rgb(24 26 32 / 0.48);
+  box-shadow:
+    inset 0 0 0 0.5px rgb(255 255 255 / 0.2),
+    inset 0 1px 0 rgb(255 255 255 / 0.1),
+    0 24px 60px rgb(0 0 0 / 0.35);
+  backdrop-filter: blur(32px) saturate(180%);
+  transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transition: transform 500ms cubic-bezier(0.2, 1, 0.3, 1);
+  animation: cardIn 900ms cubic-bezier(0.2, 1.35, 0.35, 1) 240ms backwards;
+}
+
+.glare {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(circle at var(--mx, 50%) var(--my, 0%), rgb(255 255 255 / 0.16), transparent 45%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 400ms ease;
+}
+
+.rank[data-hover] > .glare {
+  opacity: 1;
+}
+
+.emblem {
+  flex: none;
+  width: 58px;
+  height: 58px;
+  object-fit: contain;
+  filter: drop-shadow(0 6px 14px rgb(0 0 0 / 0.45));
+}
+
+.body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  white-space: nowrap;
+}
+
+.head b {
+  overflow: hidden;
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  text-overflow: ellipsis;
+}
+
+.rr {
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+  color: rgb(245 245 247 / 0.6);
+}
+
+.track {
+  height: 6px;
+  overflow: hidden;
+  border-radius: 3px;
+  background: rgb(255 255 255 / 0.12);
+}
+
+.fill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(to right, color-mix(in srgb, var(--rank) 60%, #ffffff), var(--rank));
+  box-shadow: 0 0 12px color-mix(in srgb, var(--rank) 70%, transparent);
+  transform: scaleX(var(--progress));
+  transform-origin: left;
+  animation: fill 1200ms cubic-bezier(0.2, 1, 0.3, 1) 500ms backwards;
+}
+
+.recent {
+  display: flex;
+  gap: 6px;
+  padding: 0;
+  list-style: none;
+}
+
+.recent li {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgb(255 255 255 / 0.3);
+  animation: dotIn 500ms cubic-bezier(0.2, 1.35, 0.35, 1) backwards;
+  animation-delay: calc(700ms + var(--i) * 70ms);
+}
+
+.recent li[data-result="win"] {
+  background: #30d158;
+}
+
+.recent li[data-result="loss"] {
+  background: #ff453a;
+}
+
+.note {
+  font-size: 14px;
+  color: rgb(245 245 247 / 0.6);
+}
+
+@keyframes cardIn {
+  from {
+    opacity: 0;
+    transform: translateY(-12px) scale(0.97);
+    filter: blur(10px);
+  }
+}
+
+@keyframes fill {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+@keyframes dotIn {
+  from {
+    opacity: 0;
+    transform: scale(0);
+  }
+}
+
+:global(:root[data-motion="reduced"]) .rank,
+:global(:root[data-motion="reduced"]) .fill,
+:global(:root[data-motion="reduced"]) .recent li {
+  animation: none;
+}

@@ -1,0 +1,204 @@
+/* Design tokens, three layers.
+   1. Primitives: raw values. Never referenced by components.
+   2. Semantic: roles. Themes override only this layer.
+   3. Component: per-component knobs derived from semantic tokens.
+   The default theme is `valorant-dark`. */
+
+@import "@fontsource-variable/inter/index.css";
+@import "@fontsource-variable/jetbrains-mono/index.css";
+@import "@fontsource-variable/saira/wdth.css";
+@import "@fontsource-variable/oswald/index.css";
+@import "@fontsource-variable/pixelify-sans/index.css";
+@import "@fontsource/share-tech-mono/index.css";
+@import "@fontsource-variable/cinzel/index.css";
+
+@import "./skins.css";
+@import "./glass.css";
+@import "./league.css";
+@import "./screens.css";
+@import "./transitions.css";
+@import "./fx.css";
+@import "./postmatch.css";
+
+/* The VALORANT style's titles: Anton is the closest free cut to Riot's Tungsten Bold (same stems
+   and letter widths), scaled to Tungsten's cap height. It is registered for every weight so the
+   bold title rules use it as drawn instead of faking bold. */
+@font-face {
+  font-family: "VAL Title";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  size-adjust: 85.4%;
+  src: url("../../../node_modules/@fontsource/anton/files/anton-latin-400-normal.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "VAL Title";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  size-adjust: 85.4%;
+  src: url("../../../node_modules/@fontsource/anton/files/anton-latin-ext-400-normal.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+:root {
+  /* ---- 1. Primitives ---- */
+  --red-500: #ff4655;
+  --red-400: #ff5f6c;
+  --red-600: #e03847;
+  --peach-300: #ffb4a8;
+  --ink-950: #0a0a0e;
+  --ink-900: #101015;
+  --ink-850: #17171d;
+  --ink-800: #202028;
+  --paper-100: #ededf0;
+  --green-400: #4ade80;
+  --amber-400: #fbbf24;
+  --salmon-300: #ff8a80;
+  --blue-400: #6ea8ff;
+  --team-blue-400: #5b9dff;
+  --team-orange-400: #ff9b5c;
+
+  --font-display: "Saira Variable", "Bahnschrift", "Segoe UI Variable Display", sans-serif;
+  --font-text: "Inter Variable", "Segoe UI Variable Text", "Segoe UI", sans-serif;
+  /* The VALORANT client's DIN: its own cut if installed, else Windows' Bahnschrift. */
+  --font-din: "DIN Next LT Pro", "DINNextLTPro", "Bahnschrift", var(--font-text);
+  --font-mono: "JetBrains Mono Variable", "Cascadia Mono", Consolas, monospace;
+
+  /* ---- 2. Semantic ---- */
+  --accent: var(--red-500);
+  --accent-hover: var(--red-400);
+  --accent-pressed: var(--red-600);
+  --accent-gradient-end: var(--peach-300);
+  --accent-soft: color-mix(in oklch, var(--accent) 14%, transparent);
+  --accent-soft-hover: color-mix(in oklch, var(--accent) 22%, transparent);
+  --accent-border: color-mix(in oklch, var(--accent) 45%, transparent);
+  --on-accent: #ffffff;
+  --focus-ring: color-mix(in oklch, var(--accent) 60%, transparent);
+
+  --ground: var(--ink-950);
+  --surface-chrome: rgb(16 16 21 / 0.94);
+  --surface-shell: rgb(255 255 255 / 0.035);
+  --surface-raised: rgb(23 23 29 / 0.94);
+  --surface-overlay: rgb(32 32 40 / 0.97);
+  --surface-sunken: rgb(9 9 13 / 0.8);
+  --surface-popup: var(--ink-850);
+  --wash-row: rgb(255 255 255 / 0.022);
+  --wash-row-faint: rgb(255 255 255 / 0.018);
+  --wash-hover: rgb(255 255 255 / 0.045);
+  --wash-pressed: rgb(255 255 255 / 0.08);
+
+  --border-subtle: rgb(255 255 255 / 0.07);
+  --border-default: rgb(255 255 255 / 0.11);
+  --border-strong: rgb(255 255 255 / 0.2);
+  --bevel-highlight: rgb(255 255 255 / 0.07);
+
+  --text-1: var(--paper-100);
+  --text-2: rgb(237 237 240 / 0.66);
+  --text-3: rgb(237 237 240 / 0.46);
+  --text-disabled: rgb(237 237 240 / 0.3);
+
+  --positive: var(--green-400);
+  --positive-soft: rgb(74 222 128 / 0.13);
+  --warning: var(--amber-400);
+  --warning-soft: rgb(251 191 36 / 0.13);
+  --negative: var(--salmon-300);
+  --negative-soft: rgb(255 138 128 / 0.13);
+  --info: var(--blue-400);
+  --info-soft: rgb(110 168 255 / 0.13);
+  --ally: var(--team-blue-400);
+  --ally-soft: rgb(91 157 255 / 0.13);
+  --enemy: var(--team-orange-400);
+  --enemy-soft: rgb(255 155 92 / 0.13);
+  --live: var(--accent);
+
+  --party-1: #c792ea;
+  --party-2: #7fd1b9;
+  --party-3: #ffcb6b;
+  --party-4: #f78c6c;
+  --party-5: #89ddff;
+
+  --rank-unranked: #6e7681;
+  --rank-iron: #5f6570;
+  --rank-bronze: #a8763e;
+  --rank-silver: #b9c2cc;
+  --rank-gold: #e5c46b;
+  --rank-platinum: #4fbfd4;
+  --rank-diamond: #b87de8;
+  --rank-ascendant: #2fc46b;
+  --rank-immortal: #e44d6e;
+  --rank-radiant: #fff6b0;
+
+  --backdrop-front: #8a2b36;
+  --backdrop-opacity: 0.26;
+
+  /* Type scale (px values from). */
+  --text-display: 32px;
+  --text-h1: 24px;
+  --text-h2: 19px;
+  --text-h3: 15px;
+  --text-body-lg: 14px;
+  --text-body: 13px;
+  --text-caption: 12px;
+  --text-label: 11px;
+  --tracking-display: -0.5px;
+  --tracking-heading: -0.2px;
+  --tracking-label: 1.4px;
+
+  /* Spacing (4 px grid) scaled by density. */
+  --density: 1;
+  --space-1: calc(4px * var(--density));
+  --space-2: calc(8px * var(--density));
+  --space-3: calc(12px * var(--density));
+  --space-4: calc(16px * var(--density));
+  --space-5: calc(20px * var(--density));
+  --space-6: calc(24px * var(--density));
+  --space-8: calc(32px * var(--density));
+  --bezel: 5px;
+
+  --radius-xs: 4px;
+  --radius-sm: 7px;
+  --radius-md: 11px;
+  --radius-lg: 16px;
+  --radius-outer: 18px;
+  --radius-inner: calc(var(--radius-outer) - var(--bezel));
+  --radius-pill: 9999px;
+
+  /* Motion. `--motion-scale` 0 disables durations globally. */
+  --motion-scale: 1;
+  --dur-instant: calc(90ms * var(--motion-scale));
+  --dur-fast: calc(140ms * var(--motion-scale));
+  --dur-base: calc(200ms * var(--motion-scale));
+  --dur-slow: calc(300ms * var(--motion-scale));
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --ease-decelerate: cubic-bezier(0, 0, 0, 1);
+  --ease-accelerate: cubic-bezier(0.3, 0, 1, 1);
+
+  /* ---- 3. Component ---- */
+  --titlebar-h: 46px;
+  --rail-w: 72px;
+  --strip-h: 44px;
+  --control-h: calc(36px * var(--density));
+  --row-h: calc(30px * var(--density));
+  --card-pad: var(--space-4);
+  --button-radius: var(--radius-md);
+
+  /* Style knobs: menu styles (theme/skins.css) override these to restyle every scene. */
+  --panel: rgb(var(--ground-rgb, 10 10 14) / 0.88);
+  --panel-strong: rgb(var(--ground-rgb, 10 10 14) / 0.92);
+  /* Multiplies every display font-stretch: below 1 condenses headings. */
+  --stretch: 1;
+  --nav-shade: linear-gradient(to bottom, rgb(5 5 8 / 0.92), rgb(5 5 8 / 0.55) 60%, transparent);
+  --play: var(--accent);
+  --play-hover: var(--accent-hover);
+  --play-pressed: var(--accent-pressed);
+  --on-play: var(--on-accent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --motion-scale: 0;
+  }
+}

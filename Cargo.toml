@@ -1,0 +1,49 @@
+[workspace]
+resolver = "3"
+members = ["crates/domain", "crates/riot", "crates/store", "crates/services", "app"]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.96"
+publish = false
+authors = ["s1moscs"]
+license = "GPL-3.0-or-later"
+repository = "https://github.com/Soulhackzlol/ValoShell"
+homepage = "https://s1moscs.dev/valoshell"
+
+[workspace.dependencies]
+domain = { path = "crates/domain" }
+riot = { path = "crates/riot" }
+store = { path = "crates/store" }
+services = { path = "crates/services" }
+
+serde = { version = "1", features = ["derive"] }
+serde_json = { version = "1", features = ["preserve_order"] }
+thiserror = "2"
+tracing = "0.1"
+tokio = { version = "1", features = ["rt-multi-thread", "macros", "sync", "time", "fs", "io-util", "net"] }
+tokio-util = "0.7"
+reqwest = { version = "0.13", default-features = false, features = ["json", "rustls-no-provider", "gzip", "http2"] }
+tokio-tungstenite = { version = "0.30", features = ["rustls-tls-webpki-roots"] }
+rustls = { version = "0.23", default-features = false, features = ["ring", "std"] }
+futures-util = "0.3"
+arc-swap = "1"
+base64 = "0.22"
+ts-rs = { version = "12", features = ["serde-json-impl", "no-serde-warnings"] }
+
+[workspace.lints.rust]
+unsafe_code = "deny"
+unused_must_use = "deny"
+
+[workspace.lints.clippy]
+unwrap_used = "deny"
+expect_used = "warn"
+too_many_lines = "warn"
+too_many_arguments = "deny"
+
+[profile.release]
+lto = "thin"
+codegen-units = 1
+strip = true
+panic = "abort"

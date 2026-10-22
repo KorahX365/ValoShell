@@ -1,0 +1,15 @@
+.silhouette {
+  display: grid;
+  place-items: end center;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  color: rgb(255 255 255 / 0.35);
+  background: linear-gradient(to bottom, #3a4049, #22262c);
+}
+
+.silhouette svg {
+  width: 78%;
+  height: 78%;
+  margin-bottom: -10%;
+}
