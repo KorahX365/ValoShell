@@ -15,8 +15,17 @@ updates:
     groups:
       npm:
         patterns: ["*"]
+    # Toolchain majors need a deliberate migration (TypeScript 7 drops options the UI uses).
+    ignore:
+      - dependency-name: typescript
+        update-types: ["version-update:semver-major"]
+      - dependency-name: vitest
+        update-types: ["version-update:semver-major"]
 
   - package-ecosystem: github-actions
     directory: /
     schedule:
       interval: monthly
+    groups:
+      actions:
+        patterns: ["*"]
