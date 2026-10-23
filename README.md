@@ -14,15 +14,15 @@ studio and everything the client does: play, party, store, collection and career
 ![Windows](https://img.shields.io/badge/Windows-10%20%7C%2011-0f1923)
 ![Tauri 2](https://img.shields.io/badge/Tauri-2-24c8db?logo=tauri&logoColor=white)
 ![Rust](https://img.shields.io/badge/Rust-1.96+-b7410e?logo=rust&logoColor=white)
-![Status](https://img.shields.io/badge/status-early%20preview-f5a623)
+[![Release](https://img.shields.io/github/v/release/Soulhackzlol/ValoShell?color=ff4655)](https://github.com/Soulhackzlol/ValoShell/releases/latest)
 
 **[Website](https://s1moscs.dev/valoshell)** · **[Download](https://github.com/Soulhackzlol/ValoShell/releases/latest)** · **[Build from source](#build-from-source)** · **[Report a bug](https://github.com/Soulhackzlol/ValoShell/issues/new/choose)**
 
 </div>
 
-> [!WARNING]
-> **Early preview.** ValoShell was built for a video. Some screens are unfinished and you will
-> find bugs. [Reports](https://github.com/Soulhackzlol/ValoShell/issues/new/choose) help a lot.
+> [!NOTE]
+> **First public release.** ValoShell was built for a video, so you may still find rough edges.
+> [Reports](https://github.com/Soulhackzlol/ValoShell/issues/new/choose) help a lot.
 
 <br>
 
@@ -116,6 +116,9 @@ back when it ends.
 Grab the latest build from [Releases](https://github.com/Soulhackzlol/ValoShell/releases/latest),
 start VALORANT's Riot Client, then open ValoShell.
 
+The build isn't code-signed, so Windows may say *"Windows protected your PC"*: click **More info**,
+then **Run anyway**. Each release lists the file's SHA-256 in `SHA256SUMS.txt`.
+
 ## Build from source
 
 You need Windows 10/11, [Rust](https://rustup.rs) 1.96+ and [Node.js](https://nodejs.org) 22+.
@@ -154,6 +157,22 @@ Run the checks with `cargo test --workspace`, `npm run ui:check` and `npm run ui
 It only reads and sends what the official client can, through the Riot Client's local API, and
 never touches the game process. Like any third-party tool it isn't endorsed by Riot, so use it
 at your own discretion.
+</details>
+
+<details>
+<summary><b>Windows says it protected my PC. Is it a virus?</b></summary>
+<br>
+No. The build isn't code-signed, so SmartScreen warns about any new download like it. Click
+<b>More info</b>, then <b>Run anyway</b>. Every release lists the file's SHA-256 in
+<code>SHA256SUMS.txt</code>, so you can check your download, scan it on VirusTotal or build it yourself.
+</details>
+
+<details>
+<summary><b>ValoShell doesn't open. What do I do?</b></summary>
+<br>
+It needs Microsoft's <a href="https://developer.microsoft.com/microsoft-edge/webview2/">WebView2 Runtime</a>.
+Windows 11 already has it and most Windows 10 PCs too; if yours doesn't, install it and try again.
+Still nothing? <a href="https://github.com/Soulhackzlol/ValoShell/issues/new/choose">Open an issue</a>.
 </details>
 
 <details>

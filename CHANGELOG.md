@@ -4,9 +4,10 @@ All notable changes land here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and versions follow
 [SemVer](https://semver.org/spec/v2.0.0.html).
 
-## [0.1.0] - First early preview
+## [0.1.0] - First public release
 
-The first public build. Expect bugs and unfinished screens.
+The first public release, the one from the video. You may still find rough edges;
+[reports](https://github.com/Soulhackzlol/ValoShell/issues/new/choose) help a lot.
 
 ### Menus
 

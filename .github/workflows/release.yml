@@ -9,7 +9,7 @@ permissions:
 
 jobs:
   release:
-    name: Build and draft release
+    name: Build and publish release
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v7
@@ -27,14 +27,29 @@ jobs:
 
       - run: npm run build
 
-      - name: Name the executable after the tag
+      # The notes are written by hand in .github/release-notes/<tag>.md; the build's SHA-256 is
+      # appended to them and published in SHA256SUMS.txt so downloads can be checked.
+      - name: Name, hash and add the notes
         shell: pwsh
-        run: Copy-Item target/release/valoshell.exe "ValoShell-${{ github.ref_name }}.exe"
+        run: |
+          $tag = "${{ github.ref_name }}"
+          $exe = "ValoShell-$tag.exe"
+          Copy-Item target/release/valoshell.exe $exe
+          $hash = (Get-FileHash $exe -Algorithm SHA256).Hash.ToLower()
+          "$hash  $exe" | Out-File SHA256SUMS.txt -Encoding ascii
+          Copy-Item ".github/release-notes/$tag.md" release-notes.md
+          Add-Content release-notes.md ""
+          Add-Content release-notes.md ('**SHA-256** of `' + $exe + '`: `' + $hash + '`')
 
-      # A draft, so the notes can be written and the build tried before anyone sees it.
+      # No generated notes: they list dependency bumps instead of what changed for players.
+      # Tags with a "-" (v0.2.0-beta.1) publish as pre-releases; the rest become Latest.
       - uses: softprops/action-gh-release@v3
         with:
-          draft: true
-          prerelease: true
-          generate_release_notes: true
-          files: ValoShell-${{ github.ref_name }}.exe
+          body_path: release-notes.md
+          generate_release_notes: false
+          draft: false
+          prerelease: ${{ contains(github.ref_name, '-') }}
+          make_latest: ${{ !contains(github.ref_name, '-') }}
+          files: |
+            ValoShell-${{ github.ref_name }}.exe
+            SHA256SUMS.txt
