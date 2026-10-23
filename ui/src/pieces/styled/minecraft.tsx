@@ -6,6 +6,7 @@ import { For, Index, Show, createSignal, onMount, type JSX } from "solid-js";
 import { useNavigate } from "@solidjs/router";
 import type { MatchRow } from "~/bindings/MatchRow";
 import type { PieceProps } from "~/studio/registry";
+import { call } from "~/ipc/commands";
 import { openEscMenu } from "~/menu/EscMenu";
 import { playCue } from "~/menu/sound";
 import { formatDuration } from "~/pieces/store";
@@ -112,14 +113,14 @@ export function McMenu(_props: PieceProps) {
         </div>
         <div class={styles.pair}>
           <McButton onClick={openEscMenu}>Options...</McButton>
-          <McButton onClick={openEscMenu}>Quit Game</McButton>
+          <McButton onClick={() => void call("quit_app", {})}>Quit Game</McButton>
         </div>
       </div>
       <footer class={styles.version}>
         <span>
-          ValoShell 0.1.0 ({play.searchClock() ? `searching ${play.searchClock()}` : `${play.partySize()}/${play.maxSize()} in party`})
+          ValoShell {__APP_VERSION__} ({play.searchClock() ? `searching ${play.searchClock()}` : `${play.partySize()}/${play.maxSize()} in party`})
         </span>
-        <span>Not affiliated with Riot. Do not distribute!</span>
+        <span>Not affiliated with Riot Games.</span>
       </footer>
     </section>
   );
