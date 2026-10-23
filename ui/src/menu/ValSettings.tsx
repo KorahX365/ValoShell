@@ -212,7 +212,7 @@ function Bind(props: { value: string; onChange: (key: string) => void }) {
       >
         {isListening() ? "…" : props.value}
       </button>
-      <button class={styles.bind} data-empty="">
+      <button class={styles.bind} data-empty="" disabled>
         -
       </button>
     </span>

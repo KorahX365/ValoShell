@@ -201,7 +201,7 @@ function ExpressionWheel(props: { props: PieceProps }) {
       </span>
       <Index each={[0, 1, 2, 3]}>
         {(index) => (
-          <button class={styles.spray} data-slot={index()} onMouseEnter={() => playCue("hover")}>
+          <button class={styles.spray} data-slot={index()} disabled>
             <Art src={spray(index())} class={styles.sprayArt} fallback={<ValLogo size={26} class={styles.sprayEmpty} />} />
           </button>
         )}

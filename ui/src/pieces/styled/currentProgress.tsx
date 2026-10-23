@@ -141,7 +141,7 @@ export function ValProgress(props: PieceProps) {
           <span class={styles.tierBar}>
             <i style={{ width: `${Math.min(100, (tier() / Math.max(1, tierMax())) * 100)}%` }} />
           </span>
-          <button class={styles.upgrade} onMouseEnter={() => playCue("hover")}>
+          <button class={styles.upgrade} disabled>
             <span>
               <VpCoin size={18} /> 1000
             </span>
