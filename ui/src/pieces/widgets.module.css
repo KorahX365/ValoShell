@@ -11,29 +11,60 @@
   overflow-wrap: anywhere;
 }
 
+/* ---- Clock. Stack: time over date. Row: date beside the time. Compact: time only.
+   Fitted, the type grows to the box: a digit is about 0.6em wide, so the time's character
+   count (--chars) bounds the width, and the height bounds the rest. ---- */
 .clock {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
+  padding-inline: clamp(0px, 4cqw, 16px);
   line-height: 1;
+}
+
+.clock[data-fitted] {
+  font-size: min(calc(92cqw / (var(--chars, 5) * 0.6)), 62cqh);
 }
 
 .clockTime {
   font-weight: 600;
   letter-spacing: -0.03em;
+  white-space: nowrap;
   color: var(--text-1);
 }
 
 .clockDate {
   margin-top: 0.25em;
-  font-size: 0.24em;
+  overflow: hidden;
+  font-size: max(10px, 0.24em);
   font-weight: 600;
   letter-spacing: 0.2em;
   text-transform: uppercase;
+  white-space: nowrap;
+  text-overflow: ellipsis;
   color: var(--text-2);
+}
+
+.clock[data-layout="row"] {
+  flex-direction: row;
+  align-items: baseline;
+  gap: 0.4em;
+}
+
+.clock[data-layout="row"][data-fitted] {
+  font-size: min(calc(70cqw / (var(--chars, 5) * 0.6)), 80cqh);
+}
+
+.clock[data-layout="row"] .clockDate {
+  margin-top: 0;
+}
+
+.clock[data-layout="compact"][data-fitted] {
+  font-size: min(calc(92cqw / (var(--chars, 5) * 0.6)), 86cqh);
+}
+
+.clock[data-layout="compact"] .clockDate {
+  display: none;
 }
 
 .media {
@@ -87,32 +118,50 @@
   color: var(--text-3);
 }
 
+/* ---- Match score. Stack: map, score, side. Row: all three on one line. Compact: score. ---- */
 .score {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 2px;
-  width: 100%;
-  height: 100%;
   font-family: var(--font-display);
   font-stretch: calc(112% * var(--stretch, 1));
+  font-size: clamp(9px, 13cqh, 16px);
 }
 
 .scoreMap,
 .scoreSide,
 .scoreIdle {
-  font-size: 11px;
+  overflow: hidden;
+  max-width: 100%;
   font-weight: 700;
-  letter-spacing: 2px;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
+  white-space: nowrap;
+  text-overflow: ellipsis;
   color: var(--text-2);
 }
 
 .scoreValue {
-  font-size: 30px;
+  font-size: clamp(16px, 42cqh, 72px);
   font-weight: 700;
   line-height: 1;
+  white-space: nowrap;
+}
+
+.score[data-layout="row"] {
+  flex-direction: row;
+  gap: 0.9em;
+  font-size: clamp(9px, 24cqh, 16px);
+}
+
+.score[data-layout="row"] .scoreValue {
+  font-size: clamp(14px, 64cqh, 56px);
+}
+
+.score[data-layout="compact"] .scoreValue {
+  font-size: clamp(12px, 72cqh, 64px);
 }
 
 .ally {
@@ -128,8 +177,8 @@
   color: var(--text-3);
 }
 
-.score[data-compact] .scoreMap,
-.score[data-compact] .scoreSide {
+.score[data-layout="compact"] .scoreMap,
+.score[data-layout="compact"] .scoreSide {
   display: none;
 }
 

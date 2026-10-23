@@ -254,7 +254,7 @@ impl PartyService {
         if is_custom_now {
             return self
                 .in_party(
-                    |id| custom_game::make_default(id, queue_id),
+                    |id| custom_game::convert_to_default(id, queue_id),
                     "leave the custom game",
                 )
                 .await;

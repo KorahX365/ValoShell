@@ -94,16 +94,18 @@ pub fn start_custom_game(party_id: &PartyId) -> Request {
     .json(json!({}))
 }
 
-/// `POST /parties/v1/parties/{party_id}/makedefault?queueID={queue_id}`: leave custom mode.
+/// `POST /parties/v1/parties/{party_id}/converttodefault?queueID={queue_id}`: leave custom
+/// mode for a matchmaking queue.
 ///
-/// Conflicting sources name this `makedefault` (2022 list) or `converttodefault` (VCL); try
-/// this one first. Body unknown, none is sent.
-pub fn make_default(party_id: &PartyId, queue_id: &str) -> Request {
+/// The client logs this as `Party_ConvertToDefault`; the older `makedefault` name is gone and
+/// left the party stuck in custom setup.
+pub fn convert_to_default(party_id: &PartyId, queue_id: &str) -> Request {
     let queue_id = encode_path_segment(queue_id);
     Request::post(
         Host::Glz,
-        format!("/parties/v1/parties/{party_id}/makedefault?queueID={queue_id}"),
+        format!("/parties/v1/parties/{party_id}/converttodefault?queueID={queue_id}"),
     )
+    .json(json!({}))
 }
 
 #[cfg(test)]
@@ -181,16 +183,16 @@ mod tests {
     }
 
     #[test]
-    fn make_default_passes_queue_as_query() {
-        let request = make_default(&party(), "unrated");
+    fn convert_to_default_passes_queue_as_query() {
+        let request = convert_to_default(&party(), "competitive");
         assert_eq!(request.method, Method::POST);
         assert_eq!(
             request.path,
             format!(
-                "/parties/v1/parties/{}/makedefault?queueID=unrated",
+                "/parties/v1/parties/{}/converttodefault?queueID=competitive",
                 party()
             )
         );
-        assert!(request.body.is_none());
+        assert_eq!(request.body, Some(json!({})));
     }
 }

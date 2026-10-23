@@ -1,6 +1,7 @@
 //! Long-running features built on riot + store + domain; publishes AppEvents.
 
 pub mod action;
+pub mod agents;
 pub mod assets;
 pub mod career;
 pub mod catalog;

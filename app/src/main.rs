@@ -11,6 +11,7 @@ mod protocol;
 mod shell;
 
 use commands::documents::DocumentDirs;
+use services::agents::AgentsService;
 use services::career::CareerService;
 use services::collection::CollectionService;
 use services::history::HistoryService;
@@ -88,6 +89,7 @@ fn invoke_handler() -> impl Fn(tauri::ipc::Invoke) -> bool + Send + Sync + 'stat
         commands::career::get_collection,
         commands::career::get_skin_options,
         commands::career::equip_skin,
+        commands::career::get_agent_progress,
         commands::party::get_party,
         commands::party::party_refresh,
         commands::party::party_change_queue,
@@ -179,6 +181,7 @@ fn start_features(app: &tauri::AppHandle, ctx: &Ctx, assets: &AssetStore) {
     app.manage(lobby);
     app.manage(StoreService::new(ctx.clone(), assets.clone()));
     app.manage(CollectionService::new(ctx.clone(), assets.clone()));
+    app.manage(AgentsService::new(ctx.clone(), assets.clone()));
 }
 
 /// Career, match history and the post-match summary (both read RR changes through the career).

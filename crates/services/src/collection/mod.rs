@@ -128,7 +128,8 @@ async fn read_loadout(session: &RiotSession) -> Result<PlayerLoadout, ActionErro
         .map_err(|error| ActionError::could_not("read your loadout", error))
 }
 
-async fn read_owned(
+/// Lower-case ids of every owned item of one entitlement type.
+pub(crate) async fn read_owned(
     session: &RiotSession,
     item_type: &str,
 ) -> Result<std::collections::HashSet<String>, ActionError> {

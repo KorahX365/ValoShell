@@ -69,6 +69,8 @@ function skinArt(name: string): string | null {
   return skin ? `${MEDIA}/${skin[1]}` : null;
 }
 
+const DEMO_LOCKED_AGENTS: readonly string[] = ["FADE", "HARBOR", "OMEN", "VYSE"];
+
 const AGENTS: ReadonlyArray<[string, string, string]> = [
   ["ASTRA", "41fb69c1-4189-7b37-f117-bcaf1e96f1bf", "Controller"],
   ["BREACH", "5f8d3a7f-467b-97f3-062c-13acf203c006", "Initiator"],
@@ -901,6 +903,11 @@ const HANDLERS: HandlerTable = {
   get_friends: () => FRIENDS,
   get_collection: () => collection,
   get_skin_options: ({ weaponId }) => demoSkinOptions(weaponId),
+  // A few agents stay locked, so locked tiles can be designed without an account.
+  get_agent_progress: () => ({
+    owned: AGENTS.filter(([name]) => !DEMO_LOCKED_AGENTS.includes(name)).map(([, uuid]) => uuid),
+    mastery: AGENTS.map(([, uuid], index) => ({ agent_uuid: uuid, act_level: index % 5, lifetime_level: (index * 7) % 23 })),
+  }),
   equip_skin: ({ weaponId, skinId, chromaId }) => {
     const option = demoSkinOptions(weaponId).find((entry) => entry.skin_id === skinId);
     if (!option) throw new Error("Could not equip that skin: you do not own it.");

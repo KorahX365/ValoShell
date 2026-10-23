@@ -257,6 +257,20 @@
   filter: none;
 }
 
+/* Not unlocked: darker than a teammate's pick, with a padlock so it never reads as "taken". */
+.agent[data-unowned] {
+  position: relative;
+  filter: grayscale(1) brightness(0.35);
+}
+
+.agent[data-unowned]::after {
+  content: "";
+  position: absolute;
+  inset: 30%;
+  background: var(--text-1);
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M7 10V7a5 5 0 0 1 10 0v3h1a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V11a1 1 0 0 1 1-1zm2 0h6V7a3 3 0 0 0-6 0z'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
 .actions {
   display: flex;
   align-items: center;

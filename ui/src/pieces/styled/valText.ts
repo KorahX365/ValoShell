@@ -8,6 +8,7 @@ const TEXT = {
   play: { en: "Play", es: "Jugar" },
   progress: { en: "Battlepass", es: "Progreso" },
   agents: { en: "Agents", es: "Agentes" },
+  owned: { en: "Show owned agents only", es: "Mostrar solo agentes obtenidos" },
   career: { en: "Career", es: "Carrera" },
   sidearms: { en: "Sidearms", es: "Armas de mano" },
   smgs: { en: "SMGs", es: "Subfusiles" },

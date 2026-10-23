@@ -4,6 +4,7 @@ import { For, Index, Show, createMemo, createSignal, onCleanup } from "solid-js"
 import { DoorOpen } from "lucide-solid";
 import type { PieceProps } from "~/studio/registry";
 import { playCue } from "~/menu/sound";
+import { isAgentOwned } from "~/state/agents";
 import { ROLE_ORDER, agentByUuid, catalog } from "~/state/catalog";
 import { pregame, pregameActions, timeLeft } from "~/state/pregame";
 import { Empty, controls } from "~/ui/controls";
@@ -109,8 +110,9 @@ export function AgentPicker(_props: PieceProps) {
                     data-part="agent-tile"
                     data-role={role}
                     data-own={own() === agent.uuid ? "" : undefined}
-                    disabled={isLocked() || taken().has(agent.uuid)}
-                    title={agent.display_name}
+                    data-unowned={isAgentOwned(agent.uuid) ? undefined : ""}
+                    disabled={isLocked() || taken().has(agent.uuid) || !isAgentOwned(agent.uuid)}
+                    title={isAgentOwned(agent.uuid) ? agent.display_name : `${agent.display_name} (not unlocked)`}
                     onMouseEnter={() => {
                       setHovered(agent.uuid);
                       playCue("hover");

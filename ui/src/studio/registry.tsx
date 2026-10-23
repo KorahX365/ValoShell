@@ -75,6 +75,7 @@ import { ValCareer } from "~/pieces/styled/currentCareer";
 import { GlassFriends, GlassHello, GlassParty, GlassPlay } from "~/pieces/styled/glass";
 import { GlassRank } from "~/pieces/styled/glassRank";
 import { ClockWidget, ImageWidget, MatchScoreWidget, TextWidget, VideoWidget, WebWidget } from "~/pieces/widgets";
+import { LAYOUT_FIELD, LOOK_FIELD } from "~/pieces/widgetLooks";
 import type { Piece, PieceStyle, PropValue, StageId } from "./types";
 
 export interface PieceProps {
@@ -1207,10 +1208,10 @@ export const PIECES: readonly PieceDef[] = [
     category: "widget",
     stages: null,
     size: { w: 0.16, h: 0.09 },
-    minPx: { w: 120, h: 50 },
-    defaults: { isCompact: false },
+    minPx: { w: 80, h: 28 },
+    defaults: { look: "minimal", layout: "auto" },
     style: { surface: "glass", radius: 10 },
-    fields: [{ key: "isCompact", label: "Compact", type: "toggle" }],
+    fields: [LOOK_FIELD, LAYOUT_FIELD],
     component: MatchScoreWidget,
   },
   {
@@ -1221,9 +1222,11 @@ export const PIECES: readonly PieceDef[] = [
     category: "widget",
     stages: null,
     size: { w: 0.22, h: 0.12 },
-    minPx: { w: 220, h: 84 },
-    defaults: { presets: "15, 30, 60", port: "7799", token: "" },
+    minPx: { w: 110, h: 32 },
+    defaults: { presets: "15, 30, 60", port: "7799", token: "", look: "panel", layout: "auto" },
     fields: [
+      LOOK_FIELD,
+      LAYOUT_FIELD,
       { key: "presets", label: "Delays in seconds", type: "text", placeholder: "15, 30, 60" },
       { key: "port", label: "InstantClone port", type: "text", placeholder: "7799" },
       { key: "token", label: "Dock token (only with a dashboard password)", type: "text" },
@@ -1278,10 +1281,13 @@ export const PIECES: readonly PieceDef[] = [
     category: "widget",
     stages: null,
     size: { w: 0.18, h: 0.12 },
-    minPx: { w: 90, h: 40 },
-    defaults: { size: 56, format: "24h", hasSeconds: false, hasDate: true },
+    minPx: { w: 60, h: 24 },
+    defaults: { isFitted: true, size: 56, format: "24h", hasSeconds: false, hasDate: true, look: "minimal", layout: "auto" },
     fields: [
-      { key: "size", label: "Size", type: "range", min: 16, max: 180, step: 1 },
+      LOOK_FIELD,
+      LAYOUT_FIELD,
+      { key: "isFitted", label: "Fit to box", type: "toggle" },
+      { key: "size", label: "Size (when not fitted)", type: "range", min: 16, max: 180, step: 1 },
       {
         key: "format",
         label: "Format",

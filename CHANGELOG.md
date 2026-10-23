@@ -4,6 +4,21 @@ All notable changes land here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and versions follow
 [SemVer](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Fixed
+
+- Leaving a custom game for Competitive, Swiftplay or any other mode works again.
+- Agents you haven't unlocked show as locked, on the Agents page and in agent select.
+- The Agents page shows each agent's real Agent Mastery level.
+
+### Changed
+
+- Every widget (stream delay, clock, match score) can be resized freely and reflows to fit
+  its box, with a choice of looks (Panel, Glass, Minimal, Broadcast) and layouts (Auto, Row,
+  Stack, Compact).
+- The VALORANT Agents page has the client's "Show owned agents only" toggle.
+
 ## [0.1.0] - First early preview
 
 The first public build. Expect bugs and unfinished screens.

@@ -2,6 +2,7 @@
 // talks to Rust; in a plain browser (dev preview, filming without the game) the demo backend
 // answers instead, so every screen stays usable.
 import { invoke } from "@tauri-apps/api/core";
+import type { AgentProgress } from "~/bindings/AgentProgress";
 import type { CareerView } from "~/bindings/CareerView";
 import type { Catalog } from "~/bindings/Catalog";
 import type { CollectionView } from "~/bindings/CollectionView";
@@ -50,6 +51,7 @@ export interface CommandMap {
   get_collection: [NoArgs, CollectionView];
   get_skin_options: [{ weaponId: string }, SkinOption[]];
   equip_skin: [{ weaponId: string; skinId: string; chromaId: string }, CollectionView];
+  get_agent_progress: [{ isForced: boolean }, AgentProgress];
   get_party: [NoArgs, PartyView | null];
   party_refresh: [NoArgs, PartyView | null];
   party_change_queue: [{ queueId: string }, null];

@@ -1,5 +1,7 @@
-//! Store, career, collection, friends, live-lobby and post-match commands. Nothing here can buy.
+//! Store, career, collection, agents, friends, live-lobby and post-match commands. Nothing here
+//! can buy.
 
+use services::agents::{AgentProgress, AgentsService};
 use services::career::{CareerService, CareerView};
 use services::collection::{CollectionService, CollectionView, SkinOption};
 use services::history::{HistoryService, HistoryView};
@@ -85,6 +87,18 @@ pub async fn get_skin_options(
 ) -> Result<Vec<SkinOption>, String> {
     collection
         .options(&weapon_id)
+        .await
+        .map_err(|error| error.to_string())
+}
+
+/// Owned agents and Agent Mastery levels; `is_forced` skips the short reuse window.
+#[tauri::command]
+pub async fn get_agent_progress(
+    agents: State<'_, AgentsService>,
+    is_forced: bool,
+) -> Result<AgentProgress, String> {
+    agents
+        .progress(is_forced)
         .await
         .map_err(|error| error.to_string())
 }

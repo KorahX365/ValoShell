@@ -6,6 +6,8 @@ import { isTauri } from "~/ipc/runtime";
 import { blockedReason, embedSource, embedUrl, isShortLink } from "~/studio/embeds";
 import type { PieceProps } from "~/studio/registry";
 import { game } from "~/state/session";
+import { useWidgetLayout, widgetChoice } from "./widgetLooks";
+import looks from "./widgetLooks.module.css";
 import styles from "./widgets.module.css";
 
 function text(props: PieceProps, key: string, fallback = ""): string {
@@ -31,20 +33,23 @@ const FONT_VARS: Record<string, string> = {
 
 export function TextWidget(props: PieceProps) {
   return (
-    <div
-      class={styles.text}
-      style={{
-        "font-size": `${number(props, "size", 48)}px`,
-        "font-weight": text(props, "weight", "800"),
-        "text-align": text(props, "align", "left") as "left" | "center" | "right",
-        "justify-content": { left: "flex-start", center: "center", right: "flex-end" }[text(props, "align", "left")] ?? "flex-start",
-        color: text(props, "color") || "var(--text-1)",
-        "font-family": FONT_VARS[text(props, "font", "display")] ?? "var(--font-display)",
-        "text-transform": flag(props, "isUppercase", true) ? "uppercase" : "none",
-        "text-shadow": flag(props, "hasShadow", true) ? "0 4px 24px rgb(0 0 0 / 0.55)" : "none",
-      }}
-    >
-      <span>{text(props, "text", "Your text")}</span>
+    <div class={looks.frame}>
+      <div
+        class={styles.text}
+        style={{
+          // Never taller than the box, so shrinking the piece shrinks the text instead of clipping it.
+          "font-size": `min(${number(props, "size", 48)}px, 92cqh)`,
+          "font-weight": text(props, "weight", "800"),
+          "text-align": text(props, "align", "left") as "left" | "center" | "right",
+          "justify-content": { left: "flex-start", center: "center", right: "flex-end" }[text(props, "align", "left")] ?? "flex-start",
+          color: text(props, "color") || "var(--text-1)",
+          "font-family": FONT_VARS[text(props, "font", "display")] ?? "var(--font-display)",
+          "text-transform": flag(props, "isUppercase", true) ? "uppercase" : "none",
+          "text-shadow": flag(props, "hasShadow", true) ? "0 4px 24px rgb(0 0 0 / 0.55)" : "none",
+        }}
+      >
+        <span>{text(props, "text", "Your text")}</span>
+      </div>
     </div>
   );
 }
@@ -58,6 +63,7 @@ function useNow(intervalMs: number): () => Date {
 
 export function ClockWidget(props: PieceProps) {
   const now = useNow(1000);
+  const box = useWidgetLayout(props);
   const time = () => {
     const options: Intl.DateTimeFormatOptions = {
       hour: "2-digit",
@@ -68,12 +74,23 @@ export function ClockWidget(props: PieceProps) {
     return now().toLocaleTimeString([], options);
   };
   const date = () => now().toLocaleDateString([], { weekday: "long", day: "numeric", month: "long" });
+  // A fitted clock sizes itself from the box; the time string's length sets how wide it runs.
+  // Clocks saved before fitting existed keep their fixed size.
+  const size = () => (flag(props, "isFitted") ? undefined : `${number(props, "size", 56)}px`);
   return (
-    <div class={styles.clock} style={{ "font-size": `${number(props, "size", 56)}px` }}>
-      <span class={`${styles.clockTime} num`}>{time()}</span>
-      <Show when={flag(props, "hasDate", true)}>
-        <span class={styles.clockDate}>{date()}</span>
-      </Show>
+    <div class={looks.frame} ref={box.ref}>
+      <div
+        class={`${looks.surface} ${styles.clock}`}
+        data-look={widgetChoice(props, "look", "minimal")}
+        data-layout={box.layout()}
+        data-fitted={size() ? undefined : ""}
+        style={{ "font-size": size(), "--chars": time().length }}
+      >
+        <span class={`${styles.clockTime} num`}>{time()}</span>
+        <Show when={flag(props, "hasDate", true)}>
+          <span class={styles.clockDate}>{date()}</span>
+        </Show>
+      </div>
     </div>
   );
 }
@@ -173,21 +190,26 @@ export async function openExternal(url: string): Promise<void> {
 export function MatchScoreWidget(props: PieceProps) {
   const snapshot = () => game();
   const isLive = () => snapshot()?.phase === "ingame" || snapshot()?.phase === "pregame";
+  const box = useWidgetLayout(props);
+  // Layouts saved before the Layout option used the Compact toggle instead.
+  const layout = () => (flag(props, "isCompact") ? "compact" : box.layout());
   return (
-    <div class={styles.score} data-compact={flag(props, "isCompact") ? "" : undefined}>
-      <Switch fallback={<span class={styles.scoreIdle}>Match score</span>}>
-        <Match when={isLive()}>
-          <span class={styles.scoreMap}>{snapshot()?.map_name || "Live"}</span>
-          <span class={`${styles.scoreValue} num`}>
-            <span class={styles.ally}>{snapshot()?.ally_score ?? 0}</span>
-            <span class={styles.scoreDash}>:</span>
-            <span class={styles.enemy}>{snapshot()?.enemy_score ?? 0}</span>
-          </span>
-          <Show when={snapshot()?.side}>
-            <span class={styles.scoreSide}>{snapshot()?.side === "attack" ? "Attacking" : "Defending"}</span>
-          </Show>
-        </Match>
-      </Switch>
+    <div class={looks.frame} ref={box.ref}>
+      <div class={`${looks.surface} ${styles.score}`} data-look={widgetChoice(props, "look", "minimal")} data-layout={layout()}>
+        <Switch fallback={<span class={styles.scoreIdle}>Match score</span>}>
+          <Match when={isLive()}>
+            <span class={styles.scoreMap}>{snapshot()?.map_name || "Live"}</span>
+            <span class={`${styles.scoreValue} num`}>
+              <span class={styles.ally}>{snapshot()?.ally_score ?? 0}</span>
+              <span class={styles.scoreDash}>:</span>
+              <span class={styles.enemy}>{snapshot()?.enemy_score ?? 0}</span>
+            </span>
+            <Show when={snapshot()?.side}>
+              <span class={styles.scoreSide}>{snapshot()?.side === "attack" ? "Attacking" : "Defending"}</span>
+            </Show>
+          </Match>
+        </Switch>
+      </div>
     </div>
   );
 }

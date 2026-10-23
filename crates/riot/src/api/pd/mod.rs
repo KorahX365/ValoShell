@@ -2,6 +2,7 @@
 //! Purchase, order and gift endpoints are deliberately absent.
 
 pub mod account;
+pub mod bloomline;
 pub mod bundle;
 pub mod career;
 pub mod contracts;
