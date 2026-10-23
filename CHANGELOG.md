@@ -4,21 +4,6 @@ All notable changes land here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and versions follow
 [SemVer](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
-
-### Fixed
-
-- Leaving a custom game for Competitive, Swiftplay or any other mode works again.
-- Agents you haven't unlocked show as locked, on the Agents page and in agent select.
-- The Agents page shows each agent's real Agent Mastery level.
-
-### Changed
-
-- Every widget (stream delay, clock, match score) can be resized freely and reflows to fit
-  its box, with a choice of looks (Panel, Glass, Minimal, Broadcast) and layouts (Auto, Row,
-  Stack, Compact).
-- The VALORANT Agents page has the client's "Show owned agents only" toggle.
-
 ## [0.1.0] - First early preview
 
 The first public build. Expect bugs and unfinished screens.
@@ -27,6 +12,9 @@ The first public build. Expect bugs and unfinished screens.
 
 - **Play**: queues, party invites and codes, kicks, ready checks and custom games.
 - **Agent select**: your team's picks and the timer, with select and lock in from the menu.
+  Agents you haven't unlocked show as locked.
+- **Agents**: every agent's abilities and your Agent Mastery level, with a "Show owned
+  agents only" toggle.
 - **Lobby**: rank, peak rank, RR, win rate and party stacks for every player. Enemy ranks
   during agent select are off by default and only requested when switched on.
 - **Post-match**: the full scoreboard, your stats and your RR change.
@@ -40,6 +28,8 @@ The first public build. Expect bugs and unfinished screens.
 - **Fourteen menu styles**: Modern, VALORANT, VALORANT Glass, VALORANT Beta, VALORANT 2022,
   League client, CS2, CS:GO, CS 1.6, Fortnite, Minecraft, Halo 3, Pip-Boy and Terminal.
 - **Studio**: drag, resize and restyle every piece of every page, and save it as a layout.
+- **Widgets** (stream delay, clock, match score) reflow to any size, with four looks (Panel,
+  Glass, Minimal, Broadcast) and four layouts (Auto, Row, Stack, Compact).
 
 ### Streaming
 
