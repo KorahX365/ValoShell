@@ -1,6 +1,6 @@
 # Contributing to ValoShell
 
-Thanks for helping. ValoShell is an early preview, so bug reports are as valuable as code.
+Thanks for helping. ValoShell is young, so bug reports are as valuable as code.
 Everyone taking part follows the [Code of Conduct](CODE_OF_CONDUCT.md).
 
 ## Reporting bugs and ideas

@@ -108,6 +108,7 @@ back when it ends.
 
 - **Nothing to log in to.** Your session comes from the Riot Client.
 - **Nothing touches the game.** No injection, no memory reading, no input automation.
+- **No unfair extras.** No instalock, and streamer mode only ever hides names.
 - **Opt-in extras.** Enemy ranks during agent select are off by default and never requested
   unless you turn them on.
 

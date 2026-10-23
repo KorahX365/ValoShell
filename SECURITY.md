@@ -10,7 +10,7 @@ You'll get a reply within a week, and a fix or a plan before anything is made pu
 
 ## Supported versions
 
-Only the latest release gets fixes while ValoShell is in early preview.
+Only the latest release gets fixes.
 
 ## Scope
 
